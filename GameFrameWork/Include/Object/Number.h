@@ -33,6 +33,9 @@ public:
 
 	void SetZeroTexture(Texture* pTexture) { m_ZeroTexture = pTexture; }
 
+	Vector2 GetRightPos() const { return RightPos; }
+	Vector2 GetLeftPosx() const { return LeftPos; }
+
 private:
 	int	m_Number;
 	vector<int>	m_vecNumber;
@@ -43,6 +46,9 @@ private:
 	Vector2 ZeroPos;
 	Vector2 ZeroSize;
 	Vector2 ZeroViewSize;
+
+	Vector2 LeftPos;
+	Vector2 RightPos;
 
 	bool isMove;
 	bool isLiveTime;

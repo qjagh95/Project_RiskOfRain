@@ -29,9 +29,9 @@ bool JellyFish::Init()
 {
 	Monster::Init();
 	AttackDelay = 5.0f;
-	AttackRange = 50.0f;
+	AttackRange = 30.0f;
 	Attack = 10;
-	TraceRange = 800.0f;
+	TraceRange = 500.0f;
 	SetGravity(false);
 	ChangeTime = 0.0f;
 
@@ -198,7 +198,7 @@ void JellyFish::FS_ATTACK(float DeltaTime)
 	if (m_Animation->GetFrameX() == PrevFrame)
 		return;
 
-	if (m_Animation->GetIsEnd() == true)
+	if (m_Animation->GetFrameX() == 0 || m_Animation->GetFrameX() == 1)
 	{
 		JellyFishHitBox* newHitBox = Object::CreateObject<JellyFishHitBox>("JellyHitBox", m_Layer);
 		newHitBox->SetPos(m_Pos);

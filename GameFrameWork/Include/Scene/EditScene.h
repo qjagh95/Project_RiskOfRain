@@ -131,6 +131,20 @@ public:
 
 	void NoMoveButtonCallback(float DeltaTime);
 
+	static void EraseMonserList(EditMonster* Val)
+	{
+		list<ObjectBaseSave>::iterator StartIter = monsterList.begin();
+		list<ObjectBaseSave>::iterator EndIter = monsterList.end();
+
+		for (;StartIter != EndIter;)
+		{
+			if ((*StartIter).m_Object == Val)
+				StartIter = monsterList.erase(StartIter);
+			else
+				StartIter++;
+		}
+	}
+
 private:
 	TileInfo* TileMap;
 	Tile* SelectTile;
@@ -141,7 +155,7 @@ private:
 	list<Button*> TileButtonList; ///보이기 안보이기를 하기위함.
 	list<Button*> MonsterButtonList;
 
-	list<ObjectBaseSave> monsterList;
+	static list<ObjectBaseSave> monsterList;
 	
 	EDITOR_STATE eState;
 
@@ -162,5 +176,6 @@ private:
 public:
 	friend class Scene;
 	friend class TileInfo;
+	friend class EditMonster;
 };
 

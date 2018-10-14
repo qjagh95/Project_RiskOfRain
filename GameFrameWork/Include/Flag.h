@@ -60,12 +60,13 @@ enum ANIMATION_TYPE
 enum ANIMATION_OPTION
 {
 	AO_LOOP,
+	AO_BOUNCE_LOOP_LEMUIRAN,
 	AO_ONCE_RETURN,
 	AO_ONCE_DESTROY,
 	AO_ONCE_STOP,
 	AO_REVERS_LOOP,
 	AO_REVERS_BOUNCE_LOOP,
-	AO_REVERS_ONCE_DESTROY,
+	AO_REVERS_BOUNCE_LOOP_LEMUIRAN
 };
 
 enum OBJECT_TYPE
@@ -164,10 +165,10 @@ enum ITEMBOX_OPEN
 	IO_MISSILE,
 };
 
-class Object;
+class EditMonster;
 struct ObjectBaseSave
 {
-	Object* m_Object;
+	EditMonster* m_Object;
 	MONSTER_TYPE m_mType;
 	char StageFileName;
 };

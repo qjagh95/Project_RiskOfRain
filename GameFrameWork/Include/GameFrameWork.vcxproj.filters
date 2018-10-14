@@ -262,6 +262,9 @@
     <ClCompile Include="Object\JellyFishHitBox.cpp">
       <Filter>MonsterObject</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Lemurian.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -527,6 +530,9 @@
     </ClInclude>
     <ClInclude Include="Object\JellyFishHitBox.h">
       <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Lemurian.h">
+      <Filter>MainScene\Object\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -135,8 +135,20 @@ void Number::Render(HDC hDC, float DeltaTime)
 		FrameX += m_vecNumber[i] * (int)m_NumberSize.x;
 		FrameY += (int)m_Offset.y;
 
+		if (i == m_vecNumber.size() - 1)
+		{
+			RightPos.x = (float)FrameX;
+			RightPos.y = (float)FrameY;
+		}
+		else if (i == 0)
+		{
+			LeftPos.x = (float)FrameX;
+			LeftPos.y = (float)FrameY;
+		}
+
 		TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberViewSize.x, (int)m_NumberViewSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)m_NumberSize.x, (int)m_NumberSize.y, m_ColorKey);
 	}
+
 	//0이미지
 	TransparentBlt(hDC, (int)ZeroPos.x, (int)ZeroPos.y, (int)ZeroViewSize.x, (int)ZeroViewSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
 	//0일때 따로 0텍스쳐를 띄워준다.

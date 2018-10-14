@@ -23,7 +23,7 @@ IssacTear::~IssacTear()
 bool IssacTear::Init()
 {
 	MoveDir = 1.0f;
-	Attack = 15;
+	Attack = 8;
 
 	SetTexture("IssacTear", TEXT("Enemy/Tear.bmp"));
 	SetColorKey(RGB(255, 0, 255));

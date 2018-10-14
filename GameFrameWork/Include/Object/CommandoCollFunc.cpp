@@ -127,8 +127,21 @@ void Commando::TearHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		IssacTear* getTear = (IssacTear*)Dest->GetCurObject();
 
-		if(pState != PS_SKILL3)
+		if (pState != PS_SKILL3)
+		{
 			Hp -= getTear->GetAttack();
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getTear->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
 
 		getTear->SetisActiv(false);
 
@@ -141,8 +154,22 @@ void Commando::AncientHit(Collider * Src, Collider * Dest, float DeltaTime)
 	if (Dest->GetTag() == "AcientHitBody")
 	{
 		AncientHitBox* getBox = (AncientHitBox*)Dest->GetCurObject();
+		
+		if (pState != PS_SKILL3)
+		{
+			Hp -= getBox->GetAttack();
 
-		Hp -= getBox->GetAttack();
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getBox->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
 
 		getBox->SetisActiv(false);
 
@@ -156,7 +183,23 @@ void Commando::JellyFishHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		JellyFishHitBox* getBox = (JellyFishHitBox*)Dest->GetCurObject();
 
-		Hp -= getBox->GetAttack();
+		if (pState != PS_SKILL3)
+		{
+			Hp -= getBox->GetAttack();
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getBox->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
+
+		getBox->SetisActiv(false);
 
 		SAFE_RELEASE(getBox);
 	}

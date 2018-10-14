@@ -5,6 +5,8 @@
 #include "Tile.h"
 #include "../StageManager.h"
 
+#include "../Scene/EditScene.h"
+
 EditMonster* EditMonster::EditSelect = NULL;
 bool EditMonster::isSelect = false;
 
@@ -103,7 +105,11 @@ void EditMonster::MouseHit(Collider * Src, Collider * Dest, float DeltaTime)
 		}
 
 		if (KEYDOWN("RBotton"))
+		{
 			SetisActiv(false);
+			EditScene::EraseMonserList(this);
+		}
+
 	}
 }
 

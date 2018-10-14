@@ -152,6 +152,7 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 
 					Save.m_Object = newMonster;
 
+					SAFE_RELEASE(TempLayer);
 					SAFE_RELEASE(newMonster);
 				}
 				break;

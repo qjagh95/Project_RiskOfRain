@@ -243,9 +243,6 @@ void IssacEnemy1::TimeMoveIdle(float DeltaTime)
 			case 1:
 				SelectState(AnimationName, IMS_MOVE);
 				break;
-			default:
-				SelectState(AnimationName, IMS_MOVE);
-				break;
 		}
 	}
 }
@@ -265,15 +262,14 @@ void IssacEnemy1::FS_IDLE(float DeltaTime)
 		SelectState(AnimationName, IMS_TRACE);
 
 	if (isIdle == false)
-	{
 		SelectState(AnimationName, IMS_MOVE);
-	}
 }
 
 void IssacEnemy1::FS_MOVE(float DeltaTime)
 {
 	MonsterMove(DeltaTime);
 	RangeCheck(DeltaTime);
+
 	Count = 0;
 }		
 

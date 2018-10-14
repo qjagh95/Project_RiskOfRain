@@ -9,6 +9,7 @@
 #include "Object/IssacEnemy1.h"
 #include "Object/AncientWisp.h"
 #include "Object/JellyFish.h"
+#include "Object/Lemurian.h"
 
 #include "Scene\Layer.h"
 
@@ -139,6 +140,12 @@ int StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 			}
 				break;
 			case MT_MONSTERFOUR:
+			{
+				Lemurian* newMonster = (Lemurian*)Object::CreateObject<Lemurian>("Monster", InputLayer);
+				newMonster->SetPos(Saver.Pos);
+
+				SAFE_RELEASE(newMonster);
+			}
 				break;
 			case MT_MONSTERFIVE:
 				break;

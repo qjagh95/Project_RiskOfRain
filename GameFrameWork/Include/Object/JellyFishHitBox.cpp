@@ -22,7 +22,7 @@ JellyFishHitBox::~JellyFishHitBox()
 bool JellyFishHitBox::Init()
 {
 	ColliderRect* RC = AddCollider<ColliderRect>("JellyFishHit");
-	RC->SetVirtualRect(50.0f, 50.0f);
+	RC->SetVirtualRect(80.0f, 80.0f);
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCollsionTypeName("Monster");
 

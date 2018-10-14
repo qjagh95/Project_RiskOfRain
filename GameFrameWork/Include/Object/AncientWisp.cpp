@@ -34,7 +34,6 @@ bool AncientWisp::Init()
 	SetMoneyCoinCount(15);
 	SetExpCoinCount(16);
 
-
 	int a = rand() % 2;
 
 	if (a == 0)
@@ -146,7 +145,18 @@ void AncientWisp::RangeCheck()
 
 void AncientWisp::FS_MOVE(float DeltaTime)
 {
-	MonsterMove(DeltaTime);
+	Tile* NextTile = NULL;
+	Tile* FootNextTile = NULL;
+
+	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y + m_Size.GetHalfY() - StageManager::Get()->GetTileSize().y);
+
+	if (m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
+		m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+
+	if (NextTile->GetTileType() == TT_NOMOVE)
+		MoveDir *= -1.0f;
+
+	SAFE_RELEASE(NextTile);
 	RangeCheck();
 }
 

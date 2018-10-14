@@ -27,6 +27,8 @@
 
 #include "../Sound/SoundManager.h"
 
+list<ObjectBaseSave> EditScene::monsterList;
+
 EditScene::EditScene()
 	:TileMap(NULL), SelectTileTexture(NULL), SelectTile(NULL), TileButton(NULL)
 	, CurType(TT_NOMAL), isItemOptionMode(false), isRopeOptionMode(false), isPumpOptionMode(false), isTileShow(true)
@@ -151,15 +153,6 @@ int EditScene::Update(float DeltaTime)
 
 int EditScene::LateUpdate(float DeltaTime)
 {
-	return 0;
-}
-
-void EditScene::Collision(float DeltaTime)
-{
-}
-
-void EditScene::Render(HDC hDC, float DeltaTime)
-{
 	//Collsion정보를 받고 실행해야 하기때문에 어쩔수 없이 Render에서 호출
 	switch (eState)
 	{
@@ -172,6 +165,16 @@ void EditScene::Render(HDC hDC, float DeltaTime)
 	}
 
 	SaveLoad();
+
+	return 0;
+}
+
+void EditScene::Collision(float DeltaTime)
+{
+}
+
+void EditScene::Render(HDC hDC, float DeltaTime)
+{
 }
 
 void EditScene::TileMode(float DeltaTime)
@@ -296,8 +299,13 @@ void EditScene::MonsterMode(float DeltaTime)
 		list<ObjectBaseSave>::iterator StartIter = monsterList.begin();
 		list<ObjectBaseSave>::iterator EndIter = monsterList.end();
 		
-		for (;StartIter != EndIter; StartIter++)
-			(*StartIter).m_Object->SetisActiv(false);
+		for (;StartIter != EndIter;)
+		{
+			if ((*StartIter).m_Object->GetisActiv() == true)
+				StartIter = monsterList.erase(StartIter);
+			else
+				StartIter++;
+		}
 	}
 
 	if (KEYDOWN("TileOnOff"))
