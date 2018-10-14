@@ -205,46 +205,50 @@ void EditScene::TileMode(float DeltaTime)
 			if (SelectTile->GetTileType() == TT_NOMAL)
 				return;
 
-			SelectTile->SetTileOption(TO_ITEM);
 			SelectTile->SetTileType(CurType);
+			SelectTile->SetTileOption(TO_ITEM);
 		}
 		else if (isRopeOptionMode == true)
 		{
 			if (SelectTile->GetTileType() == TT_NOMAL)
 				return;
 
-			SelectTile->SetTileOption(TO_ROPE);
 			SelectTile->SetTileType(CurType);
+			SelectTile->SetTileOption(TO_ROPE);
 		}
 		else if (isPumpOptionMode == true)
 		{
 			if (SelectTile->GetTileType() == TT_NOMAL)
 				return;
 
-			SelectTile->SetTileOption(TO_PUMP);
 			SelectTile->SetTileType(CurType);
+			SelectTile->SetTileOption(TO_PUMP);
 		}
 		else if (isTelePotOptionMode == true)
 		{
 			if (SelectTile->GetTileType() == TT_NOMAL)
 				return;
 
-			SelectTile->SetTileOption(TO_TELEPOT);
 			SelectTile->SetTileType(CurType);
+			SelectTile->SetTileOption(TO_TELEPOT);
 		}
 		else
 		{
-			Vector2 CameraPos = Camera::Get()->GetPos();
-			Vector2 CameraEnd;
+			//첫번째만 가져올거야
+			if ((*TileButtonList.begin())->GetisShow() == true)
+			{
+				Vector2 CameraPos = Camera::Get()->GetPos();
+				Vector2 CameraEnd;
 
-			CameraEnd.x = CameraPos.x + Core::Get()->GetWinSizeVector2().x;
-			CameraEnd.y = CameraPos.y + Core::Get()->GetWinSizeVector2().y / 2.0f - 34.0f;
+				CameraEnd.x = CameraPos.x + Core::Get()->GetWinSizeVector2().x;
+				CameraEnd.y = CameraPos.y + Core::Get()->GetWinSizeVector2().y / 2.0f - 34.0f;
 
-			int a = TileMap->GetTileIndex(CameraPos);
-			int b = TileMap->GetTileIndex(CameraEnd);
+				int a = TileMap->GetTileIndex(CameraPos);
+				int b = TileMap->GetTileIndex(CameraEnd);
 
-			if (SelectTile->GetIndex() < a || SelectTile->GetIndex() < b)
-				return;
+				if (SelectTile->GetIndex() < a || SelectTile->GetIndex() < b)
+					return;
+			}
 
 			SelectTile->SetTexture(SelectTileTexture);
 			SelectTile->SetTileType(CurType);
@@ -292,10 +296,9 @@ void EditScene::MonsterMode(float DeltaTime)
 		list<ObjectBaseSave>::iterator StartIter = monsterList.begin();
 		list<ObjectBaseSave>::iterator EndIter = monsterList.end();
 		
-		for (;StartIter != EndIter;)
+		for (;StartIter != EndIter; StartIter++)
 		{
 			(*StartIter).m_Object->SetisActiv(false);
-			StartIter = monsterList.erase(StartIter);
 		}
 	}
 
@@ -310,11 +313,15 @@ void EditScene::MonsterMode(float DeltaTime)
 	if (KEYDOWN("LBotton"))
 	{
 		Vector2 mPos = Input::Get()->GetMouseWorldPos();
-		Vector2 CameraPos = Camera::Get()->GetPos();
-		Vector2 EmptyPos = CameraPos + Vector2(500.0f, 50.0f);
 
-		if ((mPos.x > CameraPos.x && mPos.x < EmptyPos.x) && (mPos.y > CameraPos.y && mPos.y < EmptyPos.y))
-			return;
+		if ((*MonsterButtonList.begin())->GetisShow() == true)
+		{
+			Vector2 CameraPos = Camera::Get()->GetPos();
+			Vector2 EmptyPos = CameraPos + Vector2(500.0f, 50.0f);
+
+			if ((mPos.x > CameraPos.x && mPos.x < EmptyPos.x) && (mPos.y > CameraPos.y && mPos.y < EmptyPos.y))
+				return;
+		}
 
 		bool isSelect = EditMonster::GetIsSelect();
 
