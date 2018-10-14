@@ -43,9 +43,6 @@
     <ClCompile Include="Object\Bullet.cpp">
       <Filter>MainScene\Object\Bullet</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Monster.cpp">
-      <Filter>MainScene\Object\Monster</Filter>
-    </ClCompile>
     <ClCompile Include="Resource\ResourceManager.cpp">
       <Filter>Core\Resource\Manager</Filter>
     </ClCompile>
@@ -205,6 +202,9 @@
     <ClCompile Include="Object\DollerTexture.cpp">
       <Filter>SceneUI</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Monster.cpp">
+      <Filter>MainScene\Object\Monster\Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -257,9 +257,6 @@
     </ClInclude>
     <ClInclude Include="Object\Bullet.h">
       <Filter>MainScene\Object\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Monster.h">
-      <Filter>MainScene\Object\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Resource\ResourceManager.h">
       <Filter>Core\Resource\Manager</Filter>
@@ -413,6 +410,9 @@
     </ClInclude>
     <ClInclude Include="Object\DollerTexture.h">
       <Filter>SceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Monster.h">
+      <Filter>MainScene\Object\Monster\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -616,6 +616,9 @@
     </Filter>
     <Filter Include="MainScene\Object\Commando">
       <UniqueIdentifier>{0f7ffa1b-b576-4c41-9940-fba62aa90ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Monster\Base">
+      <UniqueIdentifier>{3047cdd8-0429-4f83-b9eb-fb8161bbe8af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

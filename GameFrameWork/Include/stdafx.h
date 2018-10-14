@@ -13,6 +13,7 @@
 #include <math.h>
 #include <conio.h>
 #include <atlstr.h>
+#include <random>
 
 using namespace std;
 

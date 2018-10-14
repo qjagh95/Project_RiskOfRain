@@ -93,7 +93,6 @@ void Input::Update(float DeltaTime)
 	GetCursorPos(&mPos);
 	ScreenToClient(Core::Get()->GetHwnd(), &mPos);
 
-	//스크린좌표와 카메라가 적용된좌표의 갭
 	m_MouseGap.x = mPos.x - m_MouseScreenPos.x;
 	m_MouseGap.y = mPos.y - m_MouseScreenPos.y;
 

@@ -61,7 +61,7 @@ int EditMonster::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
 
-	if (m_bDrag)
+	if (m_bDrag == true)
 	{
 		Vector2	vPos = Input::Get()->GetMouseGap();
 		m_Pos += vPos;

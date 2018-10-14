@@ -4,8 +4,10 @@
 #include "../Camera.h"
 #include "../Sound/SoundManager.h"
 
+#include "../Object/Bar.h"
+
 Monster::Monster()
-	:Target(NULL)
+	:Target(NULL), Hp(100), MaxHp(100)
 {
 	m_ObjectType = OT_MONSTER;
 	SetTag("Monster");
@@ -19,6 +21,9 @@ Monster::Monster(const Monster & Value)
 	AttackRange = Value.AttackRange;
 	TraceRange = Value.TraceRange;
 	mState = Value.mState;
+	Hp = Value.Hp;
+	MaxHp = Value.MaxHp;
+	mHpBar = Value.mHpBar;
 }
 
 Monster::~Monster()
@@ -46,7 +51,7 @@ bool Monster::Init()
 	RC->SetVirtualRect(100.0f, 100.0f);
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCollsionTypeName("Monster");
-	RC->SetCallBack<Monster>(this, &Monster::BulletHit, CS_COLDOING);
+	RC->SetCallBack<Monster>(this, &Monster::BaseAttackHitFirst, CS_COLFIRST);
 
 	SAFE_RELEASE(RC);
 
@@ -128,12 +133,22 @@ void Monster::Render(HDC Hdc, float DeltaTime)
 	Charactor::Render(Hdc, DeltaTime);
 }
 
+void Monster::SetTarget(Object * Value)
+{
+	SAFE_RELEASE(Target);
+
+	if (Target != NULL)
+		Target->AddRefCount();
+
+	Target = Value;
+}
+
 Monster * Monster::Clone()
 {
 	return new Monster(*this);
 }
 
-void Monster::BulletHit(Collider * Src, Collider * Dest, float DeltaTime)
+void Monster::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
 {
 	if (Dest->GetTag() == "BulletBody")
 	{
@@ -143,4 +158,46 @@ void Monster::BulletHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 		SAFE_RELEASE(newBullet);
 	}
+}
+
+void Monster::BaseAttackHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::BaseAttackHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::SkillTwoHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+void Monster::SkillTwoHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+void Monster::SkillTwoHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::SkillThreeHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::SkillThreeHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::SkillThreeHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::SkillFourHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::SkillFourHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
+{
+}
+
+void Monster::SkillFourHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
+{
 }

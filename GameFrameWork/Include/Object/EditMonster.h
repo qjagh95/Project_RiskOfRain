@@ -6,13 +6,13 @@ class EditMonster : public Object
 public:
 	friend class Object;
 
-	virtual bool Init() override;
-	virtual int Input(float DeltaTime) override;
-	virtual int Update(float DeltaTime) override;
-	virtual int LateUpdate(float DeltaTime) override;
-	virtual void Collision(float DeltaTime) override;
-	virtual void Render(HDC Hdc, float DeltaTime) override;
-	virtual EditMonster* Clone() override;
+	virtual bool Init();
+	virtual int Input(float DeltaTime);
+	virtual int Update(float DeltaTime);
+	virtual int LateUpdate(float DeltaTime);
+	virtual void Collision(float DeltaTime);
+	virtual void Render(HDC Hdc, float DeltaTime);
+	virtual EditMonster* Clone();
 	
 	void MouseHit(Collider * Src, Collider * Dest, float DeltaTime);
 	static bool GetIsSelect() { return isSelect; }
