@@ -2,6 +2,8 @@
 #include "BaseAttackBullet.h"
 #include "Effect.h"
 
+#include "../Debug.h"
+
 #include "../stdafx.h"
 #include "../Input.h"
 #include "../Camera.h"
@@ -35,7 +37,7 @@ int Commando::MaxHp = 300;
 int Commando::MaxExp = 500;
 
 Commando::Commando()
-	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(12)
+	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(12), HitCount(0)
 	, SkillOneDelay(0.5f), SkillTwoDelay(5.0f), SkillThreeDelay(5.0f), SkillFourDelay(8.0f),
 	isSkillOne(false), isSkillTwo(false), isSkillThree(false), isSkillFour(false), isRopeHiting(false)
 	, isRopeUpHitting(false),PrevFrame(0), isLineHit(false)
@@ -69,6 +71,18 @@ int Commando::Input(float DeltaTime)
 	else if(isRopeHiting == false)
 		isGravity = true;
 
+	if (KEYDown(VK_NUMPAD0))
+		pMoney += 500;
+	if (KEYDown(VK_NUMPAD1))
+		AttackDamege += 100;
+
+	if (KEYDown(VK_NUMPAD9))
+	{
+		Hp += 50;
+		MaxHp += 50;
+	}
+
+
 	return 0;
 }
 
@@ -90,7 +104,7 @@ int Commando::Update(float DeltaTime)
 	PrevHitPos = HitPos;
 
 	DirCheck();
-	HpCheck();
+	HpCheck(DeltaTime);
 	RopeCheck();
 	LevelUpCheck();
 	SkillTimeCheck(DeltaTime);
@@ -152,6 +166,10 @@ void Commando::Collision(float DeltaTime)
 void Commando::CollsionAfterUpdate(float DeltaTime)
 {
 	Charactor::CollsionAfterUpdate(DeltaTime);
+
+	char Buffer[255];
+	sprintf_s(Buffer, "Hp : %d \n", Hp);
+	Debug::OutputConsole(Buffer);
 }
 
 void Commando::Render(HDC Hdc, float DeltaTime)
@@ -239,12 +257,26 @@ void Commando::DirCheck()
 	}
 }
 
-void Commando::HpCheck()
+void Commando::HpCheck(float DeltaTime)
 {
+	HpTimeVar += DeltaTime;
+
+	if (HpTimeVar >= 1.0f)
+	{
+		HpTimeVar = 0.0f;
+
+		if(Hp < MaxHp)
+			Hp += 3;
+	}
+
 	if (Hp <= 0)
+	{
 		Hp = 0;
+	}
 	else if (Hp >= MaxHp)
+	{
 		Hp = MaxHp;
+	}
 }
 
 void Commando::RopeCheck()
@@ -302,7 +334,10 @@ void Commando::SkillState()
 	if (KEYPress('Z'))
 	{
 		if (isSkillOne == false)
+		{
 			SelectState(PLAYER_STATE::PS_SKILL1);
+			HitCount++;
+		}
 
 		isSkillOne = true;
 	}
@@ -456,7 +491,7 @@ void Commando::AnimationInit()
 	AddAnimationClip("LJumpDown", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "LeftJumpDown", TEXT("Commando/LeftJump.bmp"));
 	AddAnimationClip("RJumpDown", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "RightJumpDown", TEXT("Commando/RightJump.bmp"));
 
-	AddAnimationClip("LSkill1", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 54.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.5f, "LeftSkill1", TEXT("Commando/LeftSkill1.bmp"));
+	AddAnimationClip("LSkill1", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 54.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.4f, "LeftSkill1", TEXT("Commando/LeftSkill1.bmp"));
 	AddAnimationClip("LSkill2", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 94.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.4f, "LeftSkill2", TEXT("Commando/LeftSkill2.bmp"));
 	AddAnimationClip("LSkill3", AT_ATLAS, AO_REVERS_LOOP, 40.0f, 40.0f, 9, 1, 9, 1, 8, 0, 0.4f, "LeftSkill3", TEXT("Commando/LeftSkill3.bmp"));
 	AddAnimationClip("LSkill4", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 66.0f, 40.0f, 13, 1, 13, 1, 12, 0, 0.7f, "LeftSkill4", TEXT("Commando/LeftSkill4.bmp"));
@@ -481,6 +516,8 @@ void Commando::CollsionInit()
 	RC->SetCallBack<Commando>(this, &Commando::CoinHit, CS_COLFIRST);
 	RC->SetCallBack<Commando>(this, &Commando::ItemBoxHit, CS_COLDOING);
 	RC->SetCallBack<Commando>(this, &Commando::TearHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::AncientHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::JellyFishHit, CS_COLFIRST);
 	RC->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RC);
 
@@ -514,5 +551,7 @@ void Commando::InfoInit()
 	MoveDir = 1.0f;
 	SetGravity(true);
 	isJumping = false;
+	HpTimeVar = 0.0f;
+	TimeVar = 0.0f;
 }
 

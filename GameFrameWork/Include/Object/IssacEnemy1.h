@@ -3,8 +3,8 @@ enum ISSAC1_MONSTER_STATE
 {
 	IMS_IDLE,
 	IMS_MOVE,
-	IMS_ATTACK,
 	IMS_TRACE,
+	IMS_ATTACK,
 	IMS_MAX,
 };
 
@@ -24,10 +24,13 @@ public:
 	IssacEnemy1* Clone() override;
 	void TileCollsionActive(float DeltaTime) override;
 
-	void RangeCheck();
+	void BaseAttackHitFirst(Collider* Src, Collider* Dest, float DeltaTime) override;
+	void SkillTwoHitFirst(Collider* Src, Collider* Dest, float DeltaTime) override;
+
+	void RangeCheck(float DeltaTime);
 	void TimeMoveIdle(float DeltaTime);
 
-	void SelectState(ISSAC1_MONSTER_STATE mState);
+	void SetTraceRange(float Value) { TraceRange = Value; }
 
 	void FS_IDLE(float DeltaTime);
 	void FS_MOVE(float DeltaTime);
@@ -35,20 +38,22 @@ public:
 	void FS_ATTACK(float DeltaTime);
 
 private:
-	ISSAC1_MONSTER_STATE mState;
-	ISSAC1_MONSTER_STATE PrevState;
 	float TraceRange;
 	float AttackRange;
-	float Distance;
 	bool isAttack;
 	bool isStop;
+	bool isIdle;
 	string AnimationName[IMS_MAX];
+	
+	float BackDistance;
+	bool isHit;
 
 	float TimeVar;
 	float IdleTime;
 	float AttackTime;
 	float StopTime;
 	int PrevFrame;
+	int Count;
 
 protected:
 	IssacEnemy1();

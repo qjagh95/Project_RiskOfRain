@@ -297,9 +297,7 @@ void EditScene::MonsterMode(float DeltaTime)
 		list<ObjectBaseSave>::iterator EndIter = monsterList.end();
 		
 		for (;StartIter != EndIter; StartIter++)
-		{
 			(*StartIter).m_Object->SetisActiv(false);
-		}
 	}
 
 	if (KEYDOWN("TileOnOff"))

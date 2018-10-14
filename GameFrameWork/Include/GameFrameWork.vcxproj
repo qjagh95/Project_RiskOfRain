@@ -34,6 +34,8 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MouseObject.cpp" />
+    <ClCompile Include="Object\AncientEffect.cpp" />
+    <ClCompile Include="Object\AncientHitBox.cpp" />
     <ClCompile Include="Object\AncientWisp.cpp" />
     <ClCompile Include="Object\BackGround.cpp" />
     <ClCompile Include="Object\Bar.cpp" />
@@ -60,6 +62,10 @@
     <ClCompile Include="Object\Hider.cpp" />
     <ClCompile Include="Object\IssacEnemy1.cpp" />
     <ClCompile Include="Object\IssacTear.cpp" />
+    <ClCompile Include="Object\ItemBase.cpp" />
+    <ClCompile Include="Object\JellyFish.cpp" />
+    <ClCompile Include="Object\JellyFishHitBox.cpp" />
+    <ClCompile Include="Object\UsingItemBase.cpp" />
     <ClCompile Include="Object\ItemBox.cpp" />
     <ClCompile Include="Object\LaserBullet.cpp" />
     <ClCompile Include="Object\LaserEffect.cpp" />
@@ -119,6 +125,8 @@
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MouseObject.h" />
+    <ClInclude Include="Object\AncientEffect.h" />
+    <ClInclude Include="Object\AncientHitBox.h" />
     <ClInclude Include="Object\AncientWisp.h" />
     <ClInclude Include="Object\BackGround.h" />
     <ClInclude Include="Object\Bar.h" />
@@ -144,6 +152,10 @@
     <ClInclude Include="Object\Hider.h" />
     <ClInclude Include="Object\IssacEnemy1.h" />
     <ClInclude Include="Object\IssacTear.h" />
+    <ClInclude Include="Object\ItemBase.h" />
+    <ClInclude Include="Object\JellyFish.h" />
+    <ClInclude Include="Object\JellyFishHitBox.h" />
+    <ClInclude Include="Object\UsingItemBase.h" />
     <ClInclude Include="Object\ItemBox.h" />
     <ClInclude Include="Object\LaserBullet.h" />
     <ClInclude Include="Object\LaserEffect.h" />

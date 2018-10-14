@@ -12,12 +12,16 @@
 #include "../Object/MoneyCoin.h"
 #include "../Object/ExpCoin.h"
 
+#include "../Object/Tile.h"
+#include "../StageManager.h"
+
 Monster::Monster()
-	:Target(NULL), Hp(100), MaxHp(100), HpBar(NULL)
+	:Target(NULL), Hp(100), MaxHp(100), HpBar(NULL), Distance(0.0f), mState(0), PrevState(0), PlayerDgree(0)
 {
 	m_ObjectType = OT_MONSTER;
 	SetTag("Monster");
 	Dir = "R";
+	Name = "Monster";
 }
 
 Monster::Monster(const Monster & Value)
@@ -55,7 +59,7 @@ bool Monster::Init()
 	RC = AddCollider<ColliderRect>("MonsterBody");
 	RC->SetVirtualRect(m_Size);
 	RC->SetPivot(0.5f, 0.5f);
-	RC->SetCollsionTypeName("Monster");
+
 	RC->SetCallBack<Monster>(this, &Monster::BaseAttackHitFirst, CS_COLFIRST);
 	RC->SetCallBack<Monster>(this, &Monster::BaseAttackHitDoing, CS_COLDOING);
 	RC->SetCallBack<Monster>(this, &Monster::BaseAttackHitEnd, CS_COLEND);
@@ -63,14 +67,6 @@ bool Monster::Init()
 	RC->SetCallBack<Monster>(this, &Monster::SkillTwoHitFirst, CS_COLFIRST);
 	RC->SetCallBack<Monster>(this, &Monster::SkillTwoHitDoing, CS_COLDOING);
 	RC->SetCallBack<Monster>(this, &Monster::SkillTwoHitEnd, CS_COLEND);
-
-	RC->SetCallBack<Monster>(this, &Monster::SkillThreeHitFirst, CS_COLFIRST);
-	RC->SetCallBack<Monster>(this, &Monster::SkillThreeHitDoing, CS_COLDOING);
-	RC->SetCallBack<Monster>(this, &Monster::SkillThreeHitEnd, CS_COLEND);
-
-	RC->SetCallBack<Monster>(this, &Monster::SkillFourHitFirst, CS_COLFIRST);
-	RC->SetCallBack<Monster>(this, &Monster::SkillFourHitDoing, CS_COLDOING);
-	RC->SetCallBack<Monster>(this, &Monster::SkillFourHitEnd, CS_COLEND);
 
 	HpBar = Object::CreateObject<Bar>("mHpBar", m_Layer);
 	HpBar->SetSize(Vector2(100.0f, 6.0f));
@@ -99,10 +95,12 @@ int Monster::Update(float DeltaTime)
 
 	RC->SetVirtualRect(m_Size);
 
-	HpBar->SetPos(m_Pos.x - HpBar->GetSize().GetHalfX(), m_Pos.y - m_Size.y);
+	HpBar->SetPos(m_Pos.x - HpBar->GetSize().GetHalfX(), m_Pos.y - m_Size.GetHalfY() - 50.0f);
 	HpBar->SetBarInfo(0, MaxHp, Hp);
 
 	Target = FindSceneObject("Commando");
+	Distance = Math::GetDistance(m_Pos, Target->GetPos());
+	PlayerDgree = Math::GetDegree(m_Pos, Target->GetPos());
 
 	if (Hp <= 0)
 	{
@@ -119,8 +117,8 @@ int Monster::Update(float DeltaTime)
 		for (int i = 0; i < a; i++)
 		{
 			//Money
-			float x = (float)(Math::RandomRange((int)m_Pos.x - (int)m_Size.GetHalfX(), (int)RightBottom.x));
-			float y = (float)(Math::RandomRange((int)m_Pos.y - (int)m_Size.GetHalfY(), (int)RightBottom.y));
+			float x = (float)(Math::RandomRange((int)m_Pos.x - (int)30.0f, (int)m_Pos.x + (int)30.0f));
+			float y = (float)(Math::RandomRange((int)m_Pos.y - (int)30.0f, (int)m_Pos.y + (int)30.0f));
 
 			MoneyCoin* newMoney = (MoneyCoin*)Object::CreateCloneObject("MoneyCoin", m_Layer);
 			newMoney->SetPos(Vector2(x,y));
@@ -129,8 +127,8 @@ int Monster::Update(float DeltaTime)
 		for (int i = 0; i < b; i++)
 		{
 			//Exp
-			float x = (float)(Math::RandomRange((int)m_Pos.x - (int)m_Size.GetHalfX(), (int)RightBottom.x));
-			float y = (float)(Math::RandomRange((int)m_Pos.y - (int)m_Size.GetHalfY(), (int)RightBottom.y));
+			float x = (float)(Math::RandomRange((int)m_Pos.x - (int)30.0f, (int)m_Pos.x + (int)30.0f));
+			float y = (float)(Math::RandomRange((int)m_Pos.y - (int)30.0f, (int)m_Pos.y + (int)30.0f));
 
 			ExpCoin* newExp = (ExpCoin*)Object::CreateCloneObject("ExpCoin", m_Layer);
 			newExp->SetPos(Vector2(x, y));
@@ -145,6 +143,7 @@ int Monster::Update(float DeltaTime)
 int Monster::LateUpdate(float DeltaTime)
 {
 	Charactor::LateUpdate(DeltaTime);
+
 	return 0;
 }
 
@@ -156,6 +155,8 @@ void Monster::Collision(float DeltaTime)
 void Monster::CollsionAfterUpdate(float DeltaTime)
 {
 	Charactor::CollsionAfterUpdate(DeltaTime);
+
+	PrevDir = Dir;
 
 	SAFE_RELEASE(Target);
 }
@@ -186,7 +187,7 @@ void Monster::TileCollsionActive(float DeltaTime)
 
 void Monster::DirCheck()
 {
-	if (Target->GetPos().x - m_Pos.x < 0)
+	if (Target->GetPos().x - m_Pos.x <= 0)
 	{
 		MoveDir = -1.0f;
 		Dir = "L";
@@ -196,6 +197,46 @@ void Monster::DirCheck()
 		MoveDir = 1;
 		Dir = "R";
 	}
+}
+
+void Monster::MonsterMove(float DeltaTime)
+{
+	Tile* NextTile = NULL;
+	Tile* FootNextTile = NULL;
+
+	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y);
+	FootNextTile = StageManager::Get()->GetTile(m_Pos.x + (m_Size.GetHalfX() * MoveDir) + (NextTile->GetSize().GetHalfX() * MoveDir), m_Pos.y + m_Size.GetHalfY());
+
+	if (NextTile->GetTileType() == TT_NOMAL)
+	{
+		if (m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
+			m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+
+		if (FootNextTile->GetTileType() != TT_NOMOVE)
+			MoveDir *= -1.0f;
+	}
+	else if (NextTile->GetTileType() == TT_NOMOVE)
+		MoveDir *= -1.0f;
+
+	SAFE_RELEASE(FootNextTile);
+	SAFE_RELEASE(NextTile);
+}
+
+void Monster::AnimationDirCheck(string * aName, int state)
+{
+	if (Dir != PrevDir)
+	{
+		ChangeClip(Dir + aName[state]);
+		PrevDir = Dir;
+	}
+}
+
+void Monster::SelectState(string* AnimationName ,int State)
+{
+	PrevState = mState;
+	mState = State;
+
+	ChangeClip(Dir + AnimationName[mState]);
 }
 
 void Monster::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
@@ -213,6 +254,8 @@ void Monster::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTim
 		DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
 		DamegaNumber->SetMaxRange(50.0f, 100.0f);
 		DamegaNumber->SetIsCameraMode(true);
+
+		DirCheck();
 
 		SAFE_RELEASE(DamegaNumber);
 		SAFE_RELEASE(GetBullet);
@@ -234,6 +277,8 @@ void Monster::SkillTwoHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
 		LaserBullet* GetBullet = (LaserBullet*)Dest->GetCurObject();
 		Hp -= GetBullet->GetAttack();
 
+		DirCheck();
+
 		Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
 		DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
 		DamegaNumber->SetTexture("DamegaNumber", TEXT("object/TempNumber.bmp"));
@@ -253,29 +298,5 @@ void Monster::SkillTwoHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
 }
 
 void Monster::SkillTwoHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
-{
-}
-
-void Monster::SkillThreeHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
-{
-}
-
-void Monster::SkillThreeHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
-{
-}
-
-void Monster::SkillThreeHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
-{
-}
-
-void Monster::SkillFourHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
-{
-}
-
-void Monster::SkillFourHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
-{
-}
-
-void Monster::SkillFourHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
 {
 }

@@ -57,7 +57,15 @@ int IssacTear::Update(float DeltaTime)
 	if (CurTile->GetTileType() == TT_NOMOVE)
 		SetisActiv(false);
 
+	if (m_Pos.x <= 0.0f || m_Pos.x >= StageManager::Get()->GetWidth())
+		SetisActiv(false);
+
+	if (m_Pos.y <= 0.0f || m_Pos.y >= StageManager::Get()->GetHight())
+		SetisActiv(false);
+
 	m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+
+	SAFE_RELEASE(CurTile);
 
 	return 0;
 }

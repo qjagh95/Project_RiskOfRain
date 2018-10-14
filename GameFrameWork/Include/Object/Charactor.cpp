@@ -46,7 +46,7 @@ int Charactor::LateUpdate(float DeltaTime)
 		m_Pos = PrevPos;
 	}
 
-	if (NextTile->GetTileType() == TT_NOMOVE)
+	if (NextTile != NULL && NextTile->GetTileType() == TT_NOMOVE)
 	{
 		isGravity = false;
 		SetForce(0.0f);
@@ -70,7 +70,7 @@ int Charactor::LateUpdate(float DeltaTime)
 
 		TileCollsionActive(DeltaTime);
 	}
-	else if (NextTile->GetTileType() == TT_NOMAL)
+	else if (NextTile != NULL && NextTile->GetTileType() == TT_NOMAL)
 		isGravity = true;
 	
 	SAFE_RELEASE(CurTile);

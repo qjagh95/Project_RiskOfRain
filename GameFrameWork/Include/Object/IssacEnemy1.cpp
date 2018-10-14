@@ -2,13 +2,14 @@
 #include "../Object/Object.h"
 #include "../Object/Tile.h"
 #include "../StageManager.h"
-
+#include "../Coll/ColliderRect.h"
 #include "../Resource/Animation.h"
-
 #include "../Object/IssacTear.h"
+#include "../Debug.h"
 
 IssacEnemy1::IssacEnemy1()
-	:TimeVar(0.0f), IdleTime(0.0f), Distance(0.0f), AttackTime(4.0f), isAttack(false), StopTime(0.0f)
+	:TimeVar(0.0f), IdleTime(0.0f), AttackTime(4.0f), isAttack(false), StopTime(0.0f), isStop(false)
+	,Count(0), BackDistance(100.0f), isHit(false)
 {
 }
 
@@ -27,8 +28,10 @@ bool IssacEnemy1::Init()
 
 	TraceRange = 400.0f;
 	AttackRange = 300.0f;
-	SetMoveSpeed(250.0f);
+	SetMoveSpeed(150.0f);
 	isGravity = true;
+	SetHp(150);
+	SetMaxHp(150);
 
 	SetSize(78.0f, 76.0f);
 	SetPivot(0.5f, 0.5f);
@@ -38,8 +41,18 @@ bool IssacEnemy1::Init()
 	AnimationName[IMS_TRACE] = "Move";
 	AnimationName[IMS_ATTACK] = "Attack";
 
-	Dir = "R";
-	MoveDir = 1.0f;
+	int randn = rand() % 2;
+
+	if (randn == 0)
+	{
+		Dir = "R";
+		MoveDir = 1.0f;
+	}
+	else
+	{
+		Dir = "L";
+		MoveDir = -1.0f;
+	}
 
 	AddAnimationClip("LIdle", AT_ATLAS, AO_LOOP, 78.0f, 76.0f, 1, 1, 1, 1, 0, 0, 0.3f, "LIdle", TEXT("Enemy/Issac1LeftIdle.bmp"));
 	AddAnimationClip("RIdle", AT_ATLAS, AO_LOOP, 78.0f, 76.0f, 1, 1, 1, 1, 0, 0, 0.3f, "RIdle", TEXT("Enemy/Issac1RightIdle.bmp"));
@@ -48,7 +61,9 @@ bool IssacEnemy1::Init()
 	AddAnimationClip("LAttack", AT_ATLAS, AO_LOOP, 67.0f, 77.0f, 1, 1, 1, 1, 0, 0, 0.3f, "LAttack", TEXT("Enemy/Issac1LeftAttack.bmp"));
 	AddAnimationClip("RAttack", AT_ATLAS, AO_LOOP, 67.0f, 77.0f, 1, 1, 1, 1, 0, 0, 0.3f, "RAttack", TEXT("Enemy/Issac1RightAttack.bmp"));
 
-	SelectState(ISSAC1_MONSTER_STATE::IMS_IDLE);
+	SelectState(AnimationName, IMS_IDLE);
+	isIdle = true;
+
 	return true;
 }
 
@@ -56,17 +71,17 @@ int IssacEnemy1::Input(float DeltaTime)
 {
 	Monster::Input(DeltaTime);
 
+	TimeMoveIdle(DeltaTime);
+
 	return 0;
 }
 
 int IssacEnemy1::Update(float DeltaTime)
 {
 	Monster::Update(DeltaTime);
-
-	Distance = Math::GetDistance(m_Pos, Target->GetPos());
-	RangeCheck();
-	TimeMoveIdle(DeltaTime);
 	
+	AnimationDirCheck(AnimationName, mState);
+
 	switch (mState)
 	{
 		case IMS_IDLE:
@@ -93,15 +108,54 @@ int IssacEnemy1::Update(float DeltaTime)
 			isAttack = false;
 		}
 	}
+	if (isStop == true)
+	{
+		StopTime += DeltaTime;
+		if (StopTime >= 0.4f)
+		{
+			StopTime = 0.0f;
+			isStop = false;
+		}
+	}
 
+	if (isIdle == true)
+	{
+		IdleTime += DeltaTime;
+
+		if (IdleTime >= 1.5f)
+		{
+			IdleTime = 0.0f;
+			isIdle = false;
+		}
+	}
 	return 0;
 }
 
 int IssacEnemy1::LateUpdate(float DeltaTime)
 {
 	Monster::LateUpdate(DeltaTime);
-
 	PrevFrame = m_Animation->GetFrameX();
+
+	if (isHit == true)
+	{
+		Tile* NextTile = NULL;
+
+		NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * (MoveDir * -1.0f), m_Pos.y);
+
+		if (NextTile->GetTileType() != TT_NOMOVE)
+		{
+			BackDistance -= MoveSpeed * 3.0f * DeltaTime;
+			m_Pos.x += MoveSpeed * 3.0f * (MoveDir * -1.0f) * DeltaTime;
+		}
+
+		if (BackDistance <= 0.0f)
+		{
+			isHit = false;
+			BackDistance = 50.0f;
+		}
+
+		SAFE_RELEASE(NextTile);
+	}
 	return 0;
 }
 
@@ -130,218 +184,159 @@ void IssacEnemy1::TileCollsionActive(float DeltaTime)
 	Monster::TileCollsionActive(DeltaTime);
 }
 
-void IssacEnemy1::RangeCheck()
+void IssacEnemy1::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	Monster::BaseAttackHitFirst(Src, Dest, DeltaTime);
+
+	if (Dest->GetTag() == "BaseBody")
+	{
+		isHit = true;
+	}
+}
+
+void IssacEnemy1::SkillTwoHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	Monster::SkillTwoHitFirst(Src, Dest, DeltaTime);
+
+	if (Dest->GetTag() == "LaserBody")
+	{
+		isHit = true;
+	}
+}
+
+void IssacEnemy1::RangeCheck(float DeltaTime)
 {
 	if (Distance < AttackRange)
 	{
 		if (isAttack == false)
 		{
-			SelectState(IMS_ATTACK);
+			SelectState(AnimationName,IMS_ATTACK);
+			isStop = true;
 			isAttack = true;
 		}
 	}
 	else if (Distance < TraceRange)
-		SelectState(IMS_TRACE);
+		SelectState(AnimationName, IMS_TRACE);
+	else
+		SelectState(AnimationName, IMS_MOVE);
 }
 
 void IssacEnemy1::TimeMoveIdle(float DeltaTime)
 {
-	int RandNum = 2;
-	TimeVar += DeltaTime;
-
-	if (TimeVar > 2.0f)
+	if (mState == IMS_MOVE || mState == IMS_IDLE)
 	{
-		TimeVar = 0.0f;
-		RandNum = rand() % 2;
+		int RandNum = 2;
+		TimeVar += DeltaTime;
+
+		if (TimeVar > 3.0f)
+		{
+			TimeVar = 0.0f;
+			RandNum = rand() % 2;
+		}
+
+		switch (RandNum)
+		{
+			case 0:
+				SelectState(AnimationName, IMS_IDLE);
+				isIdle = true;
+				break;
+			case 1:
+				SelectState(AnimationName, IMS_MOVE);
+				break;
+			default:
+				SelectState(AnimationName, IMS_MOVE);
+				break;
+		}
 	}
-
-	switch (RandNum)
-	{
-		case 0:
-			SelectState(IMS_IDLE);
-			break;
-		case 1:
-			SelectState(IMS_MOVE);
-			break;
-	}
-
-}
-
-void IssacEnemy1::SelectState(ISSAC1_MONSTER_STATE mState)
-{
-	PrevState = this->mState;
-	this->mState = mState;
-	ChangeClip(Dir + AnimationName[mState]);
 }
 
 void IssacEnemy1::FS_IDLE(float DeltaTime)
 {
-	IdleTime += DeltaTime;
-
 	if (Distance < AttackRange)
 	{
 		if (isAttack == false)
 		{
-			SelectState(IMS_ATTACK);
+			SelectState(AnimationName, IMS_ATTACK);
 			isAttack = true;
+			isStop = true;
 		}
 	}
 	else if (Distance < TraceRange)
-		SelectState(IMS_TRACE);
-	else 
-		SelectState(IMS_MOVE);
+		SelectState(AnimationName, IMS_TRACE);
 
-	if (IdleTime > 1.5f)
-		SelectState(IMS_MOVE);
+	if (isIdle == false)
+	{
+		SelectState(AnimationName, IMS_MOVE);
+	}
 }
 
 void IssacEnemy1::FS_MOVE(float DeltaTime)
 {
-	Tile* NextTile = NULL;
-	Tile* FootTile = NULL;
-
-	if (MoveDir == 1.0f)
-	{
-		NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX(), m_Pos.y);
-		FootTile = StageManager::Get()->GetTile(m_Pos.x + (m_Size.GetHalfX() * 2.0f), m_Pos.y + m_Size.GetHalfY());
-		
-		if (NextTile->GetTileType() != TT_NOMOVE)
-		{
-			if(m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
-				m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
-
-			if (FootTile->GetTileType() != TT_NOMOVE)
-			{
-				MoveDir = -1.0f;
-				Dir = "L";
-			}
-		}
-		else if (NextTile->GetTileType() == TT_NOMOVE)
-			MoveDir = -1.0f;
-
-	}
-	else if(MoveDir == -1.0f)
-	{
-		NextTile = StageManager::Get()->GetTile(m_Pos.x - m_Size.GetHalfX(), m_Pos.y);
-		FootTile = StageManager::Get()->GetTile(m_Pos.x - (m_Size.GetHalfX() * 2.0f), m_Pos.y + m_Size.GetHalfY());
-
-		if (NextTile->GetTileType() != TT_NOMOVE)
-		{
-			if (m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
-				m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
-
-			if (FootTile->GetTileType() != TT_NOMOVE)
-			{
-				MoveDir = 1.0f;
-				Dir = "R";
-			}
-		}
-		else if (NextTile->GetTileType() == TT_NOMOVE)
-			MoveDir = 1.0f;
-	}
-
-	RangeCheck();
-
-	SAFE_RELEASE(FootTile);
-	SAFE_RELEASE(NextTile);
+	MonsterMove(DeltaTime);
+	RangeCheck(DeltaTime);
+	Count = 0;
 }		
 
 void IssacEnemy1::FS_TRACE(float DeltaTime)
 {
- 	DirCheck();
 	Tile* NextTile = NULL;
+	Tile* NextTile2 = NULL;
 
-	if (MoveDir == 1.0f)
+	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y);
+	NextTile2 = StageManager::Get()->GetTile(m_Pos.x + (NextTile->GetSize().x * 2.0f) * MoveDir, m_Pos.y - NextTile->GetSize().y);
+
+	if (NextTile->GetTileType() == TT_NOMOVE)
 	{
-		Tile* NextTile2 = NULL;
-
-		NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX(), m_Pos.y);
-		NextTile2 = StageManager::Get()->GetTile(m_Pos.x + NextTile->GetSize().x * 2.0f, m_Pos.y - NextTile->GetSize().y);
-
-		if (NextTile->GetTileType() != TT_NOMOVE)
+		if (NextTile2->GetTileType() == TT_NOMAL)
 		{
-			if (m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
-				m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+			m_Pos.y--;
+			SetForce(600.0f);
 		}
-		if (NextTile->GetTileType() == TT_NOMOVE)
-		{
-			if (NextTile2->GetTileType() == TT_NOMAL)
-			{
-				m_Pos.y--;
-				SetForce(600.0f);
-			}
-		}
-		SAFE_RELEASE(NextTile2);
-	}
-	else if (MoveDir == -1.0f)
-	{
-		Tile* NextTile2 = NULL;
-
-		NextTile = StageManager::Get()->GetTile(m_Pos.x - m_Size.GetHalfX(), m_Pos.y);
-		NextTile2 = StageManager::Get()->GetTile(m_Pos.x - NextTile->GetSize().x * 2.0f, m_Pos.y - NextTile->GetSize().y);
-
-		if (NextTile->GetTileType() != TT_NOMOVE)
-		{
-			if (m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
-				m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
-		}
-		if (NextTile->GetTileType() == TT_NOMOVE)
-		{
-			if (NextTile2->GetTileType() == TT_NOMAL)
-			{
-				m_Pos.y--;
-				SetForce(600.0f);
-			}
-		}
-		SAFE_RELEASE(NextTile2);
 	}
 
+	SAFE_RELEASE(NextTile2);
 	SAFE_RELEASE(NextTile);
+
+	MonsterMove(DeltaTime);
+	DirCheck();
 
 	if (Distance < AttackRange)
 	{
 		if (isAttack == false)
 		{
-			SelectState(IMS_ATTACK);
+			SelectState(AnimationName, IMS_ATTACK);
 			isAttack = true;
+			isStop = true;
 		}
 	}
-	else
-		SelectState(IMS_MOVE);
-
+	else if(Distance > TraceRange)
+		SelectState(AnimationName, IMS_MOVE);
 }
 
 void IssacEnemy1::FS_ATTACK(float DeltaTime)
 {
-	if (isAttack == false)
+ 	if (isAttack == false)
 	{
-		SelectState(IMS_MOVE);
+		SelectState(AnimationName, IMS_MOVE);
 		return;
 	}
 
 	DirCheck();
-	isStop = true;
 
-	if (isStop == true)
-		StopTime += DeltaTime;
-	if (StopTime >= 0.4f)
-	{
-		isStop = false;
-		StopTime = 0.0f;
-		SelectState(PrevState);
-	}
-
-	if (PrevFrame != m_Animation->GetFrameX())
+	if (Count <= 7)
 	{
 		for (int i = 0; i < 8; i++)
 		{
+			Count++;
 			IssacTear* newTear = (IssacTear*)Object::CreateCloneObject("Tear", m_Layer);
 			newTear->SetDir(MoveDir);
 			newTear->SetPos(m_Pos);
-			newTear->SetForce((float)Math::RandomRange((int)MoveSpeed, (int)(MoveSpeed * 3.0f)));
-			newTear->SetMoveSpeed((float)Math::RandomRange((int)MoveSpeed, (int)(MoveSpeed * 3.0f)));
+			newTear->SetForce((float)Math::RandomRange((int)MoveSpeed * (int)2.0f, (int)(MoveSpeed * 3.5f)));
+			newTear->SetMoveSpeed((float)Math::RandomRange((int)MoveSpeed * (int)2.0f, (int)(MoveSpeed * 3.5f)));
 			SAFE_RELEASE(newTear);
 		}
 	}
 
+	if (isStop == false)
+		SelectState(AnimationName, IMS_MOVE);
 }

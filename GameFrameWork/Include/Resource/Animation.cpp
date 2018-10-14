@@ -92,13 +92,10 @@ void Animation::Update(float DeltaTime)
 		{
 			m_CurClip->m_AnimationTime -= CompleatTime;
 
-			if (m_CurClip->m_FrameX == 0)
-				m_CurClip->m_FrameX = m_CurClip->m_FrameCountX;
-
-			  m_CurClip->m_FrameX--;
+			 m_CurClip->m_FrameX--;
 
 			//다돌았으면 시작위치로 바꿔주고 y++
-			if (m_CurClip->m_FrameX == 0)
+			if (m_CurClip->m_FrameX == -1)
 			{
 				m_CurClip->m_FrameX = m_CurClip->m_StartX;
 				m_CurClip->m_FrameY++;

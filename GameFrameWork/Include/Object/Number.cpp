@@ -38,7 +38,7 @@ bool Number::Init()
 	m_ZeroTexture = ResourceManager::Get()->LoadTexture("Zero", TEXT("object/ZeroNumber.bmp"));
 
 	ZeroPos = Vector2(0.0f, 0.0f);
-	ZeroSize = Vector2(13.0f,24.0f);
+	ZeroSize = Vector2(13.0f, 24.0f);
 	SetColorKey(RGB(255, 0, 255));
 
 	m_NumberViewSize = m_NumberSize;
@@ -103,7 +103,7 @@ void Number::Render(HDC hDC, float DeltaTime)
 	while (Number > 0)
 	{
 		int a = Number % 10;
-		Number /= 10; ///소수점 나누기를 방지하기위함. (무한루프)
+		Number /= 10; ///위에서 10으로 나눈 나머지를 구했으니 변수를 나눠줘야지?
 		Count++;
 
 		m_vecNumber.push_back(a);
@@ -135,12 +135,8 @@ void Number::Render(HDC hDC, float DeltaTime)
 		FrameX += m_vecNumber[i] * (int)m_NumberSize.x;
 		FrameY += (int)m_Offset.y;
 
-		if (isColorKey == false)
-			BitBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberViewSize.x, (int)m_NumberViewSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
-		else if(isColorKey == true)
-			TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberViewSize.x, (int)m_NumberViewSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)m_NumberSize.x, (int)m_NumberSize.y, m_ColorKey);
+		TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberViewSize.x, (int)m_NumberViewSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)m_NumberSize.x, (int)m_NumberSize.y, m_ColorKey);
 	}
-	
 	//0이미지
 	TransparentBlt(hDC, (int)ZeroPos.x, (int)ZeroPos.y, (int)ZeroViewSize.x, (int)ZeroViewSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
 	//0일때 따로 0텍스쳐를 띄워준다.

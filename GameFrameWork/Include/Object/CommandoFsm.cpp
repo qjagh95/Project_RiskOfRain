@@ -158,26 +158,15 @@ void Commando::FS_Skill1(float DeltaTime)
 			newBullet->SetDir(MoveDir);
 			newBullet->SetAttack(AttackDamege);
 			newBullet->SetIsStop(true);
-			newBullet->SetPos(Vector2(HitPos.x,m_Pos.y));
-
-			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
-			DamegaNumber->SetPos(HitPos.x, HitPos.y - HitSize.GetHalfY());
-			DamegaNumber->SetTexture("DamegaNumber", TEXT("object/TempNumber.bmp"));
-			DamegaNumber->SetNumberSize(19.0f, 24.0f);
-			DamegaNumber->SetNumber(newBullet->GetAttack());
-			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
-			DamegaNumber->SetMaxRange(50.0f, 100.0f);
-			DamegaNumber->SetIsCameraMode(true);
+			newBullet->SetPos(Vector2(HitPos.x + HitSize.GetHalfX() * (MoveDir * -1.0f), m_Pos.y));
 
 			const list<Collider*>* CollList = newBullet->GetColliderList();
-
 			list<Collider*>::const_iterator	StartIter = CollList->begin();
 			list<Collider*>::const_iterator	EndIter = CollList->end();
 
 			for (; StartIter != EndIter; StartIter++)
 				(*StartIter)->SetCollsionTypeName("Commando");
 
-			SAFE_RELEASE(DamegaNumber);
 			SAFE_RELEASE(newBullet);
 		}
 		else if(isLineHit == false || TileCheck == true)
@@ -243,10 +232,6 @@ void Commando::FS_Skill3(float DeltaTime)
 	Vector2 TempPos = m_Pos;
 	Tile* NextTile = StageManager::Get()->GetTile(TempPos.x + (m_Size.GetHalfX() * MoveDir), TempPos.y);
 
-	char Buffer[255];
-	sprintf_s(Buffer, "Frame : %d \n", m_Animation->GetFrameX());
-	Debug::OutputConsole(Buffer);
-
 	if(NextTile->GetTileType() != TT_NOMOVE)
 		m_Pos.x += BASESPEED * 2.0f * MoveDir * DeltaTime;
 
@@ -254,7 +239,6 @@ void Commando::FS_Skill3(float DeltaTime)
 		SelectState(PLAYER_STATE::PS_IDLE);
 
 	SAFE_RELEASE(NextTile);
-
 }
 
 void Commando::FS_Skill4(float DeltaTime)

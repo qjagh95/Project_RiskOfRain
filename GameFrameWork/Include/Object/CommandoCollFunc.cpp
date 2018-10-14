@@ -16,6 +16,9 @@
 #include "../Object/ItemBox.h"
 #include "../Object/IssacTear.h"
 
+#include "../Object/AncientHitBox.h"
+#include "../Object/JellyFishHitBox.h"
+
 #include "../Resource/Animation.h"
 
 #include "../Coll/ColliderRect.h"
@@ -110,6 +113,7 @@ void Commando::ItemBoxHit(Collider * Src, Collider * Dest, float DeltaTime)
 			{
 				pMoney -= getBox->GetPrice();
 				getBox->ChangeClip("ItemBoxOpen");
+				SoundManager::Get()->Play("BoxOpen");
 			}
 		}
 
@@ -129,6 +133,32 @@ void Commando::TearHit(Collider * Src, Collider * Dest, float DeltaTime)
 		getTear->SetisActiv(false);
 
 		SAFE_RELEASE(getTear);
+	}
+}
+
+void Commando::AncientHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "AcientHitBody")
+	{
+		AncientHitBox* getBox = (AncientHitBox*)Dest->GetCurObject();
+
+		Hp -= getBox->GetAttack();
+
+		getBox->SetisActiv(false);
+
+		SAFE_RELEASE(getBox);
+	}
+}
+
+void Commando::JellyFishHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "JellyFishHit")
+	{
+		JellyFishHitBox* getBox = (JellyFishHitBox*)Dest->GetCurObject();
+
+		Hp -= getBox->GetAttack();
+
+		SAFE_RELEASE(getBox);
 	}
 }
 

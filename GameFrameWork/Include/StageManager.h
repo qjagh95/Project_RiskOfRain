@@ -21,7 +21,7 @@ public:
 	int GetHight();
 	Vector2 GetTileSize();
 
-	static void LoadMonsterList(const TCHAR* FileName, Layer* InputLayer);
+	static int LoadMonsterList(const TCHAR* FileName, Layer* InputLayer);
 
 private:
 	TileInfo* m_TileInfo;

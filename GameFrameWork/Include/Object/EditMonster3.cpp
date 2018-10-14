@@ -19,10 +19,10 @@ EditMonster3::~EditMonster3()
 bool EditMonster3::Init()
 {
 	EditMonster::Init();
-	SetSize(39.0f, 72.0f);
+	SetSize(30.0f, 30.0f);
 	RC->SetVirtualRect(m_Size);
 
-	SetTexture("EditMonster3", TEXT("EditMonster/Jelly_One.bmp"));
+	SetTexture("EditMonster3", TEXT("EditMonster/EditorJellyFish.bmp"));
 
 	return true;
 }

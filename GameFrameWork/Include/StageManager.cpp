@@ -7,6 +7,8 @@
 
 #include "Object\Monster.h"
 #include "Object/IssacEnemy1.h"
+#include "Object/AncientWisp.h"
+#include "Object/JellyFish.h"
 
 #include "Scene\Layer.h"
 
@@ -83,7 +85,7 @@ Vector2 StageManager::GetTileSize()
 	return m_TileInfo->GetTileSize();
 }
 
-void StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
+int StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 {
 	const char* pPath = PathManager::Get()->FindPathMultiByte(DATA_PATH);
 	string FullPath;
@@ -121,8 +123,20 @@ void StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 			}
 			break;
 			case MT_MONSTERTWO:
+			{
+				AncientWisp* newMonster = (AncientWisp*)Object::CreateObject<AncientWisp>("Monster", InputLayer);
+				newMonster->SetPos(Saver.Pos);
+
+				SAFE_RELEASE(newMonster);
+			}
 				break;
 			case MT_MONSTERTHREE:
+			{
+				JellyFish* newMonster = (JellyFish*)Object::CreateObject<JellyFish>("Monster", InputLayer);
+				newMonster->SetPos(Saver.Pos);
+
+				SAFE_RELEASE(newMonster);
+			}
 				break;
 			case MT_MONSTERFOUR:
 				break;
@@ -140,6 +154,7 @@ void StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 				break;
 		}
 	}
-
 	fclose(pFile);
+
+	return (int)Count;
 }

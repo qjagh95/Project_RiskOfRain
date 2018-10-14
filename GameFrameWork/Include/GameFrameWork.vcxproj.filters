@@ -244,6 +244,24 @@
     <ClCompile Include="Object\AncientWisp.cpp">
       <Filter>MainScene\Object\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Object\AncientEffect.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AncientHitBox.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UsingItemBase.cpp">
+      <Filter>StageObject\Item\Parent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ItemBase.cpp">
+      <Filter>StageObject\Item\Parent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\JellyFish.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\JellyFishHitBox.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -492,6 +510,24 @@
     <ClInclude Include="Object\AncientWisp.h">
       <Filter>MainScene\Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Object\AncientEffect.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AncientHitBox.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UsingItemBase.h">
+      <Filter>StageObject\Item\Parent</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ItemBase.h">
+      <Filter>StageObject\Item\Parent</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\JellyFish.h">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\JellyFishHitBox.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -718,6 +754,12 @@
     </Filter>
     <Filter Include="MonsterObject">
       <UniqueIdentifier>{6eb7f60f-332c-4774-879f-f8fbe94bd3c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StageObject\Item">
+      <UniqueIdentifier>{af6a78c5-ca6b-45cc-91ab-b2a48c1b6869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StageObject\Item\Parent">
+      <UniqueIdentifier>{d1dab1e7-4779-4807-aa7c-1742b7901285}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -31,11 +31,13 @@ public:
 	void CoinHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void ItemBoxHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void TearHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void AncientHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void JellyFishHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 	void PlayerMove(float DeltaTime);
 
 	void DirCheck();
-	void HpCheck();
+	void HpCheck(float DeltaTime);
 	void RopeCheck();
 	void LevelUpCheck();
 
@@ -46,6 +48,8 @@ public:
 	void SetHp(int Value) { Hp = Value; }
 	static int GetHp() { return Hp; }
 	void AddHp(int Value) { Hp += Value; }
+	int GetHitCount() const { return HitCount; }
+	void SetHitCount(int Value) { HitCount = Value; }
 
 	///-------------FSMÇÔ¼ö-------------
 	void FS_Idle(float DeltaTime);
@@ -82,6 +86,7 @@ private:
 	static int MaxExp;
 	static int Level;
 	int AttackDamege;
+	int HitCount;
 
 	float SkillOneDelay;
 	float SkillTwoDelay;
@@ -116,6 +121,7 @@ private:
 	float TimeVar;
 
 	int PrevFrame;
+	float HpTimeVar;
 
 public:
 	friend class Object;

@@ -19,10 +19,14 @@ public:
 	virtual Monster* Clone() override;
 	virtual void TileCollsionActive(float DeltaTime) override;
 
-	virtual void DirCheck();
+	void DirCheck();
+	void MonsterMove(float DeltaTime);
+	void AnimationDirCheck(string *aName, int state);
+	void SelectState(string* AnimationName ,int State);
 
 	void SetHp(int Value) { Hp = Value; }
 	int GetHp() const { return Hp; }
+	void SetMaxHp(int Value) { MaxHp = Value; }
 	void SetAttack(int Value) { Attack = Value; }
 	int GetAttack() const { return Attack; }
 	void SetMoneyCoinCount(int iCount) { MoneyCoinCount = iCount;}
@@ -30,21 +34,13 @@ public:
 	void SetExpCoinCount(int iCount) { ExpCoinCount = iCount; }
 	int GetExpCoinCount() const { return ExpCoinCount; }
 
-	void BaseAttackHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
+	virtual void BaseAttackHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
 	void BaseAttackHitDoing(Collider* Src, Collider* Dest, float DeltaTime);
 	void BaseAttackHitEnd(Collider* Src, Collider* Dest, float DeltaTime);
 
-	void SkillTwoHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
+	virtual void SkillTwoHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
 	void SkillTwoHitDoing(Collider* Src, Collider* Dest, float DeltaTime);
 	void SkillTwoHitEnd(Collider* Src, Collider* Dest, float DeltaTime);
-
-	void SkillThreeHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
-	void SkillThreeHitDoing(Collider* Src, Collider* Dest, float DeltaTime);
-	void SkillThreeHitEnd(Collider* Src, Collider* Dest, float DeltaTime);
-
-	void SkillFourHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
-	void SkillFourHitDoing(Collider* Src, Collider* Dest, float DeltaTime);
-	void SkillFourHitEnd(Collider* Src, Collider* Dest, float DeltaTime);
 
 protected:
 	Monster();
@@ -52,18 +48,26 @@ protected:
 	~Monster();
 
 	string Dir;
+	string PrevDir;
 	float MoveDir;
 	Object* Target;
+	float Distance;
+	ColliderRect* RC;
+	bool monsterColl;
+
+	float PlayerDgree;
+	int mState;
+	int PrevState;
 
 private:
 	int MaxHp;
 	int Hp;
 	int Attack;
+	string Name;
 
 	int MoneyCoinCount;
 	int ExpCoinCount;
 
 	Bar* HpBar;
-	ColliderRect* RC;
 };
 

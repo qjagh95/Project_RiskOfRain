@@ -36,7 +36,7 @@ bool BaseAttackBullet::Init()
 
 	//中宜端持失
 	ColliderRect* RC = AddCollider<ColliderRect>("BaseBody");
-	RC->SetVirtualRect(5.0f, 5.0f);
+	RC->SetVirtualRect(m_Size);
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCollsionTypeName("BaseAttackBullet");
 	SAFE_RELEASE(RC);

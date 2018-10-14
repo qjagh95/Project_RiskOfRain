@@ -1161,10 +1161,10 @@ void EditScene::Monster3Callback(float DeltaTime)
 {
 	monsterType = MT_MONSTERTHREE;
 
-	SelectTileTexture = ResourceManager::Get()->LoadTexture("EditMonster3", TEXT("EditMonster/Jelly_One.bmp"));
+	SelectTileTexture = ResourceManager::Get()->LoadTexture("EditMonster3", TEXT("EditMonster/EditorJellyFish.bmp"));
 
 	Input::Get()->SetMouseTexture(SelectTileTexture);
-	Input::Get()->SetMouseTextureSize(Vector2(39.0f, 72.0f));
+	Input::Get()->SetMouseTextureSize(Vector2(30.0f, 30.0f));
 	Input::Get()->SetMouseTexturePivot(0.5f, 0.5f);
 }
 

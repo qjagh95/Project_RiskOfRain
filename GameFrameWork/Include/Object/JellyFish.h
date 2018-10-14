@@ -1,13 +1,15 @@
 #pragma once
-enum ANCIENTWISP_STATE
+
+enum JELLYFISH_STATE
 {
-	AS_MOVE,
-	AS_ATTACK,
-	AS_MAX
+	JS_MOVE,
+	JS_TRACE,
+	JS_ATTACK,
+	JS_MAX,
 };
 
 #include "Monster.h"
-class AncientWisp : public Monster
+class JellyFish : public Monster
 {
 public:
 	friend class Object;
@@ -19,26 +21,30 @@ public:
 	void Collision(float DeltaTime) override;
 	void CollsionAfterUpdate(float DeltaTime) override;
 	void Render(HDC Hdc, float DeltaTime) override;
-	AncientWisp* Clone() override;
+	JellyFish* Clone() override;
 	void TileCollsionActive(float DeltaTime) override;
 
 	void RangeCheck();
+	void SelectState(JELLYFISH_STATE mState);
 
 	void FS_MOVE(float DeltaTime);
+	void FS_TRACE(float DeltaTime);
 	void FS_ATTACK(float DeltaTime);
 
 private:
 	float AttackRange;
+	float TraceRange;
 	bool isAttack;
 	int Attack;
-	string AnimationName[AS_MAX];
+	string AnimationName[JS_MAX];
 
-	float AttackTime;
+	float ChangeTime;
+	float AttackDelay;
 	int PrevFrame;
 
 protected:
-	AncientWisp();
-	AncientWisp(const AncientWisp& Value);
-	~AncientWisp();
+	JellyFish();
+	JellyFish(const JellyFish& Value);
+	~JellyFish();
 };
 

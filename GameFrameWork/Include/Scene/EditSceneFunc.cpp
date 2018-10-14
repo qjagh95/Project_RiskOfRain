@@ -94,6 +94,8 @@ void EditScene::LoadStageFile(const TCHAR * FileName)
 
 void EditScene::LoadMonFile(const TCHAR* FileName)
 {
+	monsterList.clear();
+
 	string MPath;
 #ifdef _UNICODE
 	MPath = CW2A(FileName);
@@ -106,6 +108,7 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 
 		size_t Count;
 		fread(&Count, sizeof(Count), 1, pFile);
+		ObjectBaseSave Save;
 
 		for (size_t i = 0 ; i < Count; i++)
 		{
@@ -121,6 +124,8 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster1", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
+					Save.m_Object = newMonster;
+
 					SAFE_RELEASE(newMonster);
 					SAFE_RELEASE(TempLayer);
 				}
@@ -131,6 +136,8 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 
 					EditMonster2* newMonster = (EditMonster2*)Object::CreateObject<EditMonster2>("EditMonster2", TempLayer);
 					newMonster->SetPos(Saver.Pos);
+
+					Save.m_Object = newMonster;
 
 					SAFE_RELEASE(newMonster);
 					SAFE_RELEASE(TempLayer);
@@ -143,6 +150,8 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 					EditMonster3* newMonster = (EditMonster3*)Object::CreateObject<EditMonster3>("EditMonster3", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
+					Save.m_Object = newMonster;
+
 					SAFE_RELEASE(newMonster);
 				}
 				break;
@@ -152,6 +161,8 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 
 					EditMonster4* newMonster = (EditMonster4*)Object::CreateObject<EditMonster4>("EditMonster4", TempLayer);
 					newMonster->SetPos(Saver.Pos);
+
+					Save.m_Object = newMonster;
 
 					SAFE_RELEASE(newMonster);
 					SAFE_RELEASE(TempLayer);
@@ -164,6 +175,8 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 					EditMonster5* newMonster = (EditMonster5*)Object::CreateObject<EditMonster5>("EditMonster5", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
+					Save.m_Object = newMonster;
+
 					SAFE_RELEASE(newMonster);
 					SAFE_RELEASE(TempLayer);
 				}
@@ -175,23 +188,22 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 					EditMonster6* newMonster = (EditMonster6*)Object::CreateObject<EditMonster6>("EditMonster6", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
+					Save.m_Object = newMonster;
+
 					SAFE_RELEASE(newMonster);
 					SAFE_RELEASE(TempLayer);
 				}
 				break;
 				case MT_MONSTERSEVEN:
 				{
-
 				}
 				break;
 				case MT_MONSTEREIGHT:
 				{
-
 				}
 				break;
 				case MT_MONSTERNINE:
 				{
-
 				}
 				break;
 				case MT_MONSTERTEN:
@@ -199,6 +211,9 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 				}
 				break;
 			} //switch
+			Save.m_mType = Saver.m_mType;
+
+			monsterList.push_back(Save);
 		}
 	}
 	fclose(pFile);
@@ -228,7 +243,6 @@ void EditScene::SaveLoad()
 			SaveStageFile(FileName);
 			SaveMonsterList(FileName);
 		}
-
 		ShowCursor(FALSE);
 	}
 
