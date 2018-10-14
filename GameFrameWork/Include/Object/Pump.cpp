@@ -1,5 +1,15 @@
 #include "Pump.h"
+#include "Object.h"
+
+#include "../Camera.h"
+
+#include "../Resource/Texture.h"
+#include "../Resource/ResourceManager.h"
+#include "../Resource/Animation.h"
+
 #include "../Coll/ColliderRect.h"
+
+#include "../Scene/Layer.h"
 
 Pump::Pump()
 {
@@ -18,17 +28,17 @@ Pump::~Pump()
 
 bool Pump::Init()
 {
-	SetSize(50.0f, 50.0f);
-	SetPivot(0.5f, 0.5f);
-	SetMoveSpeed(200.0f);
+	AddAnimationClip("Pumping", AT_ATLAS, AO_LOOP, 54.0f, 174.0f, 6, 1, 6, 1, 0, 0, 0.3f, "Pumping" ,TEXT("object/Pump.bmp"));
 
-	//SetTexture("PumpObject", TEXT("Pistol.bmp"));
+	SetSize(54.0f, 174.0f);
+	SetPivot(0.5f, 0.5f);
 	SetColorKey(RGB(255, 0, 255));
 
 	//中宜端持失
 	ColliderRect* RC = AddCollider<ColliderRect>("PumpBody");
-	RC->SetVirtualRect(50.0f, 50.0f);
+	RC->SetVirtualRect(m_Size);
 	RC->SetPivot(0.5f, 0.5f);
+	RC->SetCallBack(this, &Pump::PlayerColl, CS_COLFIRST);
 	RC->SetCollsionTypeName("Pump");
 
 	SAFE_RELEASE(RC);
@@ -68,5 +78,9 @@ void Pump::Render(HDC Hdc, float DeltaTime)
 Pump * Pump::Clone()
 {
 	return new Pump(*this);
+}
+
+void Pump::PlayerColl(Collider * Src, Collider* Dest, float DeltaTime)
+{
 }
 

@@ -28,6 +28,7 @@ public:
 	bool GetIsEnd() const { return m_isEnd; }
 	void SetAniStart(bool Value) { m_AniStart = Value; }
 	bool GetAniStart() const { return m_AniStart; }
+	string GetClipName() const { return m_CurClipName; }
 
 private:
 	Object* m_Object;

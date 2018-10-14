@@ -11,6 +11,7 @@
 #include "MainScene.h"
 #include "EditScene.h"
 #include "../Object/MenuBg.h"
+#include "../Object/MenuStarBg.h"
 
 MenuScene::MenuScene()
 {
@@ -23,13 +24,14 @@ MenuScene::~MenuScene()
 bool MenuScene::Init()
 {
 	Vector2 WinSize = Core::Get()->GetWinSizeVector2();
-	Camera::Get()->SetWorldSize(1280.0f, 720.0f);
+	Camera::Get()->SetWorldSize(1800.0f, 1000.0f);
 
 	Layer* DefaultLayer = m_Scene->FindLayer("Default");
 	Layer* BackLayer = m_Scene->FindLayer("BackGround");
 	Layer* UiLayer = m_Scene->FindLayer("UI");
 
 	MenuBg* newBG = Object::CreateObject<MenuBg>("BackGround", BackLayer);
+	MenuStarBg* newBG2 = Object::CreateObject<MenuStarBg>("StarBackGround", BackLayer);
 
 	Button* StartButton = Object::CreateObject<Button>("StartButton",UiLayer);
 	StartButton->SetPos(WinSize.x / 2.0f - 100.0f, WinSize.y / 2.0f - 50.0f);
@@ -62,6 +64,7 @@ bool MenuScene::Init()
 	SAFE_RELEASE(UiLayer);
 	SAFE_RELEASE(BackLayer);
 	SAFE_RELEASE(newBG);
+	SAFE_RELEASE(newBG2);
 
 	return true;
 }

@@ -18,6 +18,7 @@ public:
 
 	void SetLiveTime(float Time) { LiveTime = Time, isLiveTime = true; }
 	void SetMaxRange(float Range, float Speed) { MaxRange = Range, isMove = true, MoveSpeed = Speed; }
+	int GetNumberCount() const { return Count; }
 
 private:
 	int	m_Number;
@@ -29,6 +30,7 @@ private:
 	float MaxRange;
 	float LiveTime;
 	float TimeVar;
+	int Count;
 
 protected:
 	Number();

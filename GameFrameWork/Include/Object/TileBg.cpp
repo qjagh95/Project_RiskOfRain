@@ -19,7 +19,7 @@ TileBg::~TileBg()
 bool TileBg::Init()
 {
 	SetPos(0.0f, 0.0f);
-	SetSize(1280.0f, 720.0f);
+	SetSize(1800.0f, 1000.0f);
 	SetPivot(0.0f, 0.0f);
 	SetIsCameraMode(false);
 

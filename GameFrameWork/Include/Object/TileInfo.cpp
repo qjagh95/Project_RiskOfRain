@@ -61,7 +61,7 @@ TileInfo::~TileInfo()
 bool TileInfo::Init()
 {
 	SetPos(0.0f, 0.0f);
-	SetSize(1280.0f, 720.0f);
+	SetSize(1800.0f, 1000.0f);
 	SetPivot(0.0f, 0.0f);
 
 	Input::Get()->PushKey("GridShow", VK_F1);
@@ -353,21 +353,10 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 			if (pLayer->GetTag() == "PlayLayer")
 			{
 				ItemBox* newBox = Object::CreateObject<ItemBox>("ItemBox", pLayer);
-				newBox->SetPos(Vector2(newTile->GetPos().x, newTile->GetPos().y - newBox->GetSize().GetHalfY()));
+				newBox->SetPos(Vector2(newTile->GetPos().x + 25.0f, newTile->GetPos().y - newBox->GetSize().GetHalfY()));
 				SAFE_RELEASE(newBox);
 			}
 			newTile->SetTileOption(TO_ITEM);
-		}
-		else if (newTile->GetTileOption() == TO_ROPE)
-		{
-			if (pLayer->GetTag() == "PlayLayer")
-			{
-				Rope* newRope = Object::CreateObject<Rope>("Rope", pLayer);
-				newRope->SetPos(Vector2(newTile->GetPos().x, newTile->GetPos().y - newRope->GetSize().GetHalfY()));
-				SAFE_RELEASE(newRope);
-			}
-
-			newTile->SetTileOption(TO_ROPE);
 		}
 		else if (newTile->GetTileOption() == TO_TELEPOT)
 		{
@@ -385,13 +374,52 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 			if (pLayer->GetTag() == "PlayLayer")
 			{
 				Pump* newPump = Object::CreateObject<Pump>("Pump", pLayer);
-				newPump->SetPos(Vector2(newTile->GetPos().x, newTile->GetPos().y - newPump->GetSize().GetHalfY()));
+				newPump->SetPos(Vector2(newTile->GetPos().x + 25.0f, newTile->GetPos().y - newPump->GetSize().GetHalfY()));
 				SAFE_RELEASE(newPump);
 			}
-
 			newTile->SetTileOption(TO_PUMP);
 		}
 		m_vecTile2[i] = newTile;
+	}
+
+	for (unsigned int y = 0; y < m_NumY - 1; y++)
+	{
+		for (unsigned int x = 0; x < m_NumX - 1; x++)
+		{
+			Tile* SerchTile = m_vecTile2[y * m_NumX + x];
+
+			if (SerchTile->GetTileOption() != TO_ROPE)
+				continue;
+
+			if (pLayer->GetTag() != "PlayLayer")
+			{
+				SerchTile->SetTileOption(TO_ROPE);
+				continue;
+			}
+
+			Vector2 TempPos = SerchTile->GetPos();
+			Vector2 TempSize = { 12,0 };
+			SerchTile->SetTileOption(TO_ROPE);
+
+			Rope* newRope = Object::CreateObject<Rope>("Rope", pLayer);
+			newRope->SetPos(TempPos);
+
+			while(true)
+			{
+				TempPos.y++;
+				TempSize.y++;
+
+				Tile* TempTile = GetTile(Vector2(TempPos.x , TempPos.y + 50.0f));
+
+				if (TempTile->GetTileType() == TT_NOMOVE)
+				{
+					newRope->SetSize(TempSize);
+					SAFE_RELEASE(TempTile);
+					return;
+				}
+				SAFE_RELEASE(TempTile);
+			}
+		}
 	}
 
 	StageManager::Get()->SetStageInfo(this);

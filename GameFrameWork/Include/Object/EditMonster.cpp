@@ -65,7 +65,6 @@ int EditMonster::Update(float DeltaTime)
 	if (m_bDrag)
 	{
 		Vector2	vPos = Input::Get()->GetMouseGap();
-
 		m_Pos += vPos;
 	}
 
@@ -101,25 +100,8 @@ void EditMonster::MouseHit(Collider * Src, Collider * Dest, float DeltaTime)
 		{
 			m_bDrag = true;
 			isSelect = true;
-
 			EditSelect = this;
-			//Src->GetCurObject(); //AddRef()
 		}
-
-		/*if (KEYPRESS("LBotton"))
-		{
-			if (EditSelect != NULL)
-			{
-				Vector2 mPos = Input::Get()->GetMouseWorldPos();
-				EditSelect->SetPos(mPos);
-			}
-		}
-
-		if (KEYUP("LBotton"))
-		{
-			isSelect = false;
-			SAFE_RELEASE(EditSelect);
-		}*/
 
 		if (KEYDOWN("RBotton"))
 			SetisActiv(false);

@@ -1,12 +1,20 @@
 #include "ItemBox.h"
 #include "Number.h"
 #include "Object.h"
-#include "../Coll/ColliderRect.h"
+#include "DollerTexture.h"
+
+#include "../Camera.h"
+
 #include "../Resource/Texture.h"
+#include "../Resource/ResourceManager.h"
+#include "../Resource/Animation.h"
+
+#include "../Coll/ColliderRect.h"
+
 #include "../Scene/Layer.h"
 
 ItemBox::ItemBox()
-	:PriceNumber(NULL), DollerTexture(NULL)
+	:PriceNumber(NULL), newDoller(NULL)
 {
 	m_ObjectType = OT_ITEM;
 	SetTag("ItemBoxObject");
@@ -15,12 +23,15 @@ ItemBox::ItemBox()
 ItemBox::ItemBox(const ItemBox & Value)
 	:Object(Value)
 {
+	Price = Value.Price;
+	PriceNumber = Value.PriceNumber;
 }
 
 ItemBox::~ItemBox()
 {
 	SAFE_RELEASE(PriceNumber);
-	SAFE_RELEASE(DollerTexture);
+	SAFE_RELEASE(newDoller);
+	SAFE_RELEASE(RC);
 }
 
 bool ItemBox::Init()
@@ -47,30 +58,28 @@ bool ItemBox::Init()
 			Price = 250;
 			break;
 		default:
-			Price = 0;
+			Price = 1;
 			break;
 	}
 
 	SetSize(132.0f, 72.0f);
 	SetPivot(0.5f, 0.5f);
-	//PriceNumber = Object::CreateObject<Number>("PriceObject", m_Layer);
+
+	newDoller = Object::CreateObject<DollerTexture>("YellodwDoller", m_Layer);
+	newDoller->SetTexture("YellodwDoller", TEXT("ui/ItemBoxDollar.bmp"));
 
 	AddAnimationClip("ItemBox", AT_ATLAS, AO_LOOP, 132.0f, 72.0f, 1, 1, 1, 1, 0, 0, 1.0f, "Box", TEXT("object/ItemBox.bmp"));
 	AddAnimationClip("ItemBoxOpen", AT_ATLAS, AO_ONCE_DESTROY, 132.0f, 72.0f, 6, 1, 6, 1, 1, 0, 1.0f, "BoxOpen", TEXT("object/ItemBox.bmp"));
 	SetColorKey(RGB(255, 0, 255));
 
-	//충돌체생성
-	ColliderRect* RC = AddCollider<ColliderRect>("ItemBoxBody");
-	RC->SetVirtualRect(m_Size);
-	RC->SetPivot(0.5f, 0.5f);
-	//RC->SetCallBack(this, ItemBox::PlayerCollBack, CS_COLDOING);
+	RC = AddCollider<ColliderRect>("ItemBoxBody");
+	RC->SetVirtualRect(Vector2(60.0f, 60.0f));
+	RC->SetPivot(0.5f, 0.2f);
+	RC->SetCallBack(this, &ItemBox::PlayerCollBack, CS_COLFIRST);
 	RC->SetCollsionTypeName("ItemBoxObject");
 
-	SAFE_RELEASE(RC);
-
-	PriceNumber = Object::CreateObject<Number>("Number", m_Layer);
-	PriceNumber->SetPos(m_Pos);
-	PriceNumber->SetTexture("PriceNumber", TEXT("Object/YellowNmber.bmp"));
+	PriceNumber = Object::CreateObject<Number>("PriceNumber", m_Layer);
+	PriceNumber->SetTexture("PriceNumber", TEXT("object/YellowNumber.bmp"));
 	PriceNumber->SetNumber(Price);
 	PriceNumber->SetNumberSize(32.0f, 24.0f);
 	PriceNumber->SetColorKey(RGB(255, 0, 255));
@@ -90,7 +99,36 @@ int ItemBox::Input(float DeltaTime)
 int ItemBox::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
-	int a = 0;
+
+	newDoller->SetPos(Vector2(m_Pos.x - m_Size.GetHalfX() + 10.0f, m_Pos.y + m_Size.y - 10.0f));
+	
+	switch (PriceNumber->GetNumberCount())
+	{
+		case 1:
+			PriceNumber->SetPos(Vector2(m_Pos.x + m_Size.GetHalfX() - 45.0f, m_Pos.y + m_Size.y - 20.0f));
+			break;
+		case 2:
+			PriceNumber->SetPos(Vector2(m_Pos.x + m_Size.GetHalfX() - 30.0f, m_Pos.y + m_Size.y - 20.0f));
+			break;
+		case 3:
+			PriceNumber->SetPos(Vector2(m_Pos.x + m_Size.GetHalfX() - 5.0f, m_Pos.y + m_Size.y - 20.0f));
+			break;
+		default:
+			break;
+	}
+
+	if (m_Animation->GetClipName() == "ItemBoxOpen")
+	{
+		bool Check = m_Animation->GetIsEnd();
+
+		if (Check == true)
+		{
+			SetisActiv(false);
+			newDoller->SetisActiv(false);
+			PriceNumber->SetisActiv(false);
+		}
+	}
+
 	return 0;
 }
 
@@ -119,6 +157,6 @@ void ItemBox::PlayerCollBack(Collider * Src, Collider * Dest, float DeltaTime)
 {
 	if (Dest->GetTag() == "PlayerBody")
 	{
-		//아이템추가코드, 체인지애니메이션
+		ChangeClip("ItemBoxOpen");
 	}
 }

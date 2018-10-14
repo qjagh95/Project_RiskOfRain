@@ -67,6 +67,7 @@ public:
 		const string& PathKey = TEXTURE_PATH);
 	bool LoadAnimation(const char* FileName, const string& ClipName);
 	void ChangeClip(const string& ClipName);
+	string GetClipName() const;
 
 	void DestroyColorKey() { isColorKey = false; }
 

@@ -196,6 +196,9 @@
     <ClCompile Include="Object\TelePoter.cpp">
       <Filter>StageObject</Filter>
     </ClCompile>
+    <ClCompile Include="Object\DollerTexture.cpp">
+      <Filter>StageObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -397,6 +400,9 @@
       <Filter>StageObject</Filter>
     </ClInclude>
     <ClInclude Include="Object\TelePoter.h">
+      <Filter>StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\DollerTexture.h">
       <Filter>StageObject</Filter>
     </ClInclude>
   </ItemGroup>

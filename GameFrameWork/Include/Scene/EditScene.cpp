@@ -53,7 +53,7 @@ bool EditScene::Init()
 	//F6 - DebugMode
 	//F7 - MonsterMode
 	Vector2 WinSize = Core::Get()->GetWinSizeVector2();
-	Camera::Get()->SetWorldSize(1280.0f, 720.0f);
+	Camera::Get()->SetWorldSize(1800.0f, 1000.0f);
 
 	Input::Get()->PushKey("Save", VK_F2);
 	Input::Get()->PushKey("Load", VK_F3);

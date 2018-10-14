@@ -11,6 +11,7 @@ Number::Number()
 	LiveTime = 0.0f;
 	MaxRange = 0.0f;
 	TimeVar = 0.0f;
+	Count = 0;
 }
 
 Number::Number(const Number & number)
@@ -21,6 +22,7 @@ Number::Number(const Number & number)
 	MaxRange = number.MaxRange;
 	LiveTime = number.LiveTime;
 	TimeVar = 0.0f;
+	Count = number.Count;
 }
 
 Number::~Number()
@@ -80,6 +82,8 @@ void Number::Collision(float DeltaTime)
 
 void Number::Render(HDC hDC, float DeltaTime)
 {
+	Count = 0;
+
 	//벡터를 초기화 한다.
 	m_vecNumber.clear();
 
@@ -90,6 +94,7 @@ void Number::Render(HDC hDC, float DeltaTime)
 	{
 		int a = Number % 10;
 		Number /= 10; ///소수점 나누기를 방지하기위함. (무한루프)
+		Count++;
 
 		m_vecNumber.push_back(a);
 	}

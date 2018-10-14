@@ -499,6 +499,11 @@ void Object::ChangeClip(const string & ClipName)
 	m_Animation->ChangeClip(ClipName);
 }
 
+string Object::GetClipName() const
+{
+	return m_Animation->GetClipName();
+}
+
 void Object::EraseSceneObject(const string & TagName, Object * pObject)
 {	
 	auto newPair = m_SceneObject.equal_range(TagName);

@@ -1,7 +1,8 @@
 #pragma once
 #include "Object.h"
 class Number;
-class Texture;
+class DollerTexture;
+class ColliderRect;
 class ItemBox : public Object
 {
 public:
@@ -25,6 +26,7 @@ protected:
 private:
 	int Price;
 	Number* PriceNumber;
-	Texture* DollerTexture;
+	DollerTexture* newDoller;
+	ColliderRect* RC;
 };
 

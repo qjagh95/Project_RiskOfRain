@@ -20,7 +20,8 @@ BackGround::~BackGround()
 bool BackGround::Init()
 {
 	SetPos(0.0f, 0.0f);
-	SetSize(1280.0f , 720.0f);
+	SetSize(
+		.0f , 720.0f);
 	SetPivot(0.0f, 0.0f);
 
 	SetTexture("Stage1", L"Stage1.bmp");

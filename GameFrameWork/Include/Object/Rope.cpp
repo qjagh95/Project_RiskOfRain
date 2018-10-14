@@ -1,5 +1,18 @@
 #include "Rope.h"
+#include "Object.h"
+
+#include "Tile.h"
+#include "TileInfo.h"
+
+#include "../Camera.h"
+
+#include "../Resource/Texture.h"
+#include "../Resource/ResourceManager.h"
+#include "../Resource/Animation.h"
+
 #include "../Coll/ColliderRect.h"
+
+#include "../Scene/Layer.h"
 
 Rope::Rope()
 {
@@ -14,24 +27,22 @@ Rope::Rope(const Rope & Value)
 
 Rope::~Rope()
 {
+	SAFE_RELEASE(RC);
 }
 
 bool Rope::Init()
 {
-	SetSize(50.0f, 50.0f);
-	SetPivot(0.5f, 0.5f);
-	SetMoveSpeed(200.0f);
+	SetPivot(0.5f, 0.0f);
 
-	//SetTexture("RopeObject", TEXT("Pistol.bmp"));
+	SetTexture("RopeObject", TEXT("object/Rope.bmp"));
 	SetColorKey(RGB(255, 0, 255));
 
 	//中宜端持失
-	ColliderRect* RC = AddCollider<ColliderRect>("RopeBody");
-	RC->SetVirtualRect(50.0f, 50.0f);
-	RC->SetPivot(0.5f, 0.5f);
+	RC = AddCollider<ColliderRect>("RopeBody");
+	RC->SetVirtualRect(m_Size);
+	RC->SetPivot(0.5f, 0.0f);
+	RC->SetCallBack(this, &Rope::PlayerCol, CS_COLDOING);
 	RC->SetCollsionTypeName("Rope");
-
-	SAFE_RELEASE(RC);
 
 	return true;
 }
@@ -45,6 +56,8 @@ int Rope::Input(float DeltaTime)
 int Rope::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
+
+	RC->SetVirtualRect(m_Size);
 
 	return 0;
 }
@@ -68,5 +81,13 @@ void Rope::Render(HDC Hdc, float DeltaTime)
 Rope * Rope::Clone()
 {
 	return new Rope(*this);
+}
+
+void Rope::PlayerCol(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "PlayerBody")
+	{
+
+	}
 }
 
