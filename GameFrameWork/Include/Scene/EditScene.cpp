@@ -426,6 +426,21 @@ void EditScene::MonsterMode(float DeltaTime)
 		Saver.m_mType = monsterType;
 		monsterList.push_back(Saver);
 	}//if(moouseDown)
+
+	if (KEYDOWN("RBotton"))
+	{
+		//¸®½ºÆ®¿¡¼­ »©Áà¾ßÇÔ.
+		list<ObjectBaseSave>::iterator StartIter = monsterList.begin();
+		list<ObjectBaseSave>::iterator EndIter = monsterList.end();
+
+		for (; StartIter != EndIter; )
+		{
+			if ((*StartIter).m_Object->GetisActiv() == false)
+				StartIter = monsterList.erase(StartIter);
+			else
+				StartIter++;
+		}
+	}
 }
 
 
