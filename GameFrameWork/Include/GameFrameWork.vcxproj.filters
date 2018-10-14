@@ -280,6 +280,18 @@
     <ClCompile Include="Object\RockGolenHitBox.cpp">
       <Filter>MonsterObject</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Colossus.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ColossusClapHitBox.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ColossusKickHitBox.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BossBarEdge.cpp">
+      <Filter>SceneUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -563,6 +575,18 @@
     </ClInclude>
     <ClInclude Include="Object\RockGolenHitBox.h">
       <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Colossus.h">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ColossusClapHitBox.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ColossusKickHitBox.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BossBarEdge.h">
+      <Filter>SceneUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

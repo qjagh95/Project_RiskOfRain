@@ -143,6 +143,7 @@ int Commando::Update(float DeltaTime)
 	isLineHit = false;
 	HitPos = { 0.0f, 0.0f };
 	HitPosList.clear();
+	HitSizeList.clear();
 
 	return 0;
 }
@@ -166,10 +167,6 @@ void Commando::Collision(float DeltaTime)
 void Commando::CollsionAfterUpdate(float DeltaTime)
 {
 	Charactor::CollsionAfterUpdate(DeltaTime);
-
-	char Buffer[255];
-	sprintf_s(Buffer, "Hp : %d \n", Hp);
-	Debug::OutputConsole(Buffer);
 }
 
 void Commando::Render(HDC Hdc, float DeltaTime)
@@ -265,18 +262,29 @@ void Commando::HpCheck(float DeltaTime)
 	{
 		HpTimeVar = 0.0f;
 
-		if(Hp < MaxHp)
-			Hp += 3;
+		if (Hp < MaxHp)
+		{
+			if (Hp != 0)
+				Hp += 3;
+		}
 	}
 
-	if (Hp <= 0)
-	{
-		Hp = 0;
-	}
-	else if (Hp >= MaxHp)
-	{
-		Hp = MaxHp;
-	}
+	//if (Hp <= 0)
+	//{
+	//	Hp = 0;
+	//	SoundManager::Get()->Play("Die");
+
+	//	bool Check = false;
+	//	SoundManager::Get()->GetisPlay("Die", &Check);
+	//	if (Check == true)
+	//	{
+	//		SoundManager::Get()->Stop("DNF");
+	//		MessageBox(NULL, L"Á×À½¤»", L"Die", MB_OK);
+	//	}
+	//	DestroyWindow(Core::Get()->GetHwnd());
+	//}
+	//else if (Hp >= MaxHp)
+	//	Hp = MaxHp;
 }
 
 void Commando::RopeCheck()
@@ -520,6 +528,11 @@ void Commando::CollsionInit()
 	RC->SetCallBack<Commando>(this, &Commando::JellyFishHit, CS_COLFIRST);
 	RC->SetCallBack<Commando>(this, &Commando::LemuiranHit, CS_COLFIRST);
 	RC->SetCallBack<Commando>(this, &Commando::WispHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::RockHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::TelePoterHit, CS_COLDOING);
+	RC->SetCallBack<Commando>(this, &Commando::ColocussClapHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::ColocussKickHit, CS_COLFIRST);
+
 	RC->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RC);
 

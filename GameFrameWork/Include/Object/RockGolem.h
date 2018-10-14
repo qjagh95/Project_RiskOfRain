@@ -36,7 +36,6 @@ public:
 
 private:
 	float AttackRange;
-	bool isAttack;
 	int Attack;
 
 	string AnimationName[RS_MAX];

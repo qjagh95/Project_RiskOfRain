@@ -20,7 +20,7 @@ RockGolenHitBox::~RockGolenHitBox()
 
 bool RockGolenHitBox::Init()
 {
-	ColliderRect* RC = AddCollider<ColliderRect>("RockHit");
+	ColliderRect* RC = AddCollider<ColliderRect>("RockHitBody");
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetVirtualRect(150.0f, 60.0f);
 	RC->SetCollsionTypeName("Monster");

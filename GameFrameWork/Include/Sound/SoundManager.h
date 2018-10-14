@@ -26,6 +26,7 @@ public:
 	bool LoadSound(const string& KeyName, bool isLoop, const TCHAR* FileName, const string& PathKey = SOUND_PATH);
 	void Play(const string& KeyName, bool BgmMode = false);
 	void Stop(const string& KeyName);
+	void GetisPlay(const string& KeyName, bool* ReturnPlaying);
 
 private:
 	SoundInfo* FindSound(const string& KeyName);

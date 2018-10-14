@@ -27,12 +27,14 @@ public:
 	void SetHp(int Value) { Hp = Value; }
 	int GetHp() const { return Hp; }
 	void SetMaxHp(int Value) { MaxHp = Value; }
+	int GetMaxHp() const { return MaxHp; }
 	void SetAttack(int Value) { Attack = Value; }
 	int GetAttack() const { return Attack; }
 	void SetMoneyCoinCount(int iCount) { MoneyCoinCount = iCount;}
 	int GetMoneyCoinCount() const { return MoneyCoinCount; }
 	void SetExpCoinCount(int iCount) { ExpCoinCount = iCount; }
 	int GetExpCoinCount() const { return ExpCoinCount; }
+	void SetBarIsShow(bool Value);
 
 	virtual void BaseAttackHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
 	void BaseAttackHitDoing(Collider* Src, Collider* Dest, float DeltaTime);

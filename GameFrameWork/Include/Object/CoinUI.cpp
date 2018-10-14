@@ -18,7 +18,7 @@ CoinUI::~CoinUI()
 bool CoinUI::Init()
 {
 	SetTexture("CoinUI",TEXT("UI/Coin.bmp"));
-	SetSize(50.0f, 48.0f);
+	SetSize(40.0f, 48.0f);
 	SetPos(100.0f, 100.0f);
 	SetIsCameraMode(false);
 

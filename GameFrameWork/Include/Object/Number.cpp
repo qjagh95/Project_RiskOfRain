@@ -137,13 +137,13 @@ void Number::Render(HDC hDC, float DeltaTime)
 
 		if (i == m_vecNumber.size() - 1)
 		{
-			RightPos.x = (float)FrameX;
-			RightPos.y = (float)FrameY;
+			RightPos.x = (float)tPos.x;
+			RightPos.y = (float)tPos.y;
 		}
 		else if (i == 0)
 		{
-			LeftPos.x = (float)FrameX;
-			LeftPos.y = (float)FrameY;
+			LeftPos.x = (float)tPos.x;
+			LeftPos.y = (float)tPos.y;
 		}
 
 		TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberViewSize.x, (int)m_NumberViewSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)m_NumberSize.x, (int)m_NumberSize.y, m_ColorKey);

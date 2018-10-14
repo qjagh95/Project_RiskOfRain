@@ -133,6 +133,13 @@ void SoundManager::Stop(const string & KeyName)
 	m_Channel[newInfo->ChannelNumber] = NULL;
 }
 
+void SoundManager::GetisPlay(const string & KeyName, bool* ReturnPlaying)
+{
+	SoundInfo* newInfo = FindSound(KeyName);
+
+	m_Channel[newInfo->ChannelNumber]->isPlaying(ReturnPlaying);
+}
+
 SoundInfo * SoundManager::FindSound(const string & KeyName)
 {
 	unordered_map<string, SoundInfo*>::iterator FindIter = m_SoundMap.find(KeyName);

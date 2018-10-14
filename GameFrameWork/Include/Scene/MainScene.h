@@ -13,11 +13,15 @@ public:
 	void Collision(float DeltaTime) override;
 	void Render(HDC hdc, float DeltaTime) override;
 
+	static bool GetStageOneBoss() { return isStageOneBoss; }
+	static void SetStageOneBoss(bool Value) { isStageOneBoss = Value; }
+
 private:
 	MainScene();
 	~MainScene();
 
 	float DebugTimeVar;
 	float TimeVar;
+	static bool isStageOneBoss;
 };
 

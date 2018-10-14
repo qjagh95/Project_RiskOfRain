@@ -35,6 +35,8 @@
 #include "../Object/CommandoUI.h"
 #include "../Object/TimeUI.h"
 
+#include "../Object/Colossus.h"
+
 #include "../Object/BaseAttackBullet.h"
 #include "../Object/LaserBullet.h"
 #include "../Object/BaseEffect.h"
@@ -55,6 +57,8 @@
 
 #include "../StageManager.h"
 
+bool MainScene::isStageOneBoss = false;
+
 MainScene::MainScene()
 	: TimeVar(0.0f), DebugTimeVar(0.0f)
 {
@@ -68,11 +72,15 @@ bool MainScene::Init()
 	Camera::Get()->SetWorldSize(Vector2(6200.0f, 3000.0f));
 
 	SoundManager::Get()->LoadSound("BGM", true, TEXT("musicStage1.wav"));
+	SoundManager::Get()->LoadSound("DNF", true, TEXT("bgm_Dnf.wav"));
 	SoundManager::Get()->LoadSound("CommandoShow", false, TEXT("teleporter_receive.wav"));
 	SoundManager::Get()->LoadSound("LevelUp", false, TEXT("LevelUp.wav"));
 
 	SoundManager::Get()->LoadSound("Die", false, TEXT("your_team_lost.wav"));
 	SoundManager::Get()->LoadSound("Win", false, TEXT("your_team_won.wav"));
+
+	SoundManager::Get()->LoadSound("Miss", false, TEXT("Miss.mp3"));
+	SoundManager::Get()->LoadSound("Recive", false, TEXT("teleporter_send.wav"));
 
 	SoundManager::Get()->LoadSound("BoxOpen", false, TEXT("recharged.wav"));
 	

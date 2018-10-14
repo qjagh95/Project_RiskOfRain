@@ -239,6 +239,11 @@ void Monster::SelectState(string* AnimationName ,int State)
 	ChangeClip(Dir + AnimationName[mState]);
 }
 
+void Monster::SetBarIsShow(bool Value)
+{
+	HpBar->SetisShow(false);
+}
+
 void Monster::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
 {
 	if (Dest->GetTag() == "BaseBody")

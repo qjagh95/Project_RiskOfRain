@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BossBarEdge.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Coll\Collider.cpp" />
@@ -44,6 +45,9 @@
     <ClCompile Include="Object\Charactor.cpp" />
     <ClCompile Include="Object\Coin.cpp" />
     <ClCompile Include="Object\CoinUI.cpp" />
+    <ClCompile Include="Object\Colossus.cpp" />
+    <ClCompile Include="Object\ColossusClapHitBox.cpp" />
+    <ClCompile Include="Object\ColossusKickHitBox.cpp" />
     <ClCompile Include="Object\CommandoCollFunc.cpp" />
     <ClCompile Include="Object\CommandoUI.cpp" />
     <ClCompile Include="Object\DieEffect.cpp" />
@@ -114,6 +118,7 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BossBarEdge.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Circle.h" />
@@ -141,6 +146,9 @@
     <ClInclude Include="Object\Charactor.h" />
     <ClInclude Include="Object\Coin.h" />
     <ClInclude Include="Object\CoinUI.h" />
+    <ClInclude Include="Object\Colossus.h" />
+    <ClInclude Include="Object\ColossusClapHitBox.h" />
+    <ClInclude Include="Object\ColossusKickHitBox.h" />
     <ClInclude Include="Object\CommandoUI.h" />
     <ClInclude Include="Object\DieEffect.h" />
     <ClInclude Include="Object\DollerTexture.h" />

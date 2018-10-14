@@ -32,6 +32,7 @@ CommandoUI::~CommandoUI()
 
 	SAFE_RELEASE(HpBar);
 	SAFE_RELEASE(ExpBar);
+	SAFE_RELEASE(Per);
 }
 
 bool CommandoUI::Init()
@@ -68,7 +69,7 @@ bool CommandoUI::Init()
 	HpNumber->SetZeroTexture(BlackZero);
 	HpNumber->SetIsCameraMode(false);
 
-	PerTexture* Per = Object::CreateObject<PerTexture>("Per", m_Layer);
+	Per = Object::CreateObject<PerTexture>("Per", m_Layer);
 
 	MaxHpNumber = Object::CreateObject<Number>("MaxHpNumber", m_Layer);
 	MaxHpNumber->SetPos(1000.0f, 948.0f);
@@ -102,6 +103,8 @@ int CommandoUI::Input(float DeltaTime)
 int CommandoUI::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
+
+	Per->SetPos(HpNumber->GetLeftPosx().x + 60.0f , HpNumber->GetLeftPosx().y - 5.0f);
 
 	HpNumber->SetNumber(Commando::Hp);
 	MaxHpNumber->SetNumber(Commando::MaxHp);

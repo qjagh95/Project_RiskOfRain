@@ -28,7 +28,6 @@ bool RockGolem::Init()
 	AttackRange = 100.0f;
 	Attack = 55;
 	SetGravity(true);
-	isAttack = false;
 	AttackDelay = 0.0f;
 
 	int randn = rand() % 2;
@@ -40,12 +39,12 @@ bool RockGolem::Init()
 	else
 	{
 		Dir = "L";
-		MoveDir = -1.0f;
+		MoveDir = 1.0f;
 	}
 
 	SetMoveSpeed(200.0f);
-	SetHp(250);
-	SetMaxHp(250);
+	SetHp(300);
+	SetMaxHp(300);
 
 	SetSize(60.0f, 90.0f);
 
@@ -58,9 +57,9 @@ bool RockGolem::Init()
 	AddAnimationClip("LMove", AT_ATLAS, AO_LOOP, 60.0f, 90.0f, 7, 1, 11, 1, 0, 0, 1.0f, "RockLMove", TEXT("Enemy/RockGolem_Left_Move.bmp"));
 	AddAnimationClip("RMove", AT_ATLAS, AO_LOOP, 60.0f, 90.0f, 7, 1, 11, 1, 0, 0, 1.0f, "RockRMove", TEXT("Enemy/RockGolem_Right_Move.bmp"));
 	AddAnimationClip("LAttack", AT_ATLAS, AO_LOOP, 126.0f, 88.0f, 20, 1, 20, 1, 0, 0, 1.5f, "RockLAttack", TEXT("Enemy/RockGolem_Left_Attack.bmp"));
-	AddAnimationClip("RAttack", AT_ATLAS, AO_REVERS_LOOP, 126.0f, 88.0f, 20, 1, 20, 1, 19, 0, 1.5f, "RockRAttack", TEXT("Enemy/RockGolem_Right_Attack.bmp"));
+	AddAnimationClip("RAttack", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 126.0f, 88.0f, 20, 1, 20, 1, 19, 0, 1.5f, "RockRAttack", TEXT("Enemy/RockGolem_Right_Attack.bmp"));
 
-	SelectState(AnimationName, RS_MOVE);
+	SelectState(AnimationName, RS_ATTACK);
 	return true;
 }
 
@@ -96,8 +95,8 @@ int RockGolem::Update(float DeltaTime)
 int RockGolem::LateUpdate(float DeltaTime)
 {
 	Monster::LateUpdate(DeltaTime);
-
 	PrevFrame = m_Animation->GetFrameX();
+
 	AnimationDirCheck(AnimationName, mState);
 
 	return 0;
@@ -157,10 +156,7 @@ void RockGolem::TimeToIdle(float DeltaTime)
 void RockGolem::RangeCheck()
 {
 	if (Distance < AttackRange)
-	{
 		SelectState(AnimationName, RS_ATTACK);
-		isAttack = true;
-	}
 }
 
 void RockGolem::FS_IDLE(float DeltaTime)
@@ -200,6 +196,8 @@ void RockGolem::FS_TRACE(float DeltaTime)
 
 void RockGolem::FS_ATTACK(float DeltaTime)
 {
+	DirCheck();
+
 	if (PrevFrame == m_Animation->GetFrameX())
 		return;
 

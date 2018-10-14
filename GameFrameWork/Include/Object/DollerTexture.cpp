@@ -16,7 +16,7 @@ DollerTexture::~DollerTexture()
 
 bool DollerTexture::Init()
 {
-	SetSize(30.0f, 48.0f);
+	SetSize(20.0f, 48.0f);
 	SetPivot(0.5f, 0.5f);
 	SetIsCameraMode(true);
 	SetTexture("YellodwDoller", TEXT("ui/ItemBoxDollar.bmp"));

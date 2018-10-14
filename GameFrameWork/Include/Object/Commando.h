@@ -22,7 +22,8 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	Commando* Clone() override;
 	void TileCollsionActive(float DeltaTime) override;
-
+	
+	void TelePoterHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void BulletHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void RopeHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void PumpHit(Collider* Src, Collider* Dest, float DeltaTime);
@@ -35,6 +36,9 @@ public:
 	void JellyFishHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void LemuiranHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void WispHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void RockHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void ColocussKickHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void ColocussClapHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 	void PlayerMove(float DeltaTime);
 
@@ -112,6 +116,7 @@ private:
 	Vector2 HitSize;
 	Vector2 PrevHitPos;
 	list<Vector2> HitPosList;
+	list<Vector2> HitSizeList;
 
 	PLAYER_STATE pState;
 	PLAYER_STATE PrevState;

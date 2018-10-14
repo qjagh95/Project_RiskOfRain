@@ -6,6 +6,8 @@
 #include "../Resource/Animation.h"
 #include "../Object/Monster.h"
 
+#include "../Debug.h"
+
 BaseAttackBullet::BaseAttackBullet()
 	:Dir(0.0f), isStop(false), Attack(0), isHit(false), isTileCol(false)
 {
@@ -28,7 +30,7 @@ BaseAttackBullet::~BaseAttackBullet()
 
 bool BaseAttackBullet::Init()
 {
-	SetSize(5.0f, 5.0f);
+	SetSize(10.0f, 1.0f);
 	SetPivot(0.5f, 0.5f);
 	SetMoveSpeed(200.0f);
 
@@ -36,7 +38,7 @@ bool BaseAttackBullet::Init()
 
 	//中宜端持失
 	ColliderRect* RC = AddCollider<ColliderRect>("BaseBody");
-	RC->SetVirtualRect(m_Size);
+	RC->SetVirtualRect(10.0f, 1.0f);
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCollsionTypeName("BaseAttackBullet");
 	SAFE_RELEASE(RC);
@@ -93,6 +95,11 @@ int BaseAttackBullet::Update(float DeltaTime)
 int BaseAttackBullet::LateUpdate(float DeltaTime)
 {
 	Object::LateUpdate(DeltaTime);
+
+	char Buffer[255];
+	sprintf_s(Buffer, "BulletPos : %f , %f\n", m_Pos.x ,m_Pos.y);
+	Debug::OutputConsole(Buffer);
+
 	return 0;
 }
 

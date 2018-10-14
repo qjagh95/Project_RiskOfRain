@@ -21,6 +21,5 @@ protected:
 	DollerTexture();
 	DollerTexture(const DollerTexture& Value);
 	~DollerTexture();
-
 };
 

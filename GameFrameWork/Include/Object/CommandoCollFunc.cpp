@@ -4,6 +4,8 @@
 #include "../Object/Tile.h"
 #include "../StageManager.h"
 
+#include "../Scene/MainScene.h"
+
 #include "../stdafx.h"
 #include "../Input.h"
 #include "../Camera.h"
@@ -16,10 +18,15 @@
 #include "../Object/ItemBox.h"
 #include "../Object/IssacTear.h"
 
+#include "../Object/Colossus.h"
+
 #include "../Object/AncientHitBox.h"
 #include "../Object/JellyFishHitBox.h"
 #include "../Object/LemurinHitBox.h"
 #include "../Object/WispHitBox.h"
+#include "../Object/RockGolenHitBox.h"
+#include "../Object/ColossusClapHitBox.h"
+#include "../Object/ColossusKickHitBox.h"
 
 #include "../Resource/Animation.h"
 
@@ -37,6 +44,29 @@ void Commando::TileCollsionActive(float DeltaTime)
 {
 	if (isJumping == true)
 		isJumping = false;
+}
+
+void Commando::TelePoterHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "TelePoterBody")
+	{
+		if (KEYDown('A'))
+		{
+			if (MainScene::GetStageOneBoss() == true)
+				return;
+
+			Colossus* newBoss = Object::CreateObject<Colossus>("Colossus", m_Layer);
+			newBoss->SetPos(Dest->GetPos().x, Dest->GetPos().y - newBoss->GetSize().GetHalfY());
+
+			MainScene::SetStageOneBoss(true);
+
+			SoundManager::Get()->Play("Recive");
+			SoundManager::Get()->Stop("BGM");
+			SoundManager::Get()->Play("DNF", true);
+
+			SAFE_RELEASE(newBoss);
+		}
+	}
 }
 
 void Commando::BulletHit(Collider * Src, Collider * Dest, float DeltaTime)
@@ -144,6 +174,8 @@ void Commando::TearHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 			SAFE_RELEASE(DamegaNumber);
 		}
+		else
+			SoundManager::Get()->Play("Miss");
 
 		getTear->SetisActiv(false);
 
@@ -172,6 +204,8 @@ void Commando::AncientHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 			SAFE_RELEASE(DamegaNumber);
 		}
+		else
+			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
 
@@ -200,6 +234,8 @@ void Commando::JellyFishHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 			SAFE_RELEASE(DamegaNumber);
 		}
+		else
+			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
 
@@ -228,6 +264,8 @@ void Commando::LemuiranHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 			SAFE_RELEASE(DamegaNumber);
 		}
+		else
+			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
 
@@ -256,9 +294,101 @@ void Commando::WispHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 			SAFE_RELEASE(DamegaNumber);
 		}
+		else
+			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
 
+		SAFE_RELEASE(getBox);
+	}
+}
+
+void Commando::RockHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "RockHit")
+	{
+		RockGolenHitBox* getBox = (RockGolenHitBox*)Dest->GetCurObject();
+
+		if (pState != PS_SKILL3)
+		{
+			Hp -= getBox->GetAttack();
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getBox->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
+		else
+			SoundManager::Get()->Play("Miss");
+
+		getBox->SetisActiv(false);
+
+		SAFE_RELEASE(getBox);
+	}
+
+
+}
+
+void Commando::ColocussKickHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "ColossusKickHitBox")
+	{
+		ColossusKickHitBox* getBox = (ColossusKickHitBox*)Dest->GetCurObject();
+
+		if (pState != PS_SKILL3)
+		{
+			Hp -= getBox->GetAttack();
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getBox->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
+		else
+			SoundManager::Get()->Play("Miss");
+
+		getBox->SetisActiv(false);
+		SAFE_RELEASE(getBox);
+	}
+}
+
+void Commando::ColocussClapHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "ColossusClapHitBox")
+	{
+		ColossusClapHitBox* getBox = (ColossusClapHitBox*)Dest->GetCurObject();
+
+		if (pState != PS_SKILL3)
+		{
+			Hp -= getBox->GetAttack();
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getBox->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
+		else
+			SoundManager::Get()->Play("Miss");
+
+		getBox->SetisActiv(false);
 		SAFE_RELEASE(getBox);
 	}
 }
@@ -270,6 +400,7 @@ void Commando::LineHit(Collider * Src, Collider * Dest, float DeltaTime)
 		HitSize = ((ColliderRect*)Dest)->GetSize();
 		HitPos = Dest->GetPos();
 
+		HitSizeList.push_back(HitSize);
 		HitPosList.push_back(HitPos);
 
 		list<Vector2>::iterator StartIter = HitPosList.begin();
@@ -282,6 +413,15 @@ void Commando::LineHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 			if (a > b)
 				HitPos = *StartIter;
+		}
+
+		list<Vector2>::iterator StartSizeIter = HitSizeList.begin();
+		list<Vector2>::iterator EndSizeIter = HitSizeList.end();
+
+		for (;StartSizeIter != EndSizeIter; StartSizeIter++)
+		{
+			if (HitSize > *StartSizeIter)
+				HitSize = *StartSizeIter;
 		}
 
 		isLineHit = true;

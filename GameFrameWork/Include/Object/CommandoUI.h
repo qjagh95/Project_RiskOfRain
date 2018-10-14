@@ -24,6 +24,7 @@ private:
 
 	Bar* HpBar;
 	Bar* ExpBar;
+	PerTexture*Per;
 
 protected:
 	CommandoUI();
