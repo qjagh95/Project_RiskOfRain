@@ -53,7 +53,7 @@ TileInfo::TileInfo(const TileInfo & Value)
 TileInfo::~TileInfo()
 {
 	for (int i = 0; i < m_VarSize; i++)
-		SAFE_RELEASE(m_vecTile2[i]);
+		SAFE_DELETE(m_vecTile2[i]);
 
 	SAFE_DELETE_ARRAY(m_vecTile2);
 }
@@ -147,9 +147,6 @@ void TileInfo::Collision(float DeltaTime)
 
 void TileInfo::Render(HDC Hdc, float DeltaTime)
 {
-	//배경화면띄우기용
-	//TransparentBlt(Hdc, 0, 0, (int)m_Size.x, (int)m_Size.y, m_Texture->GetMemDC(), (int)CameraPos.x, (int)CameraPos.y, (int)m_Size.x, (int)m_Size.y, m_ColorKey);
-
 	for (int y = m_StartY; y < m_EndY; y++)
 	{
 		for (int x = m_StartX; x < m_EndX; x++)
@@ -366,7 +363,6 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 				newTelePoter->SetPos(Vector2(newTile->GetPos().x, newTile->GetPos().y - newTelePoter->GetSize().GetHalfY()));
 				SAFE_RELEASE(newTelePoter);
 			}
-
 			newTile->SetTileOption(TO_TELEPOT);
 		}
 		else if (newTile->GetTileOption() == TO_PUMP)
@@ -398,13 +394,13 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 			}
 
 			Vector2 TempPos = SerchTile->GetPos();
-			Vector2 TempSize = { 12,0 };
+			Vector2 TempSize = { 10,0 };
 			Tile* TempTile = SerchTile;
 
 			SerchTile->SetTileOption(TO_ROPE);
 
 			Rope* newRope = Object::CreateObject<Rope>("Rope", pLayer);
-			newRope->SetPos(Vector2(TempPos.x + SerchTile->GetSize().GetHalfX(), TempPos.y + 30.0f));
+			newRope->SetPos(Vector2(TempPos.x + SerchTile->GetSize().GetHalfX(), TempPos.y - 5.0f));
 
 			TempTile = GetTile(Vector2(TempPos.x, TempPos.y + SerchTile->GetSize().y));
 
@@ -413,10 +409,11 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 				TempPos.y++;
 				TempSize.y++;
 
-				TempTile = GetTile(Vector2(TempPos.x, TempPos.y + SerchTile->GetSize().y + 30.0f));
+				TempTile = GetTile(Vector2(TempPos.x, TempPos.y + SerchTile->GetSize().y + 10.0f));
 
-				newRope->SetSize(TempSize.x, TempSize.y - SerchTile->GetSize().y);
+				newRope->SetSize(TempSize.x, TempSize.y - SerchTile->GetSize().y / 2.0f);
 			}//while(true)
+			SAFE_RELEASE(newRope);
 		}
 	}
 

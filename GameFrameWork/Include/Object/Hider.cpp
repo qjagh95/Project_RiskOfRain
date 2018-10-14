@@ -88,25 +88,25 @@ void Hider::SetHider(SKILL_TYPE eType, float dTime)
 	{
 		case ST_SKILLONE:
 		{
-			SetPos(Vector2(568.0f, 640.0f));
+			SetPos(Vector2(761.0f, 856.0f));
 			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;
 		case ST_SKILLTWO:
 		{
-			SetPos(Vector2(637.0f, 641.0f));
+			SetPos(Vector2(830.0f, 856.0f));
 			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;
 		case ST_SKILLTHREE:
 		{
-			SetPos(Vector2(706.0f, 641.0f));
+			SetPos(Vector2(899.0f, 856.0f));
 			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;
 		case ST_SKILLFOUR:
 		{
-			SetPos(Vector2(775.0f, 641.0f));
+			SetPos(Vector2(968.0f, 856.0f));
 			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;

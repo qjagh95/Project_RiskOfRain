@@ -129,8 +129,8 @@ void Object::Render(HDC hDC, float DeltaTime)
 		{
 			FrameX = m_Animation->GetFrameX() * (int)(m_Animation->GetFrameSize().x);
 			FrameY = m_Animation->GetFrameY() * (int)(m_Animation->GetFrameSize().y);
-			
 			tSize = m_Animation->GetFrameSize();
+
 			m_ColorKey = m_Animation->m_CurClip->GetColorKey();
 			isColorKey = m_Animation->m_CurClip->GetIsColorKey();
 		}
@@ -138,7 +138,22 @@ void Object::Render(HDC hDC, float DeltaTime)
 		if (isColorKey == false)
 			BitBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
 		else
-			TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+		{
+			if (m_Animation != NULL && m_Animation->GetOption() != AO_REVERS_LOOP)
+			{
+				if (m_Animation->GetClipName() == "RopeUp" || m_Animation->GetClipName() == "RopeHold")
+					TransparentBlt(hDC, (int)(LeftTop.x + tSize.GetHalfX() + 2.0f), (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+				else
+					TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+
+			}
+
+			else if (m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_LOOP)
+				TransparentBlt(hDC, (int)(LeftTop.x - (tSize.x / 2.0f)) , (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+			else
+				TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+
+		}
 	}
 
 	m_TempMove = Vector2(0.0f, 0.0f);

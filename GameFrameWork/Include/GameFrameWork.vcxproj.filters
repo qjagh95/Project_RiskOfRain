@@ -61,18 +61,6 @@
     <ClCompile Include="Object\BackGround.cpp">
       <Filter>MainScene\Object\BackGround</Filter>
     </ClCompile>
-    <ClCompile Include="Object\RotBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\FollowBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\TargetBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\JumpBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="Coll\CollsionManager.cpp">
       <Filter>Core\Coll\CollManager</Filter>
     </ClCompile>
@@ -90,12 +78,6 @@
     </ClCompile>
     <ClCompile Include="Coll\ColliderPoint.cpp">
       <Filter>Core\Coll\Collider\ColliderPoint</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\SubBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\ShotGunBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Core\Camera</Filter>
@@ -190,9 +172,6 @@
     <ClCompile Include="Object\TelePoter.cpp">
       <Filter>StageObject</Filter>
     </ClCompile>
-    <ClCompile Include="Object\DollerTexture.cpp">
-      <Filter>StageObject</Filter>
-    </ClCompile>
     <ClCompile Include="Object\DollerUI.cpp">
       <Filter>SceneUI</Filter>
     </ClCompile>
@@ -216,6 +195,15 @@
     </ClCompile>
     <ClCompile Include="Object\CommandoFsm.cpp">
       <Filter>MainScene\Object\Commando</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CommandoCollFunc.cpp">
+      <Filter>MainScene\Object\Commando</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PerTexture.cpp">
+      <Filter>SceneUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\DollerTexture.cpp">
+      <Filter>SceneUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -288,18 +276,6 @@
     <ClInclude Include="Object\BackGround.h">
       <Filter>MainScene\Object\BackGround</Filter>
     </ClInclude>
-    <ClInclude Include="Object\RotBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\FollowBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\TargetBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\JumpBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="Coll\CollsionManager.h">
       <Filter>Core\Coll\CollManager</Filter>
     </ClInclude>
@@ -323,12 +299,6 @@
     </ClInclude>
     <ClInclude Include="Coll\ColliderPoint.h">
       <Filter>Core\Coll\Collider\ColliderPoint</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\SubBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\ShotGunBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Core\Camera</Filter>
@@ -417,9 +387,6 @@
     <ClInclude Include="Object\TelePoter.h">
       <Filter>StageObject</Filter>
     </ClInclude>
-    <ClInclude Include="Object\DollerTexture.h">
-      <Filter>StageObject</Filter>
-    </ClInclude>
     <ClInclude Include="Object\DollerUI.h">
       <Filter>SceneUI</Filter>
     </ClInclude>
@@ -440,6 +407,12 @@
     </ClInclude>
     <ClInclude Include="Object\Commando.h">
       <Filter>MainScene\Object\Commando</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\PerTexture.h">
+      <Filter>SceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\DollerTexture.h">
+      <Filter>SceneUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

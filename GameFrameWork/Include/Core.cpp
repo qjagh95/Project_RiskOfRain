@@ -19,8 +19,6 @@ WindowSize Core::m_WinSize;
 INIT_STATIC_VAR(Core);
 bool Core::m_Loop = true;
 bool Core::isDebug = true;
-//레이어에서 오브젝트를 지워주지않음
-//메인씬에서 플레이어를 안지워주고있었음
 
 Core::Core()
 	:m_BackBuffer(NULL)
@@ -28,7 +26,7 @@ Core::Core()
 	m_HDC = NULL;
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//어디서 릭났는지 잡아주는 함수 (괄호는 블럭이름)
-	//_CrtSetBreakAlloc(505);
+	//_CrtSetBreakAlloc(31303);
 
 //#ifdef _DEBUG
 	AllocConsole();

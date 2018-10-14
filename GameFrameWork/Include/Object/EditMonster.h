@@ -20,7 +20,7 @@ public:
 protected:
 	EditMonster();
 	EditMonster(const EditMonster& Value);
-	~EditMonster();
+	virtual ~EditMonster();
 
 	ColliderRect* RC;
 	static EditMonster* EditSelect;

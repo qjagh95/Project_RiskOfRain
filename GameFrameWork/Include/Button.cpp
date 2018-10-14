@@ -29,9 +29,6 @@ bool Button::Init()
 	m_ButtonState = BS_NOMAL;
 	m_isCallBack = false;
 
-	// 버튼은 생성시 기본 크기를 잡아주고 사각형 충돌체를 생성해준다.
-	SetSize(200.f, 100.f);
-	SetTexture("Button", TEXT("StartButton.bmp"));
 	SetPivot(0.0f, 0.0f);
 	SetColorKey(RGB(255, 0, 255));
 

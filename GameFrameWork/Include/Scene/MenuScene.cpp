@@ -30,7 +30,7 @@ bool MenuScene::Init()
 	Layer* BackLayer = m_Scene->FindLayer("BackGround");
 	Layer* UiLayer = m_Scene->FindLayer("UI");
 
-	MenuBg* newBG = Object::CreateObject<MenuBg>("BackGround", BackLayer);
+	MenuBg* newBG = Object::CreateObject<MenuBg>("MenuBg", BackLayer);
 	MenuStarBg* newBG2 = Object::CreateObject<MenuStarBg>("StarBackGround", BackLayer);
 
 	Button* StartButton = Object::CreateObject<Button>("StartButton",UiLayer);
@@ -39,33 +39,29 @@ bool MenuScene::Init()
 	StartButton->SetTexture("StartButton", TEXT("Window/StartButton.bmp"));
 	StartButton->SetSize(200.0f, 26.0f);
 	StartButton->SetIsOffset(false);
-
 	SAFE_RELEASE(StartButton);
 
-	Button* EditButton = Object::CreateObject<Button>("EditButton", UiLayer);
-	EditButton->SetPos(WinSize.x / 2.0f - 100.0f, WinSize.y / 2.0f);
-	EditButton->SetCallBack<MenuScene>(&MenuScene::EditButtonColl, this);
-	EditButton->SetTexture("EditButton", TEXT("Window/EditorButton.bmp"));
-	EditButton->SetSize(200.0f, 26.0f);
-	EditButton->SetIsOffset(false);
+	StartButton = Object::CreateObject<Button>("EditButton", UiLayer);
+	StartButton->SetPos(WinSize.x / 2.0f - 100.0f, WinSize.y / 2.0f);
+	StartButton->SetCallBack<MenuScene>(&MenuScene::EditButtonColl, this);
+	StartButton->SetTexture("EditButton", TEXT("Window/EditorButton.bmp"));
+	StartButton->SetSize(200.0f, 26.0f);
+	StartButton->SetIsOffset(false);
+	SAFE_RELEASE(StartButton);
 
-	SAFE_RELEASE(EditButton);
-
-	Button* ExitButton = Object::CreateObject<Button>("ExitButton", UiLayer);
-	ExitButton->SetPos(WinSize.x / 2.0f - 100.0f, WinSize.y / 2.0f + 50.0f);
-	ExitButton->SetCallBack<MenuScene>(&MenuScene::ExitButtonColl, this);
-	ExitButton->SetTexture("ExitButton", TEXT("Window/ExitButton.bmp"));
-	ExitButton->SetSize(200.0f, 26.0f);
-	ExitButton->SetIsOffset(false);
-
-	SAFE_RELEASE(ExitButton);
+	StartButton = Object::CreateObject<Button>("ExitButton", UiLayer);
+	StartButton->SetPos(WinSize.x / 2.0f - 100.0f, WinSize.y / 2.0f + 50.0f);
+	StartButton->SetCallBack<MenuScene>(&MenuScene::ExitButtonColl, this);
+	StartButton->SetTexture("ExitButton", TEXT("Window/ExitButton.bmp"));
+	StartButton->SetSize(200.0f, 26.0f);
+	StartButton->SetIsOffset(false);
+	SAFE_RELEASE(StartButton);
 
 	SAFE_RELEASE(DefaultLayer);
 	SAFE_RELEASE(UiLayer);
 	SAFE_RELEASE(BackLayer);
 	SAFE_RELEASE(newBG);
 	SAFE_RELEASE(newBG2);
-
 	return true;
 }
 

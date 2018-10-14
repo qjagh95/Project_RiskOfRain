@@ -27,6 +27,7 @@ public:
 
 	void DirCheck();
 	void HpCheck();
+	void RopeCheck();
 
 	void SetMoney(int Value) { pMoney = Value; }
 	static int GetMoney() { return pMoney; }
@@ -49,6 +50,7 @@ public:
 
 	void SelectState(PLAYER_STATE eState);
 	void SkillState();
+	void SkillTimeCheck(float DeltaTime);
 
 	void BasicInit();
 	void AnimationInit();
@@ -79,6 +81,8 @@ private:
 	bool isSkillTwo;
 	bool isSkillThree;
 	bool isSkillFour;
+	
+	bool isRopeHiting;
 
 	PLAYER_STATE pState;
 	float MoveDir;
@@ -92,11 +96,6 @@ private:
 
 	Vector2 Center;
 	Vector2 LineEnd;
-
-	Bar* HpBar;
-	Bar* ExpBar;
-
-	Hider* OneHider;
 
 public:
 	friend class Object;

@@ -21,7 +21,7 @@ bool MenuBg::Init()
 {
 	SetPos(0.0f, 0.0f);
 	SetSize(1800.0f, 1000.0f);
-	SetPivot(0.08f, 0.0f);
+	SetPivot(0.0f, 0.0f);
 	SetIsCameraMode(false);
 	SetColorKey(RGB(255, 0, 255));
 

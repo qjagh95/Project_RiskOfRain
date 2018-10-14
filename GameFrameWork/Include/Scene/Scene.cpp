@@ -26,23 +26,18 @@ Scene::~Scene()
 bool Scene::Init()
 {
 	Layer* newLayer = CreateLayer("BackGround", INT_MIN);
-
 	SAFE_RELEASE(newLayer);
 
 	newLayer = CreateLayer("TileLayer", 0);
-
 	SAFE_RELEASE(newLayer);
 
 	newLayer = CreateLayer("Default", 1);
-
 	SAFE_RELEASE(newLayer);
 
 	newLayer = CreateLayer("PlayLayer", 2);
-
 	SAFE_RELEASE(newLayer);
 
 	newLayer = CreateLayer("UI", INT_MAX);
-
 	SAFE_RELEASE(newLayer);
 
 	return true;

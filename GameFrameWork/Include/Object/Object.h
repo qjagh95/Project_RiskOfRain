@@ -122,6 +122,7 @@ public:
 			SAFE_RELEASE(newObject);
 			return NULL;
 		}
+
 		newObject->AddRefCount();
 		m_SceneObject.insert(make_pair(TagName, newObject));
 		return newObject;

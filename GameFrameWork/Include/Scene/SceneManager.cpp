@@ -18,13 +18,9 @@ SceneManager::~SceneManager()
 
 bool SceneManager::Init()
 {
-	m_Scene = CreateScene("EditScene");
-	EditScene* newEditSceneCom = m_Scene->CreateSceneComponent<EditScene>("EditScene");
-
 	m_Scene = CreateScene("MenuScene");
-	MenuScene* newSceneCom = m_Scene->CreateSceneComponent<MenuScene>("MenuScene");
 
-	SAFE_RELEASE(newEditSceneCom);
+	MenuScene* newSceneCom = m_Scene->CreateSceneComponent<MenuScene>("MenuScene");
 	SAFE_RELEASE(newSceneCom);
 
 	return true;
@@ -63,16 +59,15 @@ void SceneManager::Render(HDC Hdc, float DeltaTime)
 
 Scene * SceneManager::CreateScene(const string & TagName)
 {
-	m_Scene = new Scene();
-	m_Scene->SetTag(TagName);
-	m_Scene->AddRefCount();
+	Scene* newScene = new Scene();
+	newScene->SetTag(TagName);
 
-	if (m_Scene->Init() == false)
+	if (newScene->Init() == false)
 	{
-		SAFE_RELEASE(m_Scene);
+		SAFE_RELEASE(newScene);
 		return NULL;
 	}
-	return m_Scene;
+	return newScene;
 }
 
 int SceneManager::ChangeScene()

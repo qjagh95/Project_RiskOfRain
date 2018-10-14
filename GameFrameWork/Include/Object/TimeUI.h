@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 class Texture;
+class Number;
 class TimeUI : public Object
 {
 public:
@@ -18,6 +19,14 @@ private:
 	Texture* DotTexture;
 	Vector2 DotSize;
 	Vector2 DotPos;
+
+	Number* m_Second;
+	Number* m_Minit;
+
+	static int PlaySecond;
+	static int PlayMinit;
+
+	float TimeVar;
 
 protected:
 	TimeUI();

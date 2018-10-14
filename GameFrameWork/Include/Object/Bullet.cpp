@@ -1,7 +1,6 @@
 #include "Bullet.h"
 #include "../Coll/ColliderRect.h"
 #include "../Coll/ColliderCircle.h"
-#include "SubBullet.h"
 
 Bullet::Bullet()
 	:Target(NULL)
@@ -37,9 +36,6 @@ bool Bullet::Init()
 	RC->SetVirtualRect(50.0f, 50.0f);
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCollsionTypeName("Bullet");
-
-	//ColliderCircle* RC = AddCollider<ColliderCircle>("BulletBody");
-	//RC->SetRadius(25.0f);
 
 	SAFE_RELEASE(RC);
 

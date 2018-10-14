@@ -14,7 +14,7 @@ public:
 protected:
 	UI();
 	UI(const UI& ui);
-	~UI();
+	virtual ~UI();
 
 public:
 	friend class Object;

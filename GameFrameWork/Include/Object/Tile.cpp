@@ -89,6 +89,8 @@ void Tile::Load(FILE * pFile, Layer* pLayer)
 	fread(&m_TileOption, sizeof(TILE_OPTION), 1, pFile);
 	fread(&m_Index, sizeof(int), 1, pFile);
 
+	SAFE_RELEASE(m_LineTexture);
+
 	switch (m_TileType)
 	{
 		case TT_NOMAL:

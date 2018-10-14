@@ -32,5 +32,4 @@ void SceneComponent::Collision(float DeltaTime)
 
 void SceneComponent::Render(HDC hdc, float DeltaTime)
 {
-
 }

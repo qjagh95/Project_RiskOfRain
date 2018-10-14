@@ -4,11 +4,16 @@
 #include "../Object/Commando.h"
 #include "../Object/Number.h"
 
+#include "../Object/Bar.h"
+#include "../Object/Commando.h"
+
+#include "../Object/PerTexture.h"
+
 #include "../Resource/Texture.h"
 #include "../Resource/ResourceManager.h"
 
 CommandoUI::CommandoUI()
-	:PerTexture(NULL), HpNumber(NULL), MaxHpNumber(NULL), LevelNumber(NULL)
+	:HpNumber(NULL), MaxHpNumber(NULL), LevelNumber(NULL)
 {
 	m_ObjectType = OT_UI;
 	SetTag("CommandoUI");
@@ -21,28 +26,40 @@ CommandoUI::CommandoUI(const CommandoUI & Value)
 
 CommandoUI::~CommandoUI()
 {
-	SAFE_RELEASE(PerTexture);
 	SAFE_RELEASE(HpNumber);
 	SAFE_RELEASE(MaxHpNumber);
 	SAFE_RELEASE(LevelNumber);
+
+	SAFE_RELEASE(HpBar);
+	SAFE_RELEASE(ExpBar);
 }
 
 bool CommandoUI::Init()
 {
-	PerTexture = ResourceManager::Get()->LoadTexture("Per", TEXT("object/Per.bmp"));
-	PerPos = Vector2(695.0f, 726.0f);
-	PerSize = Vector2(10.0f, 24.0f);
-
 	Texture* BlackZero = ResourceManager::Get()->LoadTexture("ZeroBlack", TEXT("object/ZeroBlack.bmp"));
 
 	SetTexture("CommandoUI", TEXT("UI/Commando.bmp"));
 	SetSize(513.0f, 185.0f);
-	SetPos(450.0f, 600.0f);
+	SetPos(Core::Get()->GetWinSizeVector2().x / 2.0f - m_Size.GetHalfX(), Core::Get()->GetWinSizeVector2().y - m_Size.y);
 	SetIsCameraMode(false);
 	SetColorKey(RGB(255, 0, 255));
 
+	HpBar = Object::CreateObject<Bar>("HpBar", m_Layer);
+	HpBar->SetSize(Vector2(480.f, 21.f));
+	HpBar->SetPos(660.0f, 945.0f);
+	HpBar->SetTexture("HpBar", TEXT("pHpBar.bmp"));
+	HpBar->SetBarInfo(0, Commando::MaxHp, Commando::Hp);
+	HpBar->SetIsCameraMode(false);
+
+	ExpBar = Object::CreateObject<Bar>("ExpBar", m_Layer);
+	ExpBar->SetSize(Vector2(480.0f, 6.0f));
+	ExpBar->SetPos(660.0f, 984.0f);
+	ExpBar->SetTexture("HPBar", TEXT("ExpBar.bmp"));
+	ExpBar->SetBarInfo(30, Commando::MaxExp, Commando::Exp);
+	ExpBar->SetIsCameraMode(false);
+
 	HpNumber = Object::CreateObject<Number>("HpNumber", m_Layer);
-	HpNumber->SetPos(685.0f, 730.0f);
+	HpNumber->SetPos(850.0f, 948.0f);
 	HpNumber->SetTexture("HpNumber", TEXT("object/TempBlack.bmp"));
 	HpNumber->SetNumberSize(19.0f, 24.0f);
 	HpNumber->SetColorKey(RGB(255, 0, 255));
@@ -51,8 +68,10 @@ bool CommandoUI::Init()
 	HpNumber->SetZeroTexture(BlackZero);
 	HpNumber->SetIsCameraMode(false);
 
+	PerTexture* Per = Object::CreateObject<PerTexture>("Per", m_Layer);
+
 	MaxHpNumber = Object::CreateObject<Number>("MaxHpNumber", m_Layer);
-	MaxHpNumber->SetPos(770.0f, 730.0f);
+	MaxHpNumber->SetPos(1000.0f, 948.0f);
 	MaxHpNumber->SetTexture("MaxHpNumber", TEXT("object/TempBlack.bmp"));
 	MaxHpNumber->SetNumberSize(19.0f, 24.0f);
 	MaxHpNumber->SetColorKey(RGB(255, 0, 255));
@@ -62,7 +81,7 @@ bool CommandoUI::Init()
 	MaxHpNumber->SetIsCameraMode(false);
 
 	LevelNumber = Object::CreateObject<Number>("LevelNumber", m_Layer);
-	LevelNumber->SetPos(520.0f, 650.0f);
+	LevelNumber->SetPos(710.0f, 865.0f);
 	LevelNumber->SetTexture("LevelNumber", TEXT("object/TempNumber.bmp"));
 	LevelNumber->SetNumberSize(19.0f, 24.0f);
 	LevelNumber->SetColorKey(RGB(255, 0, 255));
@@ -88,6 +107,9 @@ int CommandoUI::Update(float DeltaTime)
 	MaxHpNumber->SetNumber(Commando::MaxHp);
 	LevelNumber->SetNumber(Commando::Level);
 
+	HpBar->SetBarInfo(0, Commando::MaxHp, Commando::Hp);
+	ExpBar->SetBarInfo(30, Commando::MaxExp, Commando::Exp);
+
 	return 0;
 }
 
@@ -105,9 +127,6 @@ void CommandoUI::Collision(float DeltaTime)
 void CommandoUI::Render(HDC Hdc, float DeltaTime)
 {
 	Object::Render(Hdc, DeltaTime);
-
-	//PerÅØ½ºÃÄ
-	TransparentBlt(Hdc, (int)PerPos.x, (int)PerPos.y, (int)PerSize.x, (int)PerSize.y, PerTexture->GetMemDC(), 0, 0, (int)PerSize.x, (int)PerSize.y, m_ColorKey);
 }
 
 CommandoUI * CommandoUI::Clone()

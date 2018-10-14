@@ -2,6 +2,8 @@
 #include "Object.h"
 class Texture;
 class Number;
+class Bar;
+class PerTexture;
 class CommandoUI : public Object
 {
 public:
@@ -16,13 +18,12 @@ public:
 	CommandoUI* Clone() override;
 
 private:
-	Texture* PerTexture;
-	Vector2 PerPos;
-	Vector2 PerSize;
-
 	Number* HpNumber;
 	Number* MaxHpNumber;
 	Number* LevelNumber;
+
+	Bar* HpBar;
+	Bar* ExpBar;
 
 protected:
 	CommandoUI();

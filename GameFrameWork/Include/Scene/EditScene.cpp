@@ -46,13 +46,6 @@ EditScene::~EditScene()
 
 bool EditScene::Init()
 {
-	//F1 - Grid On Off
-	//F2 - Save
-	//F3 - Load
-	//F4 - TileOnOff
-	//F5 - 일시정지
-	//F6 - DebugMode
-	//F7 - MonsterMode
 	Vector2 WinSize = Core::Get()->GetWinSizeVector2();
 	Camera::Get()->SetWorldSize(1800.0f, 1000.0f);
 
@@ -60,7 +53,7 @@ bool EditScene::Init()
 	Input::Get()->PushKey("Load", VK_F3);
 	Input::Get()->PushKey("TileOnOff", VK_F4);
 	Input::Get()->PushKey("OptionChange", VK_F7);
-	//Input::Get()->PushKey("Clear", VK_RETURN);
+	Input::Get()->PushKey("Clear", VK_RETURN);
 
 	Layer* DefaultLayer = m_Scene->FindLayer("Default");
 	Layer* BackLayer = m_Scene->FindLayer("BackGround");

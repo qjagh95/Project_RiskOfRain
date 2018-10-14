@@ -5,6 +5,10 @@
 #define SAFE_RELEASE(p) if(p != NULL) {p->Release(); p = NULL;}
 #define	SAFE_DELETE_ARRAY(p)	if(p != NULL)	{ delete[] p; p = NULL; }
 
+#ifdef _DEBUG
+#define new new(_CLIENT_BLOCK,__FILE__,__LINE__)
+#endif
+
 #define TrueAssert(p) assert(!p)
 #define PI 3.141592f
 #define GRAVITY 0.98f

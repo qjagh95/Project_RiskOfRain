@@ -75,7 +75,6 @@ void CollsionManager::Collsion(float DeltaTime)
 			}
 		}
 	}
-
 	SAFE_RELEASE(MouseCollider);
 
 	// 마우스와 일반 오브젝트 충돌처리
@@ -138,6 +137,7 @@ void CollsionManager::Collsion(float DeltaTime)
 		}
 	}
 	SAFE_RELEASE(MouseColliderWorld);
+	SAFE_RELEASE(MouseCollider);
 
 	unordered_map<string, CollGroup*>::iterator StartIter = m_CollGroupMap.begin();
 	unordered_map<string, CollGroup*>::iterator EndIter = m_CollGroupMap.end();

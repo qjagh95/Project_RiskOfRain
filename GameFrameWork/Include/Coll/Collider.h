@@ -5,7 +5,6 @@ class Object;
 class Collider : public RefCount
 {
 public:
-
 	virtual bool Init();
 	virtual int Update(float DeltaTime);
 	virtual bool Collsion(Collider* Dest) = 0;

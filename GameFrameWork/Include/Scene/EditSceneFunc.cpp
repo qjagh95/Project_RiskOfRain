@@ -234,10 +234,20 @@ void EditScene::SaveLoad()
 			wstring Arr;
 			Arr = FileName;
 			size_t Cut = Arr.find_last_of(L".", Arr.size());
-			Arr = Arr.replace(Cut, Arr.size(), L".stgmon");
 
-			LoadStageFile(FileName);
-			LoadMonFile(Arr.c_str());
+			if (lstrlen(Arr.c_str()) - Cut == 4)
+			{
+				Arr = Arr.replace(Cut, Arr.size(), L".stgmon");
+				LoadStageFile(FileName);
+				LoadMonFile(Arr.c_str());
+			}
+			else
+			{
+				Arr = Arr.replace(Cut, Arr.size(), L".stg");
+				LoadStageFile(Arr.c_str());
+				LoadMonFile(FileName);
+			}
+
 		}
 
 		ShowCursor(FALSE);

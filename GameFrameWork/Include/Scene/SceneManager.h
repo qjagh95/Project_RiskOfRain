@@ -19,7 +19,7 @@ public:
 		SAFE_RELEASE(m_NextScene);
 
 		m_NextScene = CreateScene(TagName);
-		T* newComponent = m_NextScene->CreateSceneComponent<T>(TagName);
+		T* newComponent = m_NextScene->CreateSceneComponent<T>("strTag");
 		
 		SAFE_RELEASE(newComponent);
 	}

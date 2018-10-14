@@ -31,7 +31,6 @@ public:
 			SAFE_RELEASE(newComponent);
 			return NULL;
 		}
-
 		newComponent->AddRefCount();
 		m_SceneComponent = newComponent;
 

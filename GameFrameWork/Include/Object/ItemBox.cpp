@@ -66,7 +66,6 @@ bool ItemBox::Init()
 	SetPivot(0.5f, 0.5f);
 
 	newDoller = Object::CreateObject<DollerTexture>("YellodwDoller", m_Layer);
-	newDoller->SetTexture("YellodwDoller", TEXT("ui/ItemBoxDollar.bmp"));
 
 	AddAnimationClip("ItemBox", AT_ATLAS, AO_LOOP, 132.0f, 72.0f, 1, 1, 1, 1, 0, 0, 1.0f, "Box", TEXT("object/ItemBox.bmp"));
 	AddAnimationClip("ItemBoxOpen", AT_ATLAS, AO_ONCE_DESTROY, 132.0f, 72.0f, 6, 1, 6, 1, 1, 0, 1.0f, "BoxOpen", TEXT("object/ItemBox.bmp"));
@@ -84,6 +83,8 @@ bool ItemBox::Init()
 	PriceNumber->SetNumberSize(32.0f, 24.0f);
 	PriceNumber->SetColorKey(RGB(255, 0, 255));
 	PriceNumber->SetIsCameraMode(true);
+	PriceNumber->SetNumberViewSize(Vector2(32.0f, 24.0f));
+	PriceNumber->SetZeroTextureSize(Vector2(32.0f, 24.0f));
 
 	ChangeClip("ItemBox");
 
@@ -101,7 +102,7 @@ int ItemBox::Update(float DeltaTime)
 	Object::Update(DeltaTime);
 
 	newDoller->SetPos(Vector2(m_Pos.x - m_Size.GetHalfX() + 10.0f, m_Pos.y + m_Size.y - 10.0f));
-	
+
 	switch (PriceNumber->GetNumberCount())
 	{
 		case 1:

@@ -1,7 +1,5 @@
 #include "Commando.h"
 #include "Bullet.h"
-#include "TargetBullet.h"
-#include "FollowBullet.h"
 #include "Effect.h"
 
 #include "../stdafx.h"
@@ -69,7 +67,6 @@ void Commando::FS_Jump(float DeltaTime)
 
 void Commando::FS_Skill1(float DeltaTime)
 {
-
 	if (m_Animation->GetIsEnd() == true)
 	{
 		SelectState(PLAYER_STATE::PS_IDLE);
@@ -78,7 +75,6 @@ void Commando::FS_Skill1(float DeltaTime)
 
 void Commando::FS_Skill2(float DeltaTime)
 {
-
 	if (m_Animation->GetIsEnd() == true)
 	{
 		SelectState(PLAYER_STATE::PS_IDLE);
@@ -103,5 +99,36 @@ void Commando::FS_Skill4(float DeltaTime)
 
 void Commando::FS_Rope(float DeltaTime)
 {
+	SetForce(0.0f);
+
+	if (KEYPRESS("Up"))
+	{
+		ChangeClip("RopeUp");
+		m_Pos.y -= 100.0f * DeltaTime;
+	}
+	else if (KEYPRESS("Down"))
+	{
+		ChangeClip("RopeUp");
+		m_Pos.y += 100.0f * DeltaTime;
+	}
+	else
+		ChangeClip("RopeHold");
+
+	if (isRopeHiting == false)
+		SelectState(PLAYER_STATE::PS_IDLE);
+
+	if (KEYDOWN("RopeLeft"))
+	{
+		isJumping = true;
+		SetForce(300.0f);
+		SelectState(PLAYER_STATE::PS_JUMPING);
+	}
+	else if (KEYDOWN("RopeRight"))
+	{
+		isJumping = true;
+		SetForce(300.0f);
+
+		SelectState(PLAYER_STATE::PS_JUMPING);
+	}
 
 }

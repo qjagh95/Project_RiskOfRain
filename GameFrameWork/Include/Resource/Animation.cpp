@@ -104,17 +104,6 @@ void Animation::Update(float DeltaTime)
 				{
 					m_CurClip->m_FrameY = m_CurClip->m_StartY;
 					m_isEnd = true;
-
-					//디폴트는 Loop값
-					switch (m_CurClip->m_Option)
-					{
-						case AO_ONCE_RETURN:
-							ChangeClip(m_DefaultClipName);
-							break;
-						case AO_ONCE_DESTROY:
-							m_Object->SetisActiv(false);
-							break;
-					}//switch
 				}//if(y위치)
 			}//if(x위치)
 		}//while
@@ -233,6 +222,7 @@ AnimationClip * Animation::FindClip(const string & KeyName)
 
 	return FindIter->second;
 }
+
 int Animation::GetFrameX() const
 {
 	return m_CurClip->m_FrameX;

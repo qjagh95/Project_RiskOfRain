@@ -57,7 +57,7 @@ int Rope::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
 
-	RC->SetVirtualRect(m_Size);
+	RC->SetVirtualRect(m_Size.x, m_Size.y);
 
 	return 0;
 }

@@ -31,7 +31,6 @@ bool EditMonster::Init()
 	SetSize(100.0f, 100.0f);
 	SetPivot(0.5f, 0.5f);
 
-	SetTexture("Yasuo", TEXT("Yasuo.bmp"));
 	SetColorKey(RGB(255, 0, 255));
 
 	//中宜端持失
