@@ -146,7 +146,6 @@ void AncientWisp::RangeCheck()
 void AncientWisp::FS_MOVE(float DeltaTime)
 {
 	Tile* NextTile = NULL;
-	Tile* FootNextTile = NULL;
 
 	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y + m_Size.GetHalfY() - StageManager::Get()->GetTileSize().y);
 
@@ -157,6 +156,7 @@ void AncientWisp::FS_MOVE(float DeltaTime)
 		MoveDir *= -1.0f;
 
 	SAFE_RELEASE(NextTile);
+
 	RangeCheck();
 }
 

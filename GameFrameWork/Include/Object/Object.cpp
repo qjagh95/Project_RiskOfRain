@@ -147,7 +147,7 @@ void Object::Render(HDC hDC, float DeltaTime)
 			BitBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
 		else
 		{
-			if (m_Animation != NULL && m_Animation->GetOption() != AO_REVERS_LOOP && m_Animation->GetOption() != AO_REVERS_BOUNCE_LOOP && m_Animation->GetOption() != AO_BOUNCE_LOOP_LEMUIRAN && m_Animation->GetOption() != AO_REVERS_BOUNCE_LOOP_LEMUIRAN)
+			if (m_Animation != NULL && m_Animation->GetOption() != AO_REVERS_LOOP && m_Animation->GetOption() != AO_REVERS_BOUNCE_LOOP && m_Animation->GetOption() != AO_BOUNCE_LOOP_LEMUIRAN && m_Animation->GetOption() != AO_REVERS_BOUNCE_LOOP_LEMUIRAN && m_Animation->GetOption() != AO_LOOP_WISP && m_Animation->GetOption() != AO_REVERS_WISP)
 			{
 				if (m_Animation->GetClipName() == "RopeUp" || m_Animation->GetClipName() == "RopeHold")
 					TransparentBlt(hDC, (int)(LeftTop.x + tSize.GetHalfX() + 2.0f), (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
@@ -156,16 +156,19 @@ void Object::Render(HDC hDC, float DeltaTime)
 			}
 
 			else if (m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_LOOP)
-				TransparentBlt(hDC, (int)LeftTop.x , (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
-			else if(m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_BOUNCE_LOOP)
-				TransparentBlt(hDC, (int)(LeftTop.x - (tSize.x / 2.0f)) , (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
-			else if((m_Animation != NULL && m_Animation->GetOption()== AO_BOUNCE_LOOP_LEMUIRAN))
-				TransparentBlt(hDC, (int)(LeftTop.x - (m_Size.x / 2.0f)), (int)LeftTop.y - (m_Size.y / 2.0f), (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+				TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+			else if (m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_BOUNCE_LOOP)
+				TransparentBlt(hDC, (int)(LeftTop.x - (tSize.x / 2.0f)), (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+			else if ((m_Animation != NULL && m_Animation->GetOption() == AO_BOUNCE_LOOP_LEMUIRAN))
+				TransparentBlt(hDC, (int)(LeftTop.x - ((int)m_Size.x / (int)2.0f)), (int)LeftTop.y - ((int)m_Size.y / (int)2.0f), (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
 			else if (m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_BOUNCE_LOOP_LEMUIRAN)
-				TransparentBlt(hDC, (int)(LeftTop.x - m_Size.x), (int)LeftTop.y - (m_Size.y / 2.0f), (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+				TransparentBlt(hDC, (int)(LeftTop.x - (int)m_Size.x), (int)LeftTop.y - ((int)m_Size.y / (int)2.0f), (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+			else if (m_Animation != NULL && m_Animation->GetOption() == AO_LOOP_WISP)
+				TransparentBlt(hDC, (int)LeftTop.x - (int)tSize.x + (int)m_Size.x + (int)5.0f, (int)LeftTop.y - /* + (tSize.y - m_Size.y) */(int)10.0f, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+			else if (m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_WISP)
+				TransparentBlt(hDC, (int)LeftTop.x - (int)5.0f, (int)LeftTop.y - (int)10.0f, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
 			else
 				TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
-
 		}
 	}
 

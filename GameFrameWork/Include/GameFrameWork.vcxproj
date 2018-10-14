@@ -66,6 +66,9 @@
     <ClCompile Include="Object\JellyFish.cpp" />
     <ClCompile Include="Object\JellyFishHitBox.cpp" />
     <ClCompile Include="Object\Lemurian.cpp" />
+    <ClCompile Include="Object\LemurinHitBox.cpp" />
+    <ClCompile Include="Object\RockGolem.cpp" />
+    <ClCompile Include="Object\RockGolenHitBox.cpp" />
     <ClCompile Include="Object\UsingItemBase.cpp" />
     <ClCompile Include="Object\ItemBox.cpp" />
     <ClCompile Include="Object\LaserBullet.cpp" />
@@ -87,6 +90,8 @@
     <ClCompile Include="Object\TileBg.cpp" />
     <ClCompile Include="Object\TileInfo.cpp" />
     <ClCompile Include="Object\TimeUI.cpp" />
+    <ClCompile Include="Object\Wisp.cpp" />
+    <ClCompile Include="Object\WispHitBox.cpp" />
     <ClCompile Include="RefCount.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\AnimationClip.cpp" />
@@ -157,6 +162,9 @@
     <ClInclude Include="Object\JellyFish.h" />
     <ClInclude Include="Object\JellyFishHitBox.h" />
     <ClInclude Include="Object\Lemurian.h" />
+    <ClInclude Include="Object\LemurinHitBox.h" />
+    <ClInclude Include="Object\RockGolem.h" />
+    <ClInclude Include="Object\RockGolenHitBox.h" />
     <ClInclude Include="Object\UsingItemBase.h" />
     <ClInclude Include="Object\ItemBox.h" />
     <ClInclude Include="Object\LaserBullet.h" />
@@ -177,6 +185,8 @@
     <ClInclude Include="Object\TileBg.h" />
     <ClInclude Include="Object\TileInfo.h" />
     <ClInclude Include="Object\TimeUI.h" />
+    <ClInclude Include="Object\Wisp.h" />
+    <ClInclude Include="Object\WispHitBox.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RefCount.h" />
     <ClInclude Include="resource.h" />

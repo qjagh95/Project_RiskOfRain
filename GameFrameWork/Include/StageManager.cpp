@@ -10,6 +10,8 @@
 #include "Object/AncientWisp.h"
 #include "Object/JellyFish.h"
 #include "Object/Lemurian.h"
+#include "Object/Wisp.h"
+#include "Object/RockGolem.h"
 
 #include "Scene\Layer.h"
 
@@ -148,8 +150,20 @@ int StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 			}
 				break;
 			case MT_MONSTERFIVE:
+			{
+				Wisp* newMonster = (Wisp*)Object::CreateObject<Wisp>("Monster", InputLayer);
+				newMonster->SetPos(Saver.Pos);
+
+				SAFE_RELEASE(newMonster);
+			}
 				break;
 			case MT_MONSTERSIX:
+			{
+				RockGolem* newMonster = (RockGolem*)Object::CreateObject<RockGolem>("Monster", InputLayer);
+				newMonster->SetPos(Saver.Pos);
+
+				SAFE_RELEASE(newMonster);
+			}
 				break;
 			case MT_MONSTERSEVEN:
 				break;

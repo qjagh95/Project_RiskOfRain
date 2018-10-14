@@ -53,7 +53,7 @@ void Animation::Update(float DeltaTime)
 
 	m_isEnd = false;
 
-	if (m_CurClip->m_Option == AO_LOOP || m_CurClip->m_Option == AO_ONCE_DESTROY || m_CurClip->m_Option == AO_ONCE_RETURN || m_CurClip->m_Option == AO_BOUNCE_LOOP_LEMUIRAN)
+	if (m_CurClip->m_Option == AO_LOOP || m_CurClip->m_Option == AO_ONCE_DESTROY || m_CurClip->m_Option == AO_ONCE_RETURN || m_CurClip->m_Option == AO_BOUNCE_LOOP_LEMUIRAN || m_CurClip->m_Option == AO_LOOP_WISP)
 	{
 		while (m_CurClip->m_AnimationTime >= CompleatTime)
 		{
@@ -86,7 +86,7 @@ void Animation::Update(float DeltaTime)
 			}//if(xÀ§Ä¡)
 		}//while
 	}
-	else if (m_CurClip->m_Option == AO_REVERS_LOOP || m_CurClip->m_Option == AO_REVERS_BOUNCE_LOOP || m_CurClip->m_Option == AO_REVERS_BOUNCE_LOOP_LEMUIRAN)
+	else if (m_CurClip->m_Option == AO_REVERS_LOOP || m_CurClip->m_Option == AO_REVERS_BOUNCE_LOOP || m_CurClip->m_Option == AO_REVERS_BOUNCE_LOOP_LEMUIRAN || m_CurClip->m_Option == AO_REVERS_WISP)
 	{
 		while (m_CurClip->m_AnimationTime >= CompleatTime)
 		{

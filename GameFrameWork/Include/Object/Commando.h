@@ -33,6 +33,8 @@ public:
 	void TearHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void AncientHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void JellyFishHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void LemuiranHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void WispHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 	void PlayerMove(float DeltaTime);
 
@@ -93,6 +95,9 @@ private:
 	float SkillThreeDelay;
 	float SkillFourDelay;
 
+	float InfinityTime;
+
+	bool isInfinity;
 	bool isSkillOne;
 	bool isSkillTwo;
 	bool isSkillThree;

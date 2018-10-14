@@ -1,15 +1,15 @@
 #pragma once
-enum LEMURIAN_STATE
+#include "Monster.h"
+
+enum WISP_STATE
 {
-	LS_IDLE,
-	LS_MOVE,
-	LS_TRACE,
-	LS_ATTACK,
-	LS_MAX,
+	WS_MOVE,
+	WS_TRACE,
+	WS_ATTACK,
+	WS_MAX,
 };
 
-#include "Monster.h"
-class Lemurian : public Monster
+class Wisp :public Monster
 {
 public:
 	friend class Object;
@@ -21,14 +21,11 @@ public:
 	void Collision(float DeltaTime) override;
 	void CollsionAfterUpdate(float DeltaTime) override;
 	void Render(HDC Hdc, float DeltaTime) override;
-	Lemurian* Clone() override;
+	Wisp* Clone() override;
 	void TileCollsionActive(float DeltaTime) override;
 
 	void RangeCheck();
 
-	void TimeToIdle(float DeltaTime);
-
-	void FS_IDLE(float DeltaTime);
 	void FS_MOVE(float DeltaTime);
 	void FS_TRACE(float DeltaTime);
 	void FS_ATTACK(float DeltaTime);
@@ -40,7 +37,7 @@ private:
 	bool isTrace;
 	float TraceTime;
 	int Attack;
-	string AnimationName[LS_MAX];
+	string AnimationName[WS_MAX];
 
 	float ChangeTime;
 	float AttackDelay;
@@ -52,8 +49,8 @@ private:
 	bool isIdle = false;
 
 protected:
-	Lemurian();
-	Lemurian(const Lemurian& Value);
-	~Lemurian();
+	Wisp();
+	Wisp(const Wisp& Value);
+	~Wisp();
 };
 

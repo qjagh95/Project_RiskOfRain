@@ -18,6 +18,8 @@
 
 #include "../Object/AncientHitBox.h"
 #include "../Object/JellyFishHitBox.h"
+#include "../Object/LemurinHitBox.h"
+#include "../Object/WispHitBox.h"
 
 #include "../Resource/Animation.h"
 
@@ -182,6 +184,62 @@ void Commando::JellyFishHit(Collider * Src, Collider * Dest, float DeltaTime)
 	if (Dest->GetTag() == "JellyFishHit")
 	{
 		JellyFishHitBox* getBox = (JellyFishHitBox*)Dest->GetCurObject();
+
+		if (pState != PS_SKILL3)
+		{
+			Hp -= getBox->GetAttack();
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getBox->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
+
+		getBox->SetisActiv(false);
+
+		SAFE_RELEASE(getBox);
+	}
+}
+
+void Commando::LemuiranHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "LemurianHit")
+	{
+		LemurinHitBox* getBox = (LemurinHitBox*)Dest->GetCurObject();
+
+		if (pState != PS_SKILL3)
+		{
+			Hp -= getBox->GetAttack();
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+			DamegaNumber->SetTexture("DamNumber", TEXT("object/BlueNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(getBox->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			SAFE_RELEASE(DamegaNumber);
+		}
+
+		getBox->SetisActiv(false);
+
+		SAFE_RELEASE(getBox);
+	}
+}
+
+void Commando::WispHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "WispHit")
+	{
+		WispHitBox* getBox = (WispHitBox*)Dest->GetCurObject();
 
 		if (pState != PS_SKILL3)
 		{

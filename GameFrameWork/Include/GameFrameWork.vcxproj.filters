@@ -265,6 +265,21 @@
     <ClCompile Include="Object\Lemurian.cpp">
       <Filter>MainScene\Object\Monster</Filter>
     </ClCompile>
+    <ClCompile Include="Object\LemurinHitBox.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Wisp.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\WispHitBox.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RockGolem.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RockGolenHitBox.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -534,6 +549,21 @@
     <ClInclude Include="Object\Lemurian.h">
       <Filter>MainScene\Object\Monster</Filter>
     </ClInclude>
+    <ClInclude Include="Object\LemurinHitBox.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Wisp.h">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\WispHitBox.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RockGolem.h">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RockGolenHitBox.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -551,18 +581,6 @@
     <Filter Include="Core\RefCount">
       <UniqueIdentifier>{d8f21730-42cb-4e09-a2f6-9c69ecf5962c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene">
-      <UniqueIdentifier>{33d1613b-d717-4f81-8bce-4e0cf282a7c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\SceneMain">
-      <UniqueIdentifier>{0ba449a3-c250-43b0-a6d8-42aa4fda5bce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Object">
-      <UniqueIdentifier>{30909409-486f-445d-913e-9fc0121e0adf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Object\Monster">
-      <UniqueIdentifier>{fc7f0c21-ca3d-4ce7-9029-d4e650ed8ec7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\Resource">
       <UniqueIdentifier>{7868b1a0-53e4-4337-8020-d04183b436e5}</UniqueIdentifier>
     </Filter>
@@ -574,9 +592,6 @@
     </Filter>
     <Filter Include="Core\Math">
       <UniqueIdentifier>{a1179127-3a90-472a-844c-5955051f7bd4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Object\BackGround">
-      <UniqueIdentifier>{7d3487e1-58ae-4bbf-97cf-dd1436b6ca99}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Header">
       <UniqueIdentifier>{4eef6374-5d62-4e68-b452-793114c149fb}</UniqueIdentifier>
@@ -668,9 +683,6 @@
     <Filter Include="Core\Resource\Texture\AnimationClip">
       <UniqueIdentifier>{4947d10b-b366-44d2-b4a5-510a8f87b54c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\Object\Effect">
-      <UniqueIdentifier>{e9f21ab2-c7c6-4067-bae3-14444a13edde}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Core\UI">
       <UniqueIdentifier>{365bca06-a8de-484b-afa0-0c68f401c6c4}</UniqueIdentifier>
     </Filter>
@@ -731,15 +743,6 @@
     <Filter Include="SceneUI">
       <UniqueIdentifier>{ea27cc8e-bece-458a-a112-4dd9a038ccc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\Object\Commando">
-      <UniqueIdentifier>{0f7ffa1b-b576-4c41-9940-fba62aa90ff8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Object\Monster\Parent">
-      <UniqueIdentifier>{3047cdd8-0429-4f83-b9eb-fb8161bbe8af}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Object\CommandoBullet">
-      <UniqueIdentifier>{d811f12e-3787-468d-8595-cd00fbe0053a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Effect">
       <UniqueIdentifier>{52176061-1b45-4362-84d1-0b07304c6496}</UniqueIdentifier>
     </Filter>
@@ -766,6 +769,33 @@
     </Filter>
     <Filter Include="StageObject\Item\Parent">
       <UniqueIdentifier>{d1dab1e7-4779-4807-aa7c-1742b7901285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene">
+      <UniqueIdentifier>{33d1613b-d717-4f81-8bce-4e0cf282a7c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\SceneMain">
+      <UniqueIdentifier>{0ba449a3-c250-43b0-a6d8-42aa4fda5bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object">
+      <UniqueIdentifier>{30909409-486f-445d-913e-9fc0121e0adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Monster">
+      <UniqueIdentifier>{fc7f0c21-ca3d-4ce7-9029-d4e650ed8ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Monster\Parent">
+      <UniqueIdentifier>{3047cdd8-0429-4f83-b9eb-fb8161bbe8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\BackGround">
+      <UniqueIdentifier>{7d3487e1-58ae-4bbf-97cf-dd1436b6ca99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Effect">
+      <UniqueIdentifier>{e9f21ab2-c7c6-4067-bae3-14444a13edde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Commando">
+      <UniqueIdentifier>{0f7ffa1b-b576-4c41-9940-fba62aa90ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\CommandoBullet">
+      <UniqueIdentifier>{d811f12e-3787-468d-8595-cd00fbe0053a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
