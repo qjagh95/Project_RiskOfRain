@@ -70,6 +70,8 @@ int Charactor::LateUpdate(float DeltaTime)
 
 		TileCollsionActive(DeltaTime);
 	}
+	else if (NextTile->GetTileType() == TT_NOMAL)
+		isGravity = true;
 	
 	SAFE_RELEASE(CurTile);
 	SAFE_RELEASE(NextTile);

@@ -19,7 +19,7 @@ EditMonster1::~EditMonster1()
 bool EditMonster1::Init()
 {
 	EditMonster::Init();
-	SetSize(67.0f, 47.0f);
+	SetSize(78.0f, 76.0f);
 	RC->SetVirtualRect(m_Size);
 
 	SetTexture("EditMonster1", TEXT("EditMonster/IssacEnemy1_One.bmp"));

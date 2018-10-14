@@ -82,11 +82,26 @@ void Commando::FS_Jump(float DeltaTime)
 
 	if (NextTile->GetTileType() == TT_NOMOVE)
 	{
- 		SelectState(PLAYER_STATE::PS_IDLE);
+ 		SelectState(PLAYER_STATE::PS_JUMPDOWN);
 		SetForce(0.0f);
 	}
 
 	SAFE_RELEASE(CurTile);
+	SAFE_RELEASE(NextTile);
+}
+
+void Commando::Fs_JumpDown(float DeltaTime)
+{
+	if (isJumping == false)
+		return;
+
+	PlayerMove(DeltaTime);
+
+	Tile* NextTile = StageManager::Get()->GetTile(m_Pos.x, m_Pos.y + m_Size.GetHalfY());
+
+	if (NextTile->GetTileType() == TT_NOMOVE)
+		SelectState(PLAYER_STATE::PS_IDLE);
+
 	SAFE_RELEASE(NextTile);
 }
 
@@ -97,6 +112,8 @@ void Commando::FS_Skill1(float DeltaTime)
 		//프레임 중복으로 들어오기때문에 이전프레임 변수를 만들어서 이전프레임과 같다면 return;
 		if (PrevFrame == m_Animation->GetFrameX())
 			return;
+
+		SoundManager::Get()->Play("SkillOne");
 
 		bool TileCheck = false;
 		Vector2 TempPos = m_Pos;
@@ -193,6 +210,7 @@ void Commando::FS_Skill2(float DeltaTime)
 	{
 		if (PrevFrame == m_Animation->GetFrameX())
 			return;
+		SoundManager::Get()->Play("SkillTwo");
 
 		Vector2 TempPos = m_Pos;
 
@@ -225,13 +243,15 @@ void Commando::FS_Skill3(float DeltaTime)
 	Vector2 TempPos = m_Pos;
 	Tile* NextTile = StageManager::Get()->GetTile(TempPos.x + (m_Size.GetHalfX() * MoveDir), TempPos.y);
 
+	char Buffer[255];
+	sprintf_s(Buffer, "Frame : %d \n", m_Animation->GetFrameX());
+	Debug::OutputConsole(Buffer);
+
 	if(NextTile->GetTileType() != TT_NOMOVE)
 		m_Pos.x += BASESPEED * 2.0f * MoveDir * DeltaTime;
 
 	if (m_Animation->GetIsEnd() == true)
-	{
 		SelectState(PLAYER_STATE::PS_IDLE);
-	}
 
 	SAFE_RELEASE(NextTile);
 
@@ -239,10 +259,25 @@ void Commando::FS_Skill3(float DeltaTime)
 
 void Commando::FS_Skill4(float DeltaTime)
 {
+	if (MoveDir == -1.0f)
+	{
+		if (PrevFrame == 10)
+			return;
+
+		if (m_Animation->GetFrameX() == 10)
+			SoundManager::Get()->Play("SkillFour");
+	}
+
 	if (m_Animation->GetFrameX() == 1 || m_Animation->GetFrameX() == 3 || m_Animation->GetFrameX() == 5 || m_Animation->GetFrameX() == 7 || m_Animation->GetFrameX() == 9)
 	{
 		if (PrevFrame == m_Animation->GetFrameX())
 			return;
+
+		if (MoveDir == 1.0f)
+		{
+			if (m_Animation->GetFrameX() == m_Animation->GetStartX() + 3)
+				SoundManager::Get()->Play("SkillFour");
+		}
 
 		bool TileCheck = false;
 		Vector2 TempPos = m_Pos;

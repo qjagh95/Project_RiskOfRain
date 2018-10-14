@@ -238,6 +238,12 @@
     <ClCompile Include="Object\LevelUpEffect.cpp">
       <Filter>Effect\Public</Filter>
     </ClCompile>
+    <ClCompile Include="Object\IssacTear.cpp">
+      <Filter>MonsterObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\AncientWisp.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -257,9 +263,6 @@
     </ClInclude>
     <ClInclude Include="Rect.h">
       <Filter>Core\Header\Rect</Filter>
-    </ClInclude>
-    <ClInclude Include="Macro.h">
-      <Filter>Core\Header\Macro</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>Core\Header\stdafx</Filter>
@@ -479,6 +482,15 @@
     </ClInclude>
     <ClInclude Include="Object\LevelUpEffect.h">
       <Filter>Effect\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\IssacTear.h">
+      <Filter>MonsterObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Core\Header\Macro</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\AncientWisp.h">
+      <Filter>MainScene\Object\Monster</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -703,6 +715,9 @@
     </Filter>
     <Filter Include="StageObject\Object">
       <UniqueIdentifier>{d091ae8e-41ed-4b62-8efb-c845dbb1b930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MonsterObject">
+      <UniqueIdentifier>{6eb7f60f-332c-4774-879f-f8fbe94bd3c9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -19,6 +19,8 @@ public:
 	virtual Monster* Clone() override;
 	virtual void TileCollsionActive(float DeltaTime) override;
 
+	virtual void DirCheck();
+
 	void SetHp(int Value) { Hp = Value; }
 	int GetHp() const { return Hp; }
 	void SetAttack(int Value) { Attack = Value; }
@@ -51,6 +53,7 @@ protected:
 
 	string Dir;
 	float MoveDir;
+	Object* Target;
 
 private:
 	int MaxHp;
@@ -60,7 +63,6 @@ private:
 	int MoneyCoinCount;
 	int ExpCoinCount;
 
-	Object* Target;
 	Bar* HpBar;
 	ColliderRect* RC;
 };

@@ -31,6 +31,10 @@ public:
 	string GetClipName() const { return m_CurClipName; }
 	ANIMATION_OPTION GetOption() const;
 	float GetCompleatTime() const;
+	int GetStartX() const;
+	int GetStartY() const;
+	int GetMaxCountX() const;
+	int GetMaxCountY() const;
 
 private:
 	Object* m_Object;

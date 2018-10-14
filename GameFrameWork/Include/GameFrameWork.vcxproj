@@ -34,6 +34,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math.cpp" />
     <ClCompile Include="MouseObject.cpp" />
+    <ClCompile Include="Object\AncientWisp.cpp" />
     <ClCompile Include="Object\BackGround.cpp" />
     <ClCompile Include="Object\Bar.cpp" />
     <ClCompile Include="Object\BaseAttackBullet.cpp" />
@@ -58,6 +59,7 @@
     <ClCompile Include="Object\ExpEffect.cpp" />
     <ClCompile Include="Object\Hider.cpp" />
     <ClCompile Include="Object\IssacEnemy1.cpp" />
+    <ClCompile Include="Object\IssacTear.cpp" />
     <ClCompile Include="Object\ItemBox.cpp" />
     <ClCompile Include="Object\LaserBullet.cpp" />
     <ClCompile Include="Object\LaserEffect.cpp" />
@@ -117,6 +119,7 @@
     <ClInclude Include="Macro.h" />
     <ClInclude Include="Math.h" />
     <ClInclude Include="MouseObject.h" />
+    <ClInclude Include="Object\AncientWisp.h" />
     <ClInclude Include="Object\BackGround.h" />
     <ClInclude Include="Object\Bar.h" />
     <ClInclude Include="Object\BaseAttackBullet.h" />
@@ -140,6 +143,7 @@
     <ClInclude Include="Object\ExpEffect.h" />
     <ClInclude Include="Object\Hider.h" />
     <ClInclude Include="Object\IssacEnemy1.h" />
+    <ClInclude Include="Object\IssacTear.h" />
     <ClInclude Include="Object\ItemBox.h" />
     <ClInclude Include="Object\LaserBullet.h" />
     <ClInclude Include="Object\LaserEffect.h" />

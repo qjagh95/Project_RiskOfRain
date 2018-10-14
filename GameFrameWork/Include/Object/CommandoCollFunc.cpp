@@ -14,6 +14,7 @@
 #include "../Object/Number.h"
 #include "../Object/ExpEffect.h"
 #include "../Object/ItemBox.h"
+#include "../Object/IssacTear.h"
 
 #include "../Resource/Animation.h"
 
@@ -113,6 +114,21 @@ void Commando::ItemBoxHit(Collider * Src, Collider * Dest, float DeltaTime)
 		}
 
 		SAFE_RELEASE(getBox);
+	}
+}
+
+void Commando::TearHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "TearBody")
+	{
+		IssacTear* getTear = (IssacTear*)Dest->GetCurObject();
+
+		if(pState != PS_SKILL3)
+			Hp -= getTear->GetAttack();
+
+		getTear->SetisActiv(false);
+
+		SAFE_RELEASE(getTear);
 	}
 }
 

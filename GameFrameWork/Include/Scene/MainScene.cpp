@@ -43,6 +43,8 @@
 #include "../Object/ExpEffect.h"
 #include "../Object/LevelUpEffect.h"
 
+#include "../Object/IssacTear.h"
+
 #include "../Object/Coin.h"
 #include "../Object/ExpCoin.h"
 #include "../Object/MoneyCoin.h"
@@ -66,6 +68,10 @@ bool MainScene::Init()
 	SoundManager::Get()->LoadSound("BGM", true, TEXT("musicStage1.wav"));
 	SoundManager::Get()->LoadSound("CommandoShow", false, TEXT("teleporter_receive.wav"));
 	SoundManager::Get()->LoadSound("LevelUp", false, TEXT("LevelUp.wav"));
+	
+	SoundManager::Get()->LoadSound("SkillOne", false, TEXT("Skill1.mp3"));
+	SoundManager::Get()->LoadSound("SkillTwo", false, TEXT("Skill2.mp3"));
+	SoundManager::Get()->LoadSound("SkillFour", false, TEXT("Skill4.mp3"));
 
 	SoundManager::Get()->Play("BGM", true);
 	SoundManager::Get()->Play("CommandoShow", false);
@@ -91,6 +97,8 @@ bool MainScene::Init()
 	DieEffect* dieEffect = Object::CreatePrototype<DieEffect>("DieEffect", m_Scene);
 	LevelUpEffect* levelUpEffect = Object::CreatePrototype<LevelUpEffect>("LevelUpEffect", m_Scene);
 	ExpEffect* expEffect = Object::CreatePrototype<ExpEffect>("ExpEffect", m_Scene);
+	
+	IssacTear* issacTear = Object::CreatePrototype<IssacTear>("Tear", m_Scene);
 
 	Commando* newPlayer = Object::CreateObject<Commando>("Commando", newLayer);
 	Camera::Get()->SetTarget(newPlayer);
@@ -106,6 +114,8 @@ bool MainScene::Init()
 	CommandoUI* newCommando = Object::CreateObject<CommandoUI>("CommandoUI", UiLayer);
 	TimeUI* newTime = Object::CreateObject<TimeUI>("TimeUI", UiLayer);
 
+
+	SAFE_RELEASE(issacTear);
 	SAFE_RELEASE(expEffect);
 	SAFE_RELEASE(levelUpEffect);
 	SAFE_RELEASE(moneyCoin);

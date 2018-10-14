@@ -1142,7 +1142,7 @@ void EditScene::Monster1Callback(float DeltaTime)
 	SelectTileTexture = ResourceManager::Get()->LoadTexture("EditMonster1", TEXT("EditMonster/IssacEnemy1_One.bmp"));
 
 	Input::Get()->SetMouseTexture(SelectTileTexture);
-	Input::Get()->SetMouseTextureSize(Vector2(67.0f, 47.0f));
+	Input::Get()->SetMouseTextureSize(Vector2(78.0f, 76.0f));
 	Input::Get()->SetMouseTexturePivot(0.5f, 0.5f);
 }
 
@@ -1229,6 +1229,7 @@ void EditScene::NoMoveButtonCallback(float DeltaTime)
 	isTelePotOptionMode = false;
 
 	CurType = TT_NOMOVE;
+	SelectTileTexture = ResourceManager::Get()->LoadTexture("", TEXT(""));
 
 	Input::Get()->SetMouseTexture(ResourceManager::Get()->LoadTexture("NoMoveTile", TEXT("Tile/OptionNoMove.bmp")));
 	Input::Get()->SetMouseTextureSize(Vector2(60.0f, 90.0f));

@@ -91,7 +91,11 @@ void Animation::Update(float DeltaTime)
 		while (m_CurClip->m_AnimationTime >= CompleatTime)
 		{
 			m_CurClip->m_AnimationTime -= CompleatTime;
-			m_CurClip->m_FrameX--;
+
+			if (m_CurClip->m_FrameX == 0)
+				m_CurClip->m_FrameX = m_CurClip->m_FrameCountX;
+
+			  m_CurClip->m_FrameX--;
 
 			//다돌았으면 시작위치로 바꿔주고 y++
 			if (m_CurClip->m_FrameX == 0)
@@ -253,4 +257,24 @@ ANIMATION_OPTION Animation::GetOption() const
 float Animation::GetCompleatTime() const
 {
 	return m_CurClip->GetCompleatTime();
+}
+
+int Animation::GetStartX() const
+{
+	return m_CurClip->GetStartX();
+}
+
+int Animation::GetStartY() const
+{
+	return m_CurClip->GetStartY();
+}
+
+int Animation::GetMaxCountX() const
+{
+	return m_CurClip->GetMaxCountX();
+}
+
+int Animation::GetMaxCountY() const
+{
+	return m_CurClip->GetMaxCountY();
 }

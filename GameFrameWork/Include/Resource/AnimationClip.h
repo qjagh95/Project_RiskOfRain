@@ -11,6 +11,10 @@ public:
 	DWORD GetColorKey() const { return m_ColorKey; }
 	bool GetIsColorKey() const { return m_isColorKey; }
 	float GetCompleatTime() const { return m_CompleteTime; }
+	int GetStartX() const { return m_StartX; }
+	int GetStartY() const { return m_StartY; }
+	int GetMaxCountX() const { return m_FrameCountX; }
+	int GetMaxCountY() const { return m_FrameCountY; }
 
 private:
 	string	m_Name; ///클립 이름(행동이름)

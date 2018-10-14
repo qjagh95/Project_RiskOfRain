@@ -30,6 +30,7 @@ public:
 	void LineHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void CoinHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void ItemBoxHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void TearHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 	void PlayerMove(float DeltaTime);
 
@@ -50,6 +51,7 @@ public:
 	void FS_Idle(float DeltaTime);
 	void FS_Move(float DeltaTime);
 	void FS_Jump(float DeltaTime);
+	void Fs_JumpDown(float DeltaTime);
 	void FS_Skill1(float DeltaTime);
 	void FS_Skill2(float DeltaTime);
 	void FS_Skill3(float DeltaTime);
@@ -102,6 +104,8 @@ private:
 	list<Vector2> HitPosList;
 
 	PLAYER_STATE pState;
+	PLAYER_STATE PrevState;
+
 	float MoveDir;
 	string Dir;
 	string AnimationName[PS_MAX];

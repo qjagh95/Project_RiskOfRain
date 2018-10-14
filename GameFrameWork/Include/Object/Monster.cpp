@@ -44,7 +44,6 @@ bool Monster::Init()
 	ExpCoinCount = 8;
 
 	SetMoveSpeed(300.0f);
-	SetSize(100.0f, 100.0f);
 	SetPivot(0.5f, 0.5f);
 	SetGravity(true);
 
@@ -54,7 +53,7 @@ bool Monster::Init()
 
 	//中宜端持失
 	RC = AddCollider<ColliderRect>("MonsterBody");
-	RC->SetVirtualRect(100.0f, 100.0f);
+	RC->SetVirtualRect(m_Size);
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCollsionTypeName("Monster");
 	RC->SetCallBack<Monster>(this, &Monster::BaseAttackHitFirst, CS_COLFIRST);
@@ -75,7 +74,6 @@ bool Monster::Init()
 
 	HpBar = Object::CreateObject<Bar>("mHpBar", m_Layer);
 	HpBar->SetSize(Vector2(100.0f, 6.0f));
-	HpBar->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
 	HpBar->SetBarInfo(0, MaxHp, Hp);
 	HpBar->SetTexture("mHpBar", TEXT("MonsterHpBar.bmp"));
 	HpBar->SetIsCameraMode(true);
@@ -86,6 +84,12 @@ bool Monster::Init()
 int Monster::Input(float DeltaTime)
 {
 	Charactor::Input(DeltaTime);
+
+	if (MoveDir == 1.0f)
+		Dir = "R";
+	else if (MoveDir == -1.0f)
+		Dir = "L";
+
 	return 0;
 }
 
@@ -93,12 +97,17 @@ int Monster::Update(float DeltaTime)
 {
 	Charactor::Update(DeltaTime);
 
-	HpBar->SetPos(m_Pos.x - m_Size.GetHalfX(), m_Pos.y - m_Size.y);
+	RC->SetVirtualRect(m_Size);
+
+	HpBar->SetPos(m_Pos.x - HpBar->GetSize().GetHalfX(), m_Pos.y - m_Size.y);
 	HpBar->SetBarInfo(0, MaxHp, Hp);
+
+	Target = FindSceneObject("Commando");
 
 	if (Hp <= 0)
 	{
 		Hp = 0;
+
 		DieEffect* newEffect = (DieEffect*)Object::CreateCloneObject("DieEffect", m_Layer);
 		newEffect->SetPos(m_Pos);
 		SAFE_RELEASE(newEffect);
@@ -147,6 +156,8 @@ void Monster::Collision(float DeltaTime)
 void Monster::CollsionAfterUpdate(float DeltaTime)
 {
 	Charactor::CollsionAfterUpdate(DeltaTime);
+
+	SAFE_RELEASE(Target);
 }
 
 void Monster::Render(HDC Hdc, float DeltaTime)
@@ -171,14 +182,24 @@ Monster * Monster::Clone()
 
 void Monster::TileCollsionActive(float DeltaTime)
 {
-	ClearGravityTime();
-	SetForce(0.0f);
+}
+
+void Monster::DirCheck()
+{
+	if (Target->GetPos().x - m_Pos.x < 0)
+	{
+		MoveDir = -1.0f;
+		Dir = "L";
+	}
+	else if (Target->GetPos().x - m_Pos.x >= 0)
+	{
+		MoveDir = 1;
+		Dir = "R";
+	}
 }
 
 void Monster::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
 {
-	int a = 0;
-
 	if (Dest->GetTag() == "BaseBody")
 	{
 		BaseAttackBullet* GetBullet = (BaseAttackBullet*)Dest->GetCurObject();

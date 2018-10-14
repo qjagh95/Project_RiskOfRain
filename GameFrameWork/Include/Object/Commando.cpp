@@ -30,7 +30,7 @@
 int Commando::pMoney = 100;
 int Commando::Hp = 300;
 int Commando::Level = 1;
-int Commando::Exp = 427;
+int Commando::Exp = 0;
 int Commando::MaxHp = 300;
 int Commando::MaxExp = 500;
 
@@ -87,7 +87,6 @@ int Commando::Update(float DeltaTime)
 		GetColl->SetPivot(1.0f, 0.5f);
 	SAFE_RELEASE(GetColl);
 ////////////////////////////////////////////////////////////////////////
-
 	PrevHitPos = HitPos;
 
 	DirCheck();
@@ -95,9 +94,6 @@ int Commando::Update(float DeltaTime)
 	RopeCheck();
 	LevelUpCheck();
 	SkillTimeCheck(DeltaTime);
-
-	Vector2 CameraPos = Camera::Get()->GetPos();
-	Center = m_Pos - CameraPos;
 
 	switch (pState)
 	{
@@ -109,6 +105,9 @@ int Commando::Update(float DeltaTime)
 			break;
 		case PS_JUMPING:
 			FS_Jump(DeltaTime);
+			break;
+		case PS_JUMPDOWN:
+			Fs_JumpDown(DeltaTime);
 			break;
 		case PS_ROPE:
 			FS_Rope(DeltaTime);
@@ -281,7 +280,6 @@ void Commando::LevelUpCheck()
 		Exp = 0;
 
 		int Temp = (int)(MaxHp * 1.2f) - MaxHp;
-
 		MaxHp = (int)(MaxHp * 1.2f);
 		Hp += Temp;
 	}
@@ -289,6 +287,7 @@ void Commando::LevelUpCheck()
 
 void Commando::SelectState(PLAYER_STATE eState)
 {
+	PrevState = pState;
 	pState = eState;
 
 	if (pState != PS_ROPE)
@@ -438,6 +437,7 @@ void Commando::AnimationInit()
 	AnimationName[PS_SKILL3] = "Skill3";
 	AnimationName[PS_SKILL4] = "Skill4";
 	AnimationName[PS_ROPE] = "Rope";
+	AnimationName[PS_JUMPDOWN] = "JumpDown";
 
 	pState = PS_IDLE;
 	Dir = "R";
@@ -452,6 +452,9 @@ void Commando::AnimationInit()
 	AddAnimationClip("RIdle", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "RightIdle", TEXT("Commando/RightIdle.bmp"));
 	AddAnimationClip("RMove", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 8, 1, 8, 1, 0, 0, 0.6f, "RightMove", TEXT("Commando/RightMove.bmp"));
 	AddAnimationClip("RJump", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "RightJump", TEXT("Commando/RightJump.bmp"));
+
+	AddAnimationClip("LJumpDown", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "LeftJumpDown", TEXT("Commando/LeftJump.bmp"));
+	AddAnimationClip("RJumpDown", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "RightJumpDown", TEXT("Commando/RightJump.bmp"));
 
 	AddAnimationClip("LSkill1", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 54.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.5f, "LeftSkill1", TEXT("Commando/LeftSkill1.bmp"));
 	AddAnimationClip("LSkill2", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 94.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.4f, "LeftSkill2", TEXT("Commando/LeftSkill2.bmp"));
@@ -477,6 +480,7 @@ void Commando::CollsionInit()
 	RC->SetCallBack<Commando>(this, &Commando::PumpHit, CS_COLFIRST);
 	RC->SetCallBack<Commando>(this, &Commando::CoinHit, CS_COLFIRST);
 	RC->SetCallBack<Commando>(this, &Commando::ItemBoxHit, CS_COLDOING);
+	RC->SetCallBack<Commando>(this, &Commando::TearHit, CS_COLFIRST);
 	RC->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RC);
 
