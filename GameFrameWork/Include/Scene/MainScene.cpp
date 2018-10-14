@@ -39,9 +39,12 @@
 
 #include "../StageManager.h"
 
+Number* MainScene::m_Second = NULL;
+Number* MainScene::m_Minit = NULL;
+
 MainScene::MainScene()
 	: TimeVar(0.0f), DebugTimeVar(0.0f),
-	m_Second(NULL), m_Minit(NULL), PlaySecond(0), PlayMinit(0)
+	 PlaySecond(0), PlayMinit(0)
 {
 }
 MainScene::~MainScene()
@@ -110,7 +113,7 @@ bool MainScene::Init()
 	SAFE_RELEASE(bEffect);
 
 	m_Second = Object::CreateObject<Number>("NumberSecond", UiLayer);
-	m_Second->SetPos(1490.0f, 70.0f);
+	m_Second->SetPos(1490 - 1000.0f, 70.0f); //TODO : -1000
 	m_Second->SetTexture("NumberSecond", TEXT("object/TempNumber.bmp"));
 	m_Second->SetNumber(PlaySecond);
 	m_Second->SetNumberSize(19.0f, 24.0f);
@@ -118,7 +121,7 @@ bool MainScene::Init()
 	m_Second->SetIsCameraMode(false);
 
 	m_Minit = Object::CreateObject<Number>("Number", UiLayer);
-	m_Minit->SetPos(1430.0f, 70.0f);
+	m_Minit->SetPos(1430 - 1000.0f, 70.0f); //TODO : -1000
 	m_Minit->SetTexture("NumberMinit", TEXT("object/TempNumber.bmp"));
 	m_Minit->SetNumber(PlayMinit);
 	m_Minit->SetNumberSize(19.0f, 24.0f);
@@ -209,61 +212,4 @@ void MainScene::Render(HDC hdc, float DeltaTime)
 
 		DebugTimeVar = 0.0f;
 	}
-}
-
-void MainScene::LoadMonster()
-{
-	const char* pPath = PathManager::Get()->FindPathMultiByte(DATA_PATH);
-
-	string FullPath;
-
-	if (pPath != NULL)
-		FullPath = pPath;
-
-	FullPath += "123.stgmon";
-
-	FILE* pFile = NULL;
-
-	fopen_s(&pFile, FullPath.c_str(), "rb");
-	{
-		size_t ObjSize;
-		fread(&ObjSize, sizeof(size_t), 1, pFile);
-
-		for (size_t i = 0; i < ObjSize; i++)
-		{
-			ObjectSave Loader;
-			fread(&Loader, sizeof(ObjectSave), 1, pFile);
-
-			switch (Loader.m_mType)
-			{
-				case MT_MONSTERONE:
-				{
-					Monster* newMonster = Object::CreateObject<Monster>("Monster", m_Scene->FindLayer("PlayLayer"));
-					newMonster->SetPos(Loader.Pos);
-					SAFE_RELEASE(newMonster);
-				}
-					break;
-				case MT_MONSTERTWO:
-					break;
-				case MT_MONSTERTHREE:
-					break;
-				case MT_MONSTERFOUR:
-					break;
-				case MT_MONSTERFIVE:
-					break;
-				case MT_MONSTERSIX:
-					break;
-				case MT_MONSTERSEVEN:
-					break;
-				case MT_MONSTEREIGHT:
-					break;
-				case MT_MONSTERNINE:
-					break;
-				case MT_MONSTERTEN:
-					break;
-			}//switch
-		}//for
-	}//fopen_s
-
-	fclose(pFile);
 }

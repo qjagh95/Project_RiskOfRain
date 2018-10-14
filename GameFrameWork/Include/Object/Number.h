@@ -21,6 +21,11 @@ public:
 	void SetMaxRange(float Range, float Speed) { MaxRange = Range, isMove = true, MoveSpeed = Speed; }
 	int GetNumberCount() const { return Count; }
 
+	void SetZeroTexturePos(const Vector2& Pos) { ZeroPos = Pos; }
+	void SetZeroTextureSize(const Vector2& Size) { ZeroSize = Size; }
+	void SetZeroTexturePos(float x, float y) { ZeroPos = Vector2(x, y); }
+	void SetZeroTextureSize(float x, float y) { ZeroSize = Vector2(x, y); }
+
 private:
 	int	m_Number;
 	vector<int>	m_vecNumber;

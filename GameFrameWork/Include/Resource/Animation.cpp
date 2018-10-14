@@ -79,10 +79,9 @@ void Animation::Update(float DeltaTime)
 					case AO_ONCE_DESTROY:
 						m_Object->SetisActiv(false);
 						break;
-
 				}//switch
-			}//if(y위치 다돈다)
-		}//if(x위치 다돈다)
+			}//if(y위치)
+		}//if(x위치)
 	}//while
 }
 
@@ -90,7 +89,6 @@ Animation * Animation::Clone() const
 {
 	return new Animation(*this);
 }
-
 
 bool Animation::CreateAnimationClip(const string & ClipName, ANIMATION_TYPE eType, ANIMATION_OPTION eOption, float FrameWidth, float FrameHeight, int FrameCountX, int FrameCountY, int FrameMaxX, int FrameMaxY, int StartX, int StartY, float CompleatTime, const string & TexKey, const TCHAR * FileName, bool bColorKey, DWORD dColorKey, const string & PathKey)
 {

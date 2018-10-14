@@ -7,6 +7,7 @@ class Bullet;
 class FollowBullet;
 class Effect;
 class Bar;
+class Number;
 class Player : public Charactor
 {
 public:
@@ -29,6 +30,10 @@ public:
 	void SetMoney(int Value) { pMoney = Value; }
 	static int GetMoney() { return pMoney; }
 	void SetExp(int Value) { Exp = Value; }
+	void AddExp(int Value) { Exp += Value; }
+	void SetHp(int Value) { Hp = Value; }
+	int GetHp() const { return Hp; }
+	void AddHp(int Value) { Hp += Value; }
 
 	///-------------FSMÇÔ¼ö-------------
 	void FS_Idle(float DeltaTime);
@@ -43,6 +48,10 @@ public:
 	///---------------------------------
 
 	void SelectState(PLAYER_STATE eState);
+	void AnimationInit();
+	void ColliderInit();
+	void BasicInit();
+	void KeyInit();
 
 protected:
 	Player();
@@ -53,6 +62,8 @@ private:
 	Vector2 LeftTop;
 
 	static int pMoney;
+	static Number* MoneyNumber;
+	int Hp;
 	int Exp;
 
 	bool isDown;

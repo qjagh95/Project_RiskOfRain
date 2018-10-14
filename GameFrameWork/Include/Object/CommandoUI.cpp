@@ -19,7 +19,7 @@ bool CommandoUI::Init()
 {
 	SetTexture("CommandoUI", TEXT("UI/Commando.bmp"));
 	SetSize(513.0f, 185.0f);
-	SetPos(450.0f, 600.0f);
+	SetPos(450.0f, 600 - 300.0f); //TODO : -300
 	SetIsCameraMode(false);
 
 	SetColorKey(RGB(255, 0, 255));

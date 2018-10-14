@@ -6,6 +6,7 @@
 
 #include "../Object/Tile.h"
 #include "../Object/Bar.h"
+#include "../Object/Number.h"
 
 #include "../stdafx.h"
 #include "../Input.h"
@@ -27,6 +28,7 @@
 #include "../StageManager.h"
 
 int Player::pMoney = 0;
+Number* Player::MoneyNumber = NULL;
 
 Player::Player()
 	:CurTarget(NULL), Exp(0)

@@ -14,14 +14,12 @@ public:
 	void Collision(float DeltaTime) override;
 	void Render(HDC hdc, float DeltaTime) override;
 
-	void LoadMonster();
-
 private:
 	MainScene();
 	~MainScene();
 
-	Number* m_Second;
-	Number* m_Minit;
+	static Number* m_Second;
+	static Number* m_Minit;
 
 	int PlaySecond;
 	int PlayMinit;
