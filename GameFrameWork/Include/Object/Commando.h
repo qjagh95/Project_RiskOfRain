@@ -9,6 +9,7 @@ class Effect;
 class Bar;
 class Number;
 class Hider;
+class ColliderPoint;
 class Commando : public Charactor
 {
 public:
@@ -23,6 +24,9 @@ public:
 
 	void BulletHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void RopeHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void PumpHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void RopeUpHit(Collider* Src, Collider* Dest, float DeltaTime);
+
 	void PlayerMove(float DeltaTime);
 
 	void DirCheck();
@@ -83,19 +87,27 @@ private:
 	bool isSkillFour;
 	
 	bool isRopeHiting;
+	bool isRopeUpHitting;
+	bool isJumping;
+
+	bool isRightCol;
+	bool isLeftCol;
+	bool isDownCol;
+	bool isUpCol;
 
 	PLAYER_STATE pState;
 	float MoveDir;
 	string Dir;
 	string AnimationName[PS_MAX];
 	string StateName;
-
-	bool isJumping;
-
+	Vector2 RopePos;
 	Object* CurTarget;
-
 	Vector2 Center;
-	Vector2 LineEnd;
+	ColliderPoint* RP;
+	ColliderPoint* RP2;
+	float TimeVar;
+
+	int PrevFrame;
 
 public:
 	friend class Object;

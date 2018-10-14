@@ -2,19 +2,21 @@
 #include "../stdafx.h"
 #include "Charactor.h"
 class Bar;
+class ColliderRect;
 class Monster :	public Charactor
 {
 public:
 	friend class Object;
 
-	bool Init() override;
-	int Input(float DeltaTime) override;
-	int Update(float DeltaTime) override;
-	int LateUpdate(float DeltaTime) override;
-	void Collision(float DeltaTime) override;
-	void Render(HDC Hdc, float DeltaTime) override;
-	void SetTarget(Object* Value);
-	Monster* Clone() override;
+	virtual bool Init();
+	virtual int Input(float DeltaTime);
+	virtual int Update(float DeltaTime);
+	virtual int LateUpdate(float DeltaTime);
+	virtual void Collision(float DeltaTime);
+	virtual void Render(HDC Hdc, float DeltaTime);
+	virtual void SetTarget(Object* Value);
+	virtual Monster* Clone() override;
+	virtual void TileCollsionActive(float DeltaTime) override;
 
 	void SetHp(int Value) { Hp = Value; }
 	int GetHp() const { return Hp; }
@@ -43,20 +45,14 @@ protected:
 	~Monster();
 
 private:
-	int MoveDir;
-	float FireTime;
-	float TraceRange;
-	float AttackRange;
-
 	int MaxHp;
 	int Hp;
 	int Attack;
+	float MoveDir;
 
-	MONSTER_STATE mState;
-
-	Vector2 LineEnd;
+	string Dir;
 	Object* Target;
-
-	Bar* mHpBar;
+	Bar* HpBar;
+	ColliderRect* RC;
 };
 

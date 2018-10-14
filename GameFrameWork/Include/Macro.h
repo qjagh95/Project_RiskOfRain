@@ -1,5 +1,6 @@
 #pragma once
 #include <assert.h>
+#include "Keyboard.h"
 
 #define	SAFE_DELETE(p)	if(p != NULL)	{ delete p; p = NULL; }
 #define SAFE_RELEASE(p) if(p != NULL) {p->Release(); p = NULL;}
@@ -55,5 +56,7 @@ typedef string	MyString;
 #define GETMOUSESCREEMPOS Input::Get()->GetMouseScreenPos()
 #define GETMOUSEWORLDPOS Input::Get()->GetMouseWorldPos()
 #define GETMOUSEGAP Input::Get()->GetMouseGap()
+
+#define BASESPEED 350.0f
 
 

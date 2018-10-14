@@ -31,6 +31,7 @@ public:
 	void SetIsGrid(bool Value) { m_isGrid = Value; }
 	void ClearTileMap();
 	void CreateGrid(unsigned int NumX, unsigned int NumY, const Vector2& StageSize, const string& KeyName = "", const TCHAR* FileName = NULL, const string& PathKey = TEXTURE_PATH);
+	Vector2 GetTileSize() { return Vector2((float)m_SizeX, (float)m_SizeY); }
 
 private:
 	Vector2 m_WorldSize;

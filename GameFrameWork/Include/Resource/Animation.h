@@ -30,6 +30,7 @@ public:
 	bool GetAniStart() const { return m_AniStart; }
 	string GetClipName() const { return m_CurClipName; }
 	ANIMATION_OPTION GetOption() const;
+	float GetCompleatTime() const;
 
 private:
 	Object* m_Object;
@@ -39,7 +40,6 @@ private:
 	string m_DefaultClipName;
 	AnimationClip* m_CurClip;
 	AnimationClip* m_DefaultClip;
-	int Dir;
 
 	bool m_isEnd;
 	bool m_AniStart;

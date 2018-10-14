@@ -14,6 +14,7 @@
 #include <conio.h>
 #include <atlstr.h>
 #include <random>
+#include <thread>
 
 using namespace std;
 
@@ -25,9 +26,15 @@ using namespace std;
 #include "Core.h"
 #include "Flag.h"
 
+#include "Keyboard.h"
+
 #pragma comment(lib, "msimg32.lib")
 
 #include <crtdbg.h>
+
+#define KEYPress(Key) Keyboard::Get()->KeyPress(Key)
+#define KEYDown(Key) Keyboard::Get()->KeyDown(Key)
+#define KEYUp(Key) Keyboard::Get()->KeyUp(Key)
 
 
 template<typename T>

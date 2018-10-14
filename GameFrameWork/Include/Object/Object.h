@@ -49,6 +49,7 @@ public:
 	void Move(float x, float y, float DeltaTime);
 	void Move(const Vector2& Dir);
 	void Move(const Vector2& Dir, float DeltaTime);
+	void Move(float xDir);
 	void MoveByAngle(float DeltaTime);
 	void Rotation(float RotationSpeed, float DeltaTime) { m_Angle += RotationSpeed * DeltaTime; }
 

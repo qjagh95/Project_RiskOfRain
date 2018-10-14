@@ -34,8 +34,6 @@ public:
 			KeyState->Name = value;
 			KeyMap.insert(make_pair(KeyState->Name, KeyState));
 		}
-
-
 		return true;
 	}
 

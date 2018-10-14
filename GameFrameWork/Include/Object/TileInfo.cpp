@@ -403,7 +403,6 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 			newRope->SetPos(Vector2(TempPos.x + SerchTile->GetSize().GetHalfX(), TempPos.y - 5.0f));
 
 			TempTile = GetTile(Vector2(TempPos.x, TempPos.y + SerchTile->GetSize().y));
-
 			while(TempTile->GetTileType() != TT_NOMOVE)
 			{
 				TempPos.y++;
@@ -416,6 +415,5 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 			SAFE_RELEASE(newRope);
 		}
 	}
-
 	StageManager::Get()->SetStageInfo(this);
 }

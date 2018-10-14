@@ -86,7 +86,10 @@ void EditScene::LoadStageFile(const TCHAR * FileName)
 
 	TileMap = Object::CreateObject<TileInfo>("EditorObject", newLayer);
 	SAFE_RELEASE(newLayer);
-	TileMap->LoadFromFullPath(MPath.c_str(), m_Scene->FindLayer("Default"));
+
+	Layer* TempLayer = m_Scene->FindLayer("Default");
+	TileMap->LoadFromFullPath(MPath.c_str(), TempLayer);
+	SAFE_RELEASE(TempLayer);
 }
 
 void EditScene::LoadMonFile(const TCHAR* FileName)
@@ -113,23 +116,31 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 			{
 				case MT_MONSTERONE:
 				{
-					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster1", m_Scene->FindLayer("Default"));
+					Layer* TempLayer = m_Scene->FindLayer("Default");
+
+					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster1", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
 					SAFE_RELEASE(newMonster);
+					SAFE_RELEASE(TempLayer);
 				}
 				break;
 				case MT_MONSTERTWO:
 				{
-					EditMonster2* newMonster = (EditMonster2*)Object::CreateObject<EditMonster2>("EditMonster2", m_Scene->FindLayer("Default"));
+					Layer* TempLayer = m_Scene->FindLayer("Default");
+
+					EditMonster2* newMonster = (EditMonster2*)Object::CreateObject<EditMonster2>("EditMonster2", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
 					SAFE_RELEASE(newMonster);
+					SAFE_RELEASE(TempLayer);
 				}
 				break;
 				case MT_MONSTERTHREE:
 				{
-					EditMonster3* newMonster = (EditMonster3*)Object::CreateObject<EditMonster3>("EditMonster3", m_Scene->FindLayer("Default"));
+					Layer* TempLayer = m_Scene->FindLayer("Default");
+
+					EditMonster3* newMonster = (EditMonster3*)Object::CreateObject<EditMonster3>("EditMonster3", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
 					SAFE_RELEASE(newMonster);
@@ -137,26 +148,35 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 				break;
 				case MT_MONSTERFOUR:
 				{
-					EditMonster4* newMonster = (EditMonster4*)Object::CreateObject<EditMonster4>("EditMonster4", m_Scene->FindLayer("Default"));
+					Layer* TempLayer = m_Scene->FindLayer("Default");
+
+					EditMonster4* newMonster = (EditMonster4*)Object::CreateObject<EditMonster4>("EditMonster4", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
 					SAFE_RELEASE(newMonster);
+					SAFE_RELEASE(TempLayer);
 				}
 				break;
 				case MT_MONSTERFIVE:
 				{
-					EditMonster5* newMonster = (EditMonster5*)Object::CreateObject<EditMonster5>("EditMonster5", m_Scene->FindLayer("Default"));
+					Layer* TempLayer = m_Scene->FindLayer("Default");
+
+					EditMonster5* newMonster = (EditMonster5*)Object::CreateObject<EditMonster5>("EditMonster5", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
 					SAFE_RELEASE(newMonster);
+					SAFE_RELEASE(TempLayer);
 				}
 				break;
 				case MT_MONSTERSIX:
 				{
-					EditMonster6* newMonster = (EditMonster6*)Object::CreateObject<EditMonster6>("EditMonster6", m_Scene->FindLayer("Default"));
+					Layer* TempLayer = m_Scene->FindLayer("Default");
+
+					EditMonster6* newMonster = (EditMonster6*)Object::CreateObject<EditMonster6>("EditMonster6", TempLayer);
 					newMonster->SetPos(Saver.Pos);
 
 					SAFE_RELEASE(newMonster);
+					SAFE_RELEASE(TempLayer);
 				}
 				break;
 				case MT_MONSTERSEVEN:

@@ -37,11 +37,14 @@ bool ColliderPoint::Init()
 int ColliderPoint::Update(float DeltaTime)
 {
 	Vector2 ObjectPos = m_Object->GetPos();
+	Vector2 ObjectSize = m_Object->GetSize();
+
+	Vector2 RealPos = ObjectPos - (ObjectSize * m_Pivot);
 
 	if (m_IsUI && m_Object->GetObjectType() != OT_UI)
-		ObjectPos -= Camera::Get()->GetPos();
+		RealPos -= Camera::Get()->GetPos();
 
-	m_WorldPos = m_VirtualPos + ObjectPos;
+	m_WorldPos = m_VirtualPos + RealPos;
 
 	return 0;
 }

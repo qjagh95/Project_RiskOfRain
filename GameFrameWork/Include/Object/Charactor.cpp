@@ -2,6 +2,7 @@
 #include "Tile.h"
 #include "TileInfo.h"
 #include "../StageManager.h"
+#include "../Resource/Animation.h"
 
 Charactor::Charactor()
 {
@@ -37,22 +38,41 @@ int Charactor::LateUpdate(float DeltaTime)
 	Vector2 PrevPos = m_Pos - m_TempMove;
 
 	Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
-	Tile* PrevTile = StageManager::Get()->GetTile(PrevPos);
+	Tile* NextTile = StageManager::Get()->GetTile(m_Pos.x , m_Pos.y + m_Size.GetHalfY());
 
 	if (CurTile == NULL)
 	{
+		//화면밖체크
 		m_Pos = PrevPos;
 	}
 
-	if (CurTile->GetTileType() == TT_NOMOVE)
+	if (NextTile->GetTileType() == TT_NOMOVE)
 	{
-		m_Pos = PrevPos;
+		isGravity = false;
+		SetForce(0.0f);
+
+		if (m_Animation != NULL && m_Animation->GetClipName() == "RopeUp")
+		{
+			SAFE_RELEASE(CurTile);
+			SAFE_RELEASE(NextTile);
+
+			return 0;
+		}
+		if (m_Animation != NULL && m_Animation->GetClipName() == "RopeHold")
+		{
+			SAFE_RELEASE(CurTile);
+			SAFE_RELEASE(NextTile);
+
+			return 0;
+		}
+
+		m_Pos.y = NextTile->GetPos().y - m_Size.GetHalfY();
 
 		TileCollsionActive(DeltaTime);
-
-		ClearGravityTime();
-		SetForce(0.0f);
 	}
+	
+	SAFE_RELEASE(CurTile);
+	SAFE_RELEASE(NextTile);
 
 	return 0;
 }

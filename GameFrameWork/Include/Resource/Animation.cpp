@@ -53,7 +53,7 @@ void Animation::Update(float DeltaTime)
 
 	m_isEnd = false;
 
-	if (m_CurClip->m_Option != AO_REVERS_LOOP)
+	if (m_CurClip->m_Option == AO_LOOP || m_CurClip->m_Option == AO_ONCE_DESTROY || m_CurClip->m_Option == AO_ONCE_RETURN)
 	{
 		while (m_CurClip->m_AnimationTime >= CompleatTime)
 		{
@@ -86,7 +86,7 @@ void Animation::Update(float DeltaTime)
 			}//if(x위치)
 		}//while
 	}
-	else if (m_CurClip->m_Option == AO_REVERS_LOOP)
+	else if (m_CurClip->m_Option == AO_REVERS_LOOP || m_CurClip->m_Option == AO_REVERS_BOUNCE_LOOP || m_CurClip->m_Option == AO_REVERS_ONCE_DESTROY)
 	{
 		while (m_CurClip->m_AnimationTime >= CompleatTime)
 		{
@@ -104,6 +104,13 @@ void Animation::Update(float DeltaTime)
 				{
 					m_CurClip->m_FrameY = m_CurClip->m_StartY;
 					m_isEnd = true;
+
+					switch (m_CurClip->m_Option)
+					{
+						case AO_REVERS_ONCE_DESTROY:
+							m_Object->SetisActiv(false);
+							break;
+					}//switch
 				}//if(y위치)
 			}//if(x위치)
 		}//while
@@ -241,4 +248,9 @@ Vector2 Animation::GetFrameSize() const
 ANIMATION_OPTION Animation::GetOption() const
 {
 	return m_CurClip->m_Option;
+}
+
+float Animation::GetCompleatTime() const
+{
+	return m_CurClip->GetCompleatTime();
 }

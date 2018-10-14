@@ -1,7 +1,6 @@
 #pragma once
 #include "SceneComponent.h"
-class Number;
-class Bar;
+class Commando;
 class MainScene : public SceneComponent
 {
 public:

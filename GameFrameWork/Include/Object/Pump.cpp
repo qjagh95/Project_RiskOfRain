@@ -38,7 +38,6 @@ bool Pump::Init()
 	ColliderRect* RC = AddCollider<ColliderRect>("PumpBody");
 	RC->SetVirtualRect(m_Size);
 	RC->SetPivot(0.5f, 0.5f);
-	RC->SetCallBack(this, &Pump::PlayerColl, CS_COLFIRST);
 	RC->SetCollsionTypeName("Pump");
 
 	SAFE_RELEASE(RC);
@@ -78,9 +77,5 @@ void Pump::Render(HDC Hdc, float DeltaTime)
 Pump * Pump::Clone()
 {
 	return new Pump(*this);
-}
-
-void Pump::PlayerColl(Collider * Src, Collider* Dest, float DeltaTime)
-{
 }
 

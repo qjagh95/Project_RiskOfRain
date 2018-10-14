@@ -26,12 +26,16 @@ bool Hider::Init()
 	SetSize(54.0f, 54.0f);
 	SetIsCameraMode(false);
 
-	DelayTimeNumber = Object::CreateObject<Number>("HiderNumber", m_Scene->FindLayer("UI"));
+	Layer* TempLayer = m_Scene->FindLayer("UI");
+
+	DelayTimeNumber = Object::CreateObject<Number>("HiderNumber", TempLayer);
 	DelayTimeNumber->SetTexture("HiderNumber", TEXT("object/TempNumber.bmp"));
 	DelayTimeNumber->SetNumberSize(19.0f, 24.0f);
 	DelayTimeNumber->SetColorKey(RGB(255, 0, 255));
 	DelayTimeNumber->SetIsCameraMode(false);
 	DelayTimeNumber->SetNumberViewSize(Vector2(19.0f, 24.0f));
+
+	SAFE_RELEASE(TempLayer);
 
 	return true;
 }

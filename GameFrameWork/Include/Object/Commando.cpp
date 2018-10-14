@@ -1,5 +1,5 @@
 #include "Commando.h"
-#include "Bullet.h"
+#include "BaseAttackBullet.h"
 #include "Effect.h"
 
 #include "../stdafx.h"
@@ -23,6 +23,8 @@
 
 #include "../Sound/SoundManager.h"
 
+#include "../StageManager.h"
+
 int Commando::pMoney = 100;
 int Commando::Hp = 300;
 int Commando::Level = 1;
@@ -31,9 +33,11 @@ int Commando::MaxHp = 300;
 int Commando::MaxExp = 500;
 
 Commando::Commando()
-	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(10)
-	, SkillOneDelay(5.0f), SkillTwoDelay(6.0f), SkillThreeDelay(7.0f), SkillFourDelay(8.0f),
+	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(12)
+	, SkillOneDelay(0.5f), SkillTwoDelay(5.0f), SkillThreeDelay(5.0f), SkillFourDelay(8.0f),
 	isSkillOne(false), isSkillTwo(false), isSkillThree(false), isSkillFour(false), isRopeHiting(false)
+	, isRopeUpHitting(false), isRightCol(false), isUpCol(false), isDownCol(false), isLeftCol(false)
+	,PrevFrame(0)
 {
 	m_ObjectType = OT_PLAYER;
 	SetTag("Commando");
@@ -43,6 +47,8 @@ Commando::~Commando()
 {
 	SAFE_RELEASE(CurTarget);
 	SAFE_RELEASE(MoneyNumber);
+	SAFE_RELEASE(RP);
+	SAFE_RELEASE(RP2);
 }
 
 bool Commando::Init()
@@ -61,7 +67,7 @@ int Commando::Input(float DeltaTime)
 
 	if (isRopeHiting == true)
 		isGravity = false;
-	else
+	else if(isRopeHiting == false)
 		isGravity = true;
 
 	return 0;
@@ -70,7 +76,8 @@ int Commando::Input(float DeltaTime)
 int Commando::Update(float DeltaTime)
 {
 	Charactor::Update(DeltaTime);
-	//머니머니!
+
+	//에구 "머니" 나!
 	MoneyNumber->SetNumber(pMoney);
 
 	DirCheck();
@@ -110,6 +117,8 @@ int Commando::Update(float DeltaTime)
 	}
 
 	isRopeHiting = false;
+	isRopeUpHitting = false;
+	PrevFrame = m_Animation->GetFrameX();
 
 	return 0;
 }
@@ -117,7 +126,6 @@ int Commando::Update(float DeltaTime)
 int Commando::LateUpdate(float DeltaTime)
 {
 	Charactor::LateUpdate(DeltaTime);
-
 	return 0;
 }
 
@@ -139,9 +147,45 @@ Commando * Commando::Clone()
 void Commando::PlayerMove(float DeltaTime)
 {
 	if (KEYPRESS("Right"))
+	{
+		if (m_Pos.x + m_Size.GetHalfX() >= StageManager::Get()->GetWidth())
+			return;
+
+		Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
+		Tile* NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX(), m_Pos.y);
+
+		if (NextTile->GetTileType() == TT_NOMOVE)
+		{
+			SAFE_RELEASE(CurTile);
+			SAFE_RELEASE(NextTile);
+			return;
+		}
 		MoveByAngle(DeltaTime * MoveDir);
+
+		SAFE_RELEASE(CurTile);
+		SAFE_RELEASE(NextTile);
+	}
+
 	else if (KEYPRESS("Left"))
+	{
+		if (m_Pos.x - m_Size.GetHalfX() <= 0.0f)
+			return;
+
+		Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
+		Tile* NextTile = StageManager::Get()->GetTile(m_Pos.x - m_Size.GetHalfX(), m_Pos.y);
+
+		if (NextTile->GetTileType() == TT_NOMOVE)
+		{
+			SAFE_RELEASE(CurTile);
+			SAFE_RELEASE(NextTile);
+			return;
+		}
+
 		MoveByAngle(DeltaTime * MoveDir);
+
+		SAFE_RELEASE(CurTile);
+		SAFE_RELEASE(NextTile);
+	}
 }
 
 void Commando::DirCheck()
@@ -190,9 +234,12 @@ void Commando::RopeCheck()
 {
 	if (isRopeHiting == true)
 	{
-		if (KEYPRESS("Up"))
+		if (KEYPRESS("Up") == false && KEYPRESS("Down") == false)
+			return;
+
+		if (KEYPRESS("Up") == true && isRopeUpHitting == true)
 			SelectState(PLAYER_STATE::PS_ROPE);
-		if (KEYPRESS("Down"))
+		else if (KEYPRESS("Down"))
 			SelectState(PLAYER_STATE::PS_ROPE);
 	}
 }
@@ -210,50 +257,54 @@ void Commando::SelectState(PLAYER_STATE eState)
 
 void Commando::SkillState()
 {
-	if (KEYDOWN("Skill1"))
+	if (KEYPress('Z'))
 	{
 		if (isSkillOne == false)
-		{
-			Hider* OneHider = Object::CreateObject<Hider>("HiderOne", m_Scene->FindLayer("UI"));
-			OneHider->SetHider(ST_SKILLONE, SkillOneDelay);
-			SAFE_RELEASE(OneHider);
-
 			SelectState(PLAYER_STATE::PS_SKILL1);
-		}
+
 		isSkillOne = true;
 	}
 
-	if (KEYDOWN("Skill2"))
+	if (KEYDown('X'))
 	{
 		if (isSkillTwo == false)
 		{
-			Hider* OneHider = Object::CreateObject<Hider>("HiderOne", m_Scene->FindLayer("UI"));
+			Layer* TempLayer = m_Scene->FindLayer("UI");
+
+			Hider* OneHider = Object::CreateObject<Hider>("HiderOne", TempLayer);
 			OneHider->SetHider(ST_SKILLTWO, SkillTwoDelay);
 			SAFE_RELEASE(OneHider);
+			SAFE_RELEASE(TempLayer);
 
 			SelectState(PLAYER_STATE::PS_SKILL2);
 		}
 		isSkillTwo = true;
 	}
-	if (KEYDOWN("Skill3"))
+	if (KEYDown('C'))
 	{
 		if (isSkillThree == false)
 		{
-			Hider* OneHider = Object::CreateObject<Hider>("HiderOne", m_Scene->FindLayer("UI"));
+			Layer* TempLayer = m_Scene->FindLayer("UI");
+
+			Hider* OneHider = Object::CreateObject<Hider>("HiderOne", TempLayer);
 			OneHider->SetHider(ST_SKILLTHREE, SkillThreeDelay);
 			SAFE_RELEASE(OneHider);
+			SAFE_RELEASE(TempLayer);
 
 			SelectState(PLAYER_STATE::PS_SKILL3);
 		}
 		isSkillThree = true;
 	}
-	if (KEYDOWN("Skill4"))
+	if (KEYDown('V'))
 	{
 		if (isSkillFour == false)
 		{
-			Hider* OneHider = Object::CreateObject<Hider>("HiderOne", m_Scene->FindLayer("UI"));
+			Layer* TempLayer = m_Scene->FindLayer("UI");
+
+			Hider* OneHider = Object::CreateObject<Hider>("HiderOne", TempLayer);
 			OneHider->SetHider(ST_SKILLFOUR, SkillFourDelay);
 			SAFE_RELEASE(OneHider);
+			SAFE_RELEASE(TempLayer);
 
 			SelectState(PLAYER_STATE::PS_SKILL4);
 		}
@@ -269,7 +320,7 @@ void Commando::SkillTimeCheck(float DeltaTime)
 
 		if (SkillOneDelay <= 0.0f)
 		{
-			SkillOneDelay = 5.0f;
+			SkillOneDelay = 0.5f;
 			isSkillOne = false;
 		}
 	}
@@ -280,7 +331,7 @@ void Commando::SkillTimeCheck(float DeltaTime)
 
 		if (SkillTwoDelay <= 0.0f)
 		{
-			SkillTwoDelay = 6.0f;
+			SkillTwoDelay = 5.0f;
 			isSkillTwo = false;
 		}
 	}
@@ -291,7 +342,7 @@ void Commando::SkillTimeCheck(float DeltaTime)
 
 		if (SkillThreeDelay <= 0.0f)
 		{
-			SkillThreeDelay = 7.0f;
+			SkillThreeDelay = 5.0f;
 			isSkillThree = false;
 		}
 	}
@@ -302,7 +353,7 @@ void Commando::SkillTimeCheck(float DeltaTime)
 
 		if (SkillFourDelay <= 0.0f)
 		{
-			SkillFourDelay = 7.0f;
+			SkillFourDelay = 6.0f;
 			isSkillFour = false;
 		}
 	}
@@ -350,6 +401,7 @@ void Commando::AnimationInit()
 
 	//				애니이름, 아틀라스?, 루프?, 1개당 사이즈,  1줄갯수.  전체갯수. 시작위치. 행동시간
 	//리버스시 시작위치 마지막 - 1
+	//REVERS_BOUNCE 시작위치 마지막 - 1
 	AddAnimationClip("LIdle", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "LeftIdle", TEXT("Commando/LeftIdle.bmp"));
 	AddAnimationClip("LMove", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 8, 1, 8, 1, 0, 0, 0.6f, "LeftMove", TEXT("Commando/LeftMove.bmp"));
 	AddAnimationClip("LJump", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "LeftJump", TEXT("Commando/LeftJump.bmp"));
@@ -358,15 +410,15 @@ void Commando::AnimationInit()
 	AddAnimationClip("RMove", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 8, 1, 8, 1, 0, 0, 0.6f, "RightMove", TEXT("Commando/RightMove.bmp"));
 	AddAnimationClip("RJump", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 1, 1, 1, 1, 0, 0, 0.5f, "RightJump", TEXT("Commando/RightJump.bmp"));
 
-	AddAnimationClip("LSkill1", AT_ATLAS, AO_REVERS_LOOP, 54.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.4f, "LeftSkill1", TEXT("Commando/LeftSkill1.bmp"));
-	AddAnimationClip("LSkill2", AT_ATLAS, AO_REVERS_LOOP, 94.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.4f, "LeftSkill2", TEXT("Commando/LeftSkill2.bmp"));
+	AddAnimationClip("LSkill1", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 54.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.5f, "LeftSkill1", TEXT("Commando/LeftSkill1.bmp"));
+	AddAnimationClip("LSkill2", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 94.0f, 40.0f, 4, 1, 4, 1, 3, 0, 0.4f, "LeftSkill2", TEXT("Commando/LeftSkill2.bmp"));
 	AddAnimationClip("LSkill3", AT_ATLAS, AO_REVERS_LOOP, 40.0f, 40.0f, 9, 1, 9, 1, 8, 0, 0.4f, "LeftSkill3", TEXT("Commando/LeftSkill3.bmp"));
-	AddAnimationClip("LSkill4", AT_ATLAS, AO_REVERS_LOOP, 66.0f, 40.0f, 13, 1, 13, 1, 12, 0, 0.4f, "LeftSkill4", TEXT("Commando/LeftSkill4.bmp"));
+	AddAnimationClip("LSkill4", AT_ATLAS, AO_REVERS_BOUNCE_LOOP, 66.0f, 40.0f, 13, 1, 13, 1, 12, 0, 0.7f, "LeftSkill4", TEXT("Commando/LeftSkill4.bmp"));
 
 	AddAnimationClip("RSkill1", AT_ATLAS, AO_LOOP, 54.0f, 40.0f, 4, 1, 4, 1, 0, 0, 0.4f, "RightSkill1", TEXT("Commando/RightSkill1.bmp"));
 	AddAnimationClip("RSkill2", AT_ATLAS, AO_LOOP, 94.0f, 40.0f, 4, 1, 4, 1, 0, 0, 0.4f, "RightSkill2", TEXT("Commando/RightSkill2.bmp"));
 	AddAnimationClip("RSkill3", AT_ATLAS, AO_LOOP, 40.0f, 40.0f, 9, 1, 9, 1, 0, 0, 0.4f, "RightSkill3", TEXT("Commando/RightSkill3.bmp"));
-	AddAnimationClip("RSkill4", AT_ATLAS, AO_LOOP, 66.0f, 40.0f, 13, 1, 13, 1, 0, 0, 0.4f, "RightSkill4", TEXT("Commando/RightSkill4.bmp"));
+	AddAnimationClip("RSkill4", AT_ATLAS, AO_LOOP, 66.0f, 40.0f, 13, 1, 13, 1, 0, 0, 0.7f, "RightSkill4", TEXT("Commando/RightSkill4.bmp"));
 
 	AddAnimationClip("RopeUp", AT_ATLAS, AO_LOOP, 18.0f, 36.0f, 6, 1, 6, 1, 0, 0, 0.4f, "RopeUp", TEXT("Commando/Ladder_Move.bmp"));
 	AddAnimationClip("RopeHold", AT_ATLAS, AO_LOOP, 18.0f, 36.0f, 1, 1, 1, 1, 0, 0, 0.4f, "RopeHold", TEXT("Commando/Ladder_Hold.bmp"));
@@ -375,25 +427,30 @@ void Commando::AnimationInit()
 void Commando::CollsionInit()
 {
 	//충돌체생성
-	ColliderRect* RC = AddCollider<ColliderRect>("PlayerBody");
+	ColliderRect* RC = AddCollider<ColliderRect>("CommandoBody");
 	RC->SetVirtualRect(40.0f, 40.0f);
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCallBack<Commando>(this, &Commando::BulletHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::PumpHit, CS_COLFIRST);
 	RC->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RC);
 
 	//로프판단.
-	ColliderPoint* RP = AddCollider<ColliderPoint>("PlayerPoint");
-	RP->SetPivot(0.5f, 0.5f);
+	RP = AddCollider<ColliderPoint>("PlayerMiddlePoint");
+	RP->SetPivot(0.0f, -0.5f);
 	RP->SetCallBack<Commando>(this, &Commando::RopeHit, CS_COLDOING);
 	RP->SetCollsionTypeName("Commando");
-	SAFE_RELEASE(RP);
+
+	RP2 = AddCollider<ColliderPoint>("PlayerUpPoint");
+	RP2->SetPivot(0.0f, 0.5f);
+	RP2->SetCallBack<Commando>(this, &Commando::RopeUpHit, CS_COLDOING);
+	RP2->SetCollsionTypeName("Commando");
 }
 
 void Commando::InfoInit()
 {
-	SetMoveSpeed(300.0f);
-	SetPos(300.0f, 200.0f);
+	SetMoveSpeed(BASESPEED);
+	SetPos(150.0f, 1950.0f);
 	SetSize(40.0f, 40.0f);
 	SetPivot(0.5f, 0.5f);
 	MoveDir = 1.0f;

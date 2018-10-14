@@ -13,7 +13,7 @@
 #include "../Object/BackGround.h"
 #include "../Object/Object.h"
 #include "../Object/Commando.h"
-#include "../Object/Bullet.h"
+#include "../Object/BaseAttackBullet.h"
 #include "../Object/Monster.h"
 #include "../Object/Effect.h"
 
@@ -33,10 +33,14 @@
 #include "../Object/CommandoUI.h"
 #include "../Object/TimeUI.h"
 
+#include "../Object/BaseAttackBullet.h"
+#include "../Object/LaserBullet.h"
+#include "../Object/BaseEffect.h"
+#include "../Object/LaserEffect.h"
+
 #include "../Sound/SoundManager.h"
 
 #include "../StageManager.h"
-
 
 MainScene::MainScene()
 	: TimeVar(0.0f), DebugTimeVar(0.0f)
@@ -51,10 +55,10 @@ bool MainScene::Init()
 	Camera::Get()->SetWorldSize(Vector2(6200.0f, 3000.0f));
 
 	SoundManager::Get()->LoadSound("BGM", true, TEXT("musicStage1.wav"));
-	SoundManager::Get()->LoadSound("1Up", false, TEXT("1Up.wav"));
-	SoundManager::Get()->LoadSound("Stun", false, TEXT("Stun.wav"));
+	SoundManager::Get()->LoadSound("CommandoShow", false, TEXT("teleporter_receive.wav"));
 
 	SoundManager::Get()->Play("BGM", true);
+	SoundManager::Get()->Play("CommandoShow", false);
 
 	Layer* BackLayer = m_Scene->FindLayer("BackGround");
 	Layer* TileLayer = m_Scene->FindLayer("TileLayer");
@@ -70,19 +74,10 @@ bool MainScene::Init()
 	StageManager::Get()->SetStageInfo(Stage1TileInfo);
 	StageManager::LoadMonsterList(L"123.stgmon", newLayer);
 
-	Bullet* pBullet1 = Object::CreatePrototype<Bullet>("Bullet", m_Scene);
-
-	Effect* pEffect = Object::CreatePrototype<Effect>("BomeEffect", m_Scene);
-	pEffect->SetPivot(0.0f, 1.0f);
-	pEffect->SetSize(100.0f, 200.0f);
-	pEffect->SetColorKey(RGB(255, 0, 255));
-	pEffect->AddAnimationClip("BombEffect", AT_ATLAS, AO_ONCE_DESTROY, 100.0f, 200.0f, 23, 1, 23, 1, 0, 0, 1.0f, "BombEffect", TEXT("player_bomb.bmp"));
-
-	Effect* bEffect = Object::CreatePrototype<Effect>("BuffEffect", m_Scene);
-	bEffect->SetPivot(0.5f, 0.5f);
-	bEffect->SetSize(100.0f, 200.0f);
-	bEffect->SetColorKey(RGB(255, 0, 255));
-	bEffect->AddAnimationClip("BuffEffect", AT_ATLAS, AO_LOOP, 100.0f, 200.0f, 23, 1, 23, 1, 0, 0, 1.0f, "BuffEffect", TEXT("player_bomb.bmp"));
+	BaseAttackBullet* baseBullet = Object::CreatePrototype<BaseAttackBullet>("BaseAttackBullet", m_Scene);
+	LaserBullet* laserBullet = Object::CreatePrototype<LaserBullet>("LaserBullet", m_Scene);
+	BaseEffect* baseEffect = Object::CreatePrototype<BaseEffect>("BaseEffect", m_Scene);
+	LaserEffect* laserEffect = Object::CreatePrototype<LaserEffect>("LaserEffect", m_Scene);
 
 	Commando* newPlayer = Object::CreateObject<Commando>("Players", newLayer);
 	Camera::Get()->SetTarget(newPlayer);
@@ -93,8 +88,9 @@ bool MainScene::Init()
 	CommandoUI* newCommando = Object::CreateObject<CommandoUI>("CommandoUI", UiLayer);
 	TimeUI* newTime = Object::CreateObject<TimeUI>("TimeUI", UiLayer);
 
-	SAFE_RELEASE(pEffect);
-	SAFE_RELEASE(bEffect);
+	SAFE_RELEASE(baseEffect);
+	SAFE_RELEASE(laserEffect);
+	SAFE_RELEASE(newPlayer);
 	SAFE_RELEASE(newCoin);
 	SAFE_RELEASE(newDoller);
 	SAFE_RELEASE(newCommando);
@@ -104,8 +100,8 @@ bool MainScene::Init()
 	SAFE_RELEASE(UiLayer);
 	SAFE_RELEASE(BackLayer);
 	SAFE_RELEASE(newLayer);
-	SAFE_RELEASE(newPlayer);
-	SAFE_RELEASE(pBullet1);
+	SAFE_RELEASE(baseBullet);
+	SAFE_RELEASE(laserBullet);
 	SAFE_RELEASE(Stage1TileInfo);
 
 	return true;

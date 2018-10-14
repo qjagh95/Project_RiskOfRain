@@ -41,7 +41,6 @@ bool Rope::Init()
 	RC = AddCollider<ColliderRect>("RopeBody");
 	RC->SetVirtualRect(m_Size);
 	RC->SetPivot(0.5f, 0.0f);
-	RC->SetCallBack(this, &Rope::PlayerCol, CS_COLDOING);
 	RC->SetCollsionTypeName("Rope");
 
 	return true;
@@ -57,7 +56,7 @@ int Rope::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
 
-	RC->SetVirtualRect(m_Size.x, m_Size.y);
+	RC->SetVirtualRect(m_Size.x + 3.0f, m_Size.y);
 
 	return 0;
 }
@@ -81,13 +80,5 @@ void Rope::Render(HDC Hdc, float DeltaTime)
 Rope * Rope::Clone()
 {
 	return new Rope(*this);
-}
-
-void Rope::PlayerCol(Collider * Src, Collider * Dest, float DeltaTime)
-{
-	if (Dest->GetTag() == "PlayerPoint")
-	{
-		int a = 0;
-	}
 }
 

@@ -10,6 +10,7 @@ public:
 
 	DWORD GetColorKey() const { return m_ColorKey; }
 	bool GetIsColorKey() const { return m_isColorKey; }
+	float GetCompleatTime() const { return m_CompleteTime; }
 
 private:
 	string	m_Name; ///클립 이름(행동이름)

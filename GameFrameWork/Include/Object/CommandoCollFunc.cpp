@@ -1,6 +1,8 @@
 #include "Commando.h"
-#include "Bullet.h"
-#include "Effect.h"
+#include "BaseAttackBullet.h"
+
+#include "../Object/Tile.h"
+#include "../StageManager.h"
 
 #include "../stdafx.h"
 #include "../Input.h"
@@ -37,11 +39,6 @@ void Commando::BulletHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 		Object*	newBullet = Dest->GetCurObject();
 		newBullet->SetisActiv(false);
-
-		Effect* newEffect = (Effect*)Object::CreateCloneObject("BomeEffect", m_Layer);
-		newEffect->SetPos(newBullet->GetPos());
-
-		SAFE_RELEASE(newEffect);
 		SAFE_RELEASE(newBullet);
 	}
 }
@@ -49,7 +46,28 @@ void Commando::RopeHit(Collider * Src, Collider * Dest, float DeltaTime)
 {
 	if (Dest->GetTag() == "RopeBody")
 	{
+		if (KEYPRESS("Up") == false && KEYPRESS("Down") == false && pState != PS_ROPE)
+			return;
+
 		isRopeHiting = true;
-		m_Pos.x = Dest->GetPos().x;
+		RopePos = Dest->GetPos();
+	}
+}
+
+void Commando::RopeUpHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "RopeBody")
+	{
+		isRopeUpHitting = true;
+	}
+}
+
+void Commando::PumpHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "PumpBody")
+	{
+		SetForce(1200.0f);
+		isJumping = true;
+		SelectState(PLAYER_STATE::PS_JUMPING);
 	}
 }

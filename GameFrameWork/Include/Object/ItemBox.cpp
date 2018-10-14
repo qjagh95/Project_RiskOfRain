@@ -156,7 +156,7 @@ ItemBox * ItemBox::Clone()
 
 void ItemBox::PlayerCollBack(Collider * Src, Collider * Dest, float DeltaTime)
 {
-	if (Dest->GetTag() == "PlayerBody")
+	if (Dest->GetTag() == "CommandoBody")
 	{
 		ChangeClip("ItemBoxOpen");
 	}

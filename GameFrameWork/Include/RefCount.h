@@ -16,7 +16,6 @@ public:
 	bool GetisActiv() const { return isActiv; }
 	void SetisShow(bool Value) { isShow = Value; }
 	void SetisActiv(bool Value) { isActiv = Value; }
-	void SetRefCount(int Value) { m_RefCount = Value; }
 	int Release();
 
 protected:

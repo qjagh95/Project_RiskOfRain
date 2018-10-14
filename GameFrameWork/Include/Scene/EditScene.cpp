@@ -25,6 +25,8 @@
 #include "../Resource/PathManager.h"
 #include "../Resource/Texture.h"
 
+#include "../Sound/SoundManager.h"
+
 EditScene::EditScene()
 	:TileMap(NULL), SelectTileTexture(NULL), SelectTile(NULL), TileButton(NULL)
 	, CurType(TT_NOMAL), isItemOptionMode(false), isRopeOptionMode(false), isPumpOptionMode(false), isTileShow(true)
@@ -54,6 +56,10 @@ bool EditScene::Init()
 	Input::Get()->PushKey("TileOnOff", VK_F4);
 	Input::Get()->PushKey("OptionChange", VK_F7);
 	Input::Get()->PushKey("Clear", VK_RETURN);
+
+	SoundManager::Get()->LoadSound("EditBGM", true, TEXT("RolCoTa.mp3"));
+
+	SoundManager::Get()->Play("EditBGM", true);
 
 	Layer* DefaultLayer = m_Scene->FindLayer("Default");
 	Layer* BackLayer = m_Scene->FindLayer("BackGround");
@@ -328,55 +334,73 @@ void EditScene::MonsterMode(float DeltaTime)
 		{
 			case MT_MONSTERONE:
 			{
-				EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster1", m_Scene->FindLayer("Default"));
+				Layer* TempLayer = m_Scene->FindLayer("Default");
+
+				EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster1", TempLayer);
 				newMonster->SetPos(mPos);
 				Saver.m_Object = newMonster;
 
 				SAFE_RELEASE(newMonster);
+				SAFE_RELEASE(TempLayer);
 			}
 				break;
 			case MT_MONSTERTWO:
 			{
-				EditMonster2* newMonster = (EditMonster2*)Object::CreateObject<EditMonster2>("EditMonster2", m_Scene->FindLayer("Default"));
+				Layer* TempLayer = m_Scene->FindLayer("Default");
+
+				EditMonster2* newMonster = (EditMonster2*)Object::CreateObject<EditMonster2>("EditMonster2", TempLayer);
 				newMonster->SetPos(mPos);
 				Saver.m_Object = newMonster;
 
+				SAFE_RELEASE(TempLayer);
 				SAFE_RELEASE(newMonster);
 			}
 				break;
 			case MT_MONSTERTHREE:
 			{
-				EditMonster3* newMonster = (EditMonster3*)Object::CreateObject<EditMonster3>("EditMonster3", m_Scene->FindLayer("Default"));
+				Layer* TempLayer = m_Scene->FindLayer("Default");
+
+				EditMonster3* newMonster = (EditMonster3*)Object::CreateObject<EditMonster3>("EditMonster3", TempLayer);
 				newMonster->SetPos(mPos);
 				Saver.m_Object = newMonster;
 
 				SAFE_RELEASE(newMonster);
+				SAFE_RELEASE(TempLayer);
 			}
 				break;
 			case MT_MONSTERFOUR:
 			{
-				EditMonster4* newMonster = (EditMonster4*)Object::CreateObject<EditMonster4>("EditMonster4", m_Scene->FindLayer("Default"));
+				Layer* TempLayer = m_Scene->FindLayer("Default");
+
+				EditMonster4* newMonster = (EditMonster4*)Object::CreateObject<EditMonster4>("EditMonster4", TempLayer);
 				newMonster->SetPos(mPos);
 				Saver.m_Object = newMonster;
 
 				SAFE_RELEASE(newMonster);
+				SAFE_RELEASE(TempLayer);
 			}
 				break;
 			case MT_MONSTERFIVE:
 			{
-				EditMonster5* newMonster = (EditMonster5*)Object::CreateObject<EditMonster5>("EditMonster5", m_Scene->FindLayer("Default"));
+				Layer* TempLayer = m_Scene->FindLayer("Default");
+
+				EditMonster5* newMonster = (EditMonster5*)Object::CreateObject<EditMonster5>("EditMonster5", TempLayer);
 				newMonster->SetPos(mPos);
 				Saver.m_Object = newMonster;
 
 				SAFE_RELEASE(newMonster);
+				SAFE_RELEASE(TempLayer);
 			}
 				break;
 			case MT_MONSTERSIX:
 			{
-				EditMonster6* newMonster = (EditMonster6*)Object::CreateObject<EditMonster6>("EditMonster6", m_Scene->FindLayer("Default"));
+				Layer* TempLayer = m_Scene->FindLayer("Default");
+
+				EditMonster6* newMonster = (EditMonster6*)Object::CreateObject<EditMonster6>("EditMonster6", TempLayer);
 				newMonster->SetPos(mPos);
 				Saver.m_Object = newMonster;
 
+				SAFE_RELEASE(TempLayer);
 				SAFE_RELEASE(newMonster);
 			}
 				break;

@@ -99,7 +99,6 @@ void Collider::OnCollsionFirst(Collider * pDest, float DeltaTime)
 
 	for ( ;StartIter != EndIter; StartIter++)
 		(*StartIter)(this, pDest, DeltaTime);
-
 }
 
 void Collider::OnCollsionDoing(Collider * pDest, float DeltaTime)

@@ -6,8 +6,10 @@
 #include "Object\TileInfo.h"
 
 #include "Object\Monster.h"
+#include "Object/IssacEnemy1.h"
 
 #include "Scene\Layer.h"
+
 
 INIT_STATIC_VAR(StageManager)
 
@@ -66,6 +68,21 @@ void StageManager::SetStageInfo(TileInfo * info)
 	m_TileInfo = info;
 }
 
+int StageManager::GetWidth()
+{
+	return (int)(m_TileInfo->GetTileWidthCount() * m_TileInfo->GetSize().x);
+}
+
+int StageManager::GetHight()
+{
+	return (int)(m_TileInfo->GetTileHeightCount() * m_TileInfo->GetSize().y);
+}
+
+Vector2 StageManager::GetTileSize()
+{
+	return m_TileInfo->GetTileSize();
+}
+
 void StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 {
 	const char* pPath = PathManager::Get()->FindPathMultiByte(DATA_PATH);
@@ -97,7 +114,7 @@ void StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 		{
 			case MT_MONSTERONE:
 			{
-				Monster* newMonster = (Monster*)Object::CreateObject<Monster>("Monster", InputLayer);
+				IssacEnemy1* newMonster = (IssacEnemy1*)Object::CreateObject<IssacEnemy1>("IssacEnemy1", InputLayer);
 				newMonster->SetPos(Saver.Pos);
 
 				SAFE_RELEASE(newMonster);

@@ -40,9 +40,6 @@
     <ClCompile Include="Scene\MainScene.cpp">
       <Filter>MainScene\SceneMain</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Bullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="Resource\ResourceManager.cpp">
       <Filter>Core\Resource\Manager</Filter>
     </ClCompile>
@@ -203,7 +200,25 @@
       <Filter>SceneUI</Filter>
     </ClCompile>
     <ClCompile Include="Object\Monster.cpp">
-      <Filter>MainScene\Object\Monster\Base</Filter>
+      <Filter>MainScene\Object\Monster\Parent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\IssacEnemy1.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BaseAttackBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LaserBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Core\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BaseEffect.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LaserEffect.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,9 +269,6 @@
     </ClInclude>
     <ClInclude Include="Scene\MainScene.h">
       <Filter>MainScene\SceneMain</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Bullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="Resource\ResourceManager.h">
       <Filter>Core\Resource\Manager</Filter>
@@ -412,7 +424,25 @@
       <Filter>SceneUI</Filter>
     </ClInclude>
     <ClInclude Include="Object\Monster.h">
-      <Filter>MainScene\Object\Monster\Base</Filter>
+      <Filter>MainScene\Object\Monster\Parent</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\IssacEnemy1.h">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BaseAttackBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LaserBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Core\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BaseEffect.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LaserEffect.h">
+      <Filter>MainScene\Object\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -617,7 +647,7 @@
     <Filter Include="MainScene\Object\Commando">
       <UniqueIdentifier>{0f7ffa1b-b576-4c41-9940-fba62aa90ff8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainScene\Object\Monster\Base">
+    <Filter Include="MainScene\Object\Monster\Parent">
       <UniqueIdentifier>{3047cdd8-0429-4f83-b9eb-fb8161bbe8af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

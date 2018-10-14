@@ -17,6 +17,9 @@ public:
 	int GetTileIndex(const Vector2& Pos);
 	int GetTileIndex(float x, float y);
 	void SetStageInfo(TileInfo* info);
+	int GetWidth();
+	int GetHight();
+	Vector2 GetTileSize();
 
 	static void LoadMonsterList(const TCHAR* FileName, Layer* InputLayer);
 

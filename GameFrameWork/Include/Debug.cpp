@@ -17,7 +17,5 @@ void Debug::OutputVisual(char * Test)
 
 void Debug::OutputTitle(char * Test)
 {
-#ifdef _DEBUG
 	SetWindowTextA(Core::Get()->GetHwnd(), Test);
-#endif
 }

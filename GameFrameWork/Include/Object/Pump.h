@@ -13,8 +13,6 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	Pump* Clone() override;
 
-	void PlayerColl(Collider* Src, Collider* Dest, float DeltaTime);
-
 protected:
 	Pump();
 	Pump(const Pump& Value);

@@ -22,6 +22,7 @@ public:
 	TILE_OPTION GetTileOption() const { return m_TileOption; }
 	Vector2 GetLeftTop() const { return LeftTop; }
 	int GetIndex() const { return m_Index; }
+	Rect GetRect() const { return Rect(LeftTop, m_Size); }
 
 private:
 	TILE_TYPE	m_TileType;

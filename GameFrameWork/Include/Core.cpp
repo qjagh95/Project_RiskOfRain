@@ -26,7 +26,7 @@ Core::Core()
 	m_HDC = NULL;
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//어디서 릭났는지 잡아주는 함수 (괄호는 블럭이름)
-	//_CrtSetBreakAlloc(31303);
+	//_CrtSetBreakAlloc(69800);
 
 //#ifdef _DEBUG
 	AllocConsole();
@@ -43,6 +43,7 @@ Core::~Core()
 	CollsionManager::Delete();
 	Camera::Delete();
 	SoundManager::Delete();
+	Keyboard::Delete();
 	SAFE_DELETE(m_Timer);
 	SAFE_RELEASE(m_BackBuffer);
 	//GetDC를 이용하여 생성한 DC는 반드시 ReleaseDC를 해줘야한다.
@@ -57,8 +58,6 @@ Core::~Core()
 bool Core::Init(HINSTANCE hInst, UINT iWidth, UINT iHeight, const TCHAR* TitleName, const TCHAR* ClassName, int IconID)
 {
 	srand((unsigned int)time(NULL));
-
-	Debug::OutputConsole("Test");
 
 	m_hInst = hInst;
 	m_WinSize.Width = iWidth;
@@ -216,7 +215,7 @@ void Core::Logic()
 	float Delta = m_Timer->GetDeltaTime();
 
 	Input::Get()->Update(Delta);	
-
+	Keyboard::Get()->Update();
 	SoundManager::Get()->Update();
 
 	if (KEYDOWN("Puase"))
@@ -263,6 +262,10 @@ int Core::Render(float DeltaTime)
 	Input::Get()->RenderMouse(m_BackBuffer->GetMemDC(), DeltaTime);
 
 	BitBlt(m_HDC, 0, 0, m_WinSize.Width, m_WinSize.Height, m_BackBuffer->GetMemDC(), 0, 0, SRCCOPY);
+
+	char buffer[255] = {};
+	sprintf_s(buffer, "Frame : %f", m_Timer->GetFps());
+	Debug::OutputTitle(buffer);
 
 	if (isDebug == false)
 		return 0;

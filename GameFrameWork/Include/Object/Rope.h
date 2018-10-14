@@ -14,8 +14,6 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	Rope* Clone() override;
 
-	void PlayerCol(Collider* Src, Collider* Dest, float DeltaTime);
-
 protected:
 	Rope();
 	Rope(const Rope& Value);

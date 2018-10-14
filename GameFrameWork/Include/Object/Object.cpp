@@ -84,7 +84,10 @@ int Object::Update(float DeltaTime)
 		m_Animation->Update(DeltaTime);
 
 	if (isGravity == false)
+	{
 		return 0;
+		Force = 0.0f;
+	}
 
 	m_Pos.y -= Force * DeltaTime;
 	m_TempMove.y -= Force * DeltaTime;
@@ -139,16 +142,17 @@ void Object::Render(HDC hDC, float DeltaTime)
 			BitBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
 		else
 		{
-			if (m_Animation != NULL && m_Animation->GetOption() != AO_REVERS_LOOP)
+			if (m_Animation != NULL && m_Animation->GetOption() != AO_REVERS_LOOP && m_Animation->GetOption() != AO_REVERS_BOUNCE_LOOP)
 			{
 				if (m_Animation->GetClipName() == "RopeUp" || m_Animation->GetClipName() == "RopeHold")
 					TransparentBlt(hDC, (int)(LeftTop.x + tSize.GetHalfX() + 2.0f), (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
 				else
 					TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
-
 			}
 
 			else if (m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_LOOP)
+				TransparentBlt(hDC, (int)LeftTop.x , (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
+			else if(m_Animation != NULL && m_Animation->GetOption() == AO_REVERS_BOUNCE_LOOP)
 				TransparentBlt(hDC, (int)(LeftTop.x - (tSize.x / 2.0f)) , (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
 			else
 				TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
@@ -569,7 +573,13 @@ void Object::Move(const Vector2 & Dir, float DeltaTime)
 	m_Pos += Dir * DeltaTime;
 }
 
-void Object::MoveByAngle(float DeltaTime)
+void Object::Move(float xDir)
+{
+	m_TempMove.x += xDir;
+	m_Pos.x += xDir;
+}
+
+ void Object::MoveByAngle(float DeltaTime)
 {
 	m_TempMove.x += MoveSpeed * DeltaTime * cosf(Math::DgreeToRadian(m_Angle));
 	m_TempMove.y += MoveSpeed * DeltaTime * sinf(Math::DgreeToRadian(m_Angle));
