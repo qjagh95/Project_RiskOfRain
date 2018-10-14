@@ -48,10 +48,6 @@ bool Monster::Init()
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCollsionTypeName("Monster");
 	RC->SetCallBack<Monster>(this, &Monster::BulletHit, CS_COLDOING);
-	RC->SetCallBack<Monster>(this, &Monster::FollowBulletHit, CS_COLDOING);
-	RC->SetCallBack<Monster>(this, &Monster::TargetBulletHit, CS_COLDOING);
-	RC->SetCallBack<Monster>(this, &Monster::RotBulletHit, CS_COLDOING);
-	RC->SetCallBack<Monster>(this, &Monster::JumpBulletHit, CS_COLDOING);
 
 	SAFE_RELEASE(RC);
 
@@ -96,6 +92,7 @@ int Monster::Update(float DeltaTime)
 			if (FireTime >= 1.0f)
 			{
 				SoundManager::Get()->Play("1Up");
+
 				Bullet* pBullet = (Bullet*)Object::CreateCloneObject("Bullet", m_Layer);
 				pBullet->SetPos(LineEnd);
 				pBullet->SetAngle(Math::GetDegree(pBullet->GetPos(), Target->GetPos()));
@@ -140,71 +137,6 @@ Monster * Monster::Clone()
 void Monster::BulletHit(Collider * Src, Collider * Dest, float DeltaTime)
 {
 	if (Dest->GetTag() == "BulletBody")
-	{
-		Object*	newBullet = Dest->GetCurObject();
-
-		newBullet->SetisActiv(false);
-
-		SAFE_RELEASE(newBullet);
-	}
-}
-
-void Monster::RotBulletHit(Collider * Src, Collider * Dest, float DeltaTime)
-{
-	if (Dest->GetTag() == "RotBulletBody")
-	{
-		Object*	newBullet = Dest->GetCurObject();
-
-		newBullet->SetisActiv(false);
-
-		SAFE_RELEASE(newBullet);
-	}
-}
-
-void Monster::JumpBulletHit(Collider * Src, Collider * Dest, float DeltaTime)
-{
-	if (Dest->GetTag() == "JumpBulletBody")
-	{
-		Object*	newBullet = Dest->GetCurObject();
-
-		newBullet->SetisActiv(false);
-		newBullet->SetRefCount(2);
-
-		SAFE_RELEASE(newBullet);
-	}
-}
-
-void Monster::TargetBulletHit(Collider * Src, Collider * Dest, float DeltaTime)
-{
-	if (Dest->GetTag() == "TargetBulletBody")
-	{
-		TargetBullet* newBullet = (TargetBullet*)Dest->GetCurObject();
-
-		if (newBullet->GetIsRush() == true)
-		{
-			newBullet->SetisActiv(false);
-			SAFE_RELEASE(newBullet);
-		}
-
-		SAFE_RELEASE(newBullet);
-	}
-}
-
-void Monster::FollowBulletHit(Collider * Src, Collider * Dest, float DeltaTime)
-{
-	if (Dest->GetTag() == "FollowBulletBody")
-	{
-		Object*	newBullet = Dest->GetCurObject();
-
-		newBullet->SetisActiv(false);
-
-		SAFE_RELEASE(newBullet);
-	}
-}
-
-void Monster::SubBulletHit(Collider * Src, Collider * Dest, float DeltaTime)
-{
-	if (Dest->GetTag() == "SubBulletBody")
 	{
 		Object*	newBullet = Dest->GetCurObject();
 

@@ -19,6 +19,7 @@
 #include "../Object/EditMonster3.h"
 #include "../Object/EditMonster4.h"
 #include "../Object/EditMonster5.h"
+#include "../Object/EditMonster6.h"
 
 
 #include "../Object/Monster.h"
@@ -152,7 +153,7 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 				break;
 				case MT_MONSTERSIX:
 				{
-					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster6", m_Scene->FindLayer("Default"));
+					EditMonster6* newMonster = (EditMonster6*)Object::CreateObject<EditMonster6>("EditMonster6", m_Scene->FindLayer("Default"));
 					newMonster->SetPos(Saver.Pos);
 
 					SAFE_RELEASE(newMonster);
@@ -160,34 +161,21 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 				break;
 				case MT_MONSTERSEVEN:
 				{
-					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster7", m_Scene->FindLayer("Default"));
-					newMonster->SetPos(Saver.Pos);
 
-					SAFE_RELEASE(newMonster);
 				}
 				break;
 				case MT_MONSTEREIGHT:
 				{
-					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster8", m_Scene->FindLayer("Default"));
-					newMonster->SetPos(Saver.Pos);
 
-					SAFE_RELEASE(newMonster);
 				}
 				break;
 				case MT_MONSTERNINE:
 				{
-					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster9", m_Scene->FindLayer("Default"));
-					newMonster->SetPos(Saver.Pos);
 
-					SAFE_RELEASE(newMonster);
 				}
 				break;
 				case MT_MONSTERTEN:
 				{
-					EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster10", m_Scene->FindLayer("Default"));
-					newMonster->SetPos(Saver.Pos);
-
-					SAFE_RELEASE(newMonster);
 				}
 				break;
 			} //switch

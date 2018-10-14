@@ -20,6 +20,7 @@
 #include "../Object/EditMonster3.h"
 #include "../Object/EditMonster4.h"
 #include "../Object/EditMonster5.h"
+#include "../Object/EditMonster6.h"
 
 #include "../Resource/PathManager.h"
 #include "../Resource/Texture.h"
@@ -59,7 +60,7 @@ bool EditScene::Init()
 	Input::Get()->PushKey("Load", VK_F3);
 	Input::Get()->PushKey("TileOnOff", VK_F4);
 	Input::Get()->PushKey("OptionChange", VK_F7);
-	Input::Get()->PushKey("Clear", VK_RETURN);
+	//Input::Get()->PushKey("Clear", VK_RETURN);
 
 	Layer* DefaultLayer = m_Scene->FindLayer("Default");
 	Layer* BackLayer = m_Scene->FindLayer("BackGround");
@@ -379,7 +380,7 @@ void EditScene::MonsterMode(float DeltaTime)
 				break;
 			case MT_MONSTERSIX:
 			{
-				EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster6", m_Scene->FindLayer("Default"));
+				EditMonster6* newMonster = (EditMonster6*)Object::CreateObject<EditMonster6>("EditMonster6", m_Scene->FindLayer("Default"));
 				newMonster->SetPos(mPos);
 				Saver.m_Object = newMonster;
 
@@ -388,38 +389,18 @@ void EditScene::MonsterMode(float DeltaTime)
 				break;
 			case MT_MONSTERSEVEN:
 			{
-				EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster7", m_Scene->FindLayer("Default"));
-				newMonster->SetPos(mPos);
-				Saver.m_Object = newMonster;
-
-				SAFE_RELEASE(newMonster);
 			}
 				break;
 			case MT_MONSTEREIGHT:
 			{
-				EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster8", m_Scene->FindLayer("Default"));
-				newMonster->SetPos(mPos);
-				Saver.m_Object = newMonster;
-
-				SAFE_RELEASE(newMonster);
 			}
 				break;
 			case MT_MONSTERNINE:
 			{
-				EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster9", m_Scene->FindLayer("Default"));
-				newMonster->SetPos(mPos);
-				Saver.m_Object = newMonster;
-
-				SAFE_RELEASE(newMonster);
 			}
 				break;
 			case MT_MONSTERTEN:
 			{
-				EditMonster1* newMonster = (EditMonster1*)Object::CreateObject<EditMonster1>("EditMonster10", m_Scene->FindLayer("Default"));
-				newMonster->SetPos(mPos);
-				Saver.m_Object = newMonster;
-
-				SAFE_RELEASE(newMonster);
 			}
 				break;
 		} //switch

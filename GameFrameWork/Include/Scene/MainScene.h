@@ -18,14 +18,11 @@ private:
 	MainScene();
 	~MainScene();
 
-	static Number* m_Second;
-	static Number* m_Minit;
+	Number* m_Second;
+	Number* m_Minit;
 
-	int PlaySecond;
-	int PlayMinit;
-
-	Bar* m_Bar;
-	Bar* m_UiBar;
+	static int PlaySecond;
+	static int PlayMinit;
 
 	float DebugTimeVar;
 	float TimeVar;

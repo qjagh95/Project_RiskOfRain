@@ -47,6 +47,7 @@
     <ClCompile Include="Object\EditMonster3.cpp" />
     <ClCompile Include="Object\EditMonster4.cpp" />
     <ClCompile Include="Object\EditMonster5.cpp" />
+    <ClCompile Include="Object\EditMonster6.cpp" />
     <ClCompile Include="Object\Effect.cpp" />
     <ClCompile Include="Object\FollowBullet.cpp" />
     <ClCompile Include="Object\Hider.cpp" />
@@ -57,8 +58,8 @@
     <ClCompile Include="Object\Monster.cpp" />
     <ClCompile Include="Object\Number.cpp" />
     <ClCompile Include="Object\Object.cpp" />
-    <ClCompile Include="Object\Player.cpp" />
-    <ClCompile Include="Object\PlayerFsm.cpp" />
+    <ClCompile Include="Object\Commando.cpp" />
+    <ClCompile Include="Object\CommandoFsm.cpp" />
     <ClCompile Include="Object\Pump.cpp" />
     <ClCompile Include="Object\Rope.cpp" />
     <ClCompile Include="Object\RotBullet.cpp" />
@@ -122,6 +123,7 @@
     <ClInclude Include="Object\EditMonster3.h" />
     <ClInclude Include="Object\EditMonster4.h" />
     <ClInclude Include="Object\EditMonster5.h" />
+    <ClInclude Include="Object\EditMonster6.h" />
     <ClInclude Include="Object\Effect.h" />
     <ClInclude Include="Object\FollowBullet.h" />
     <ClInclude Include="Object\Hider.h" />
@@ -132,7 +134,7 @@
     <ClInclude Include="Object\Monster.h" />
     <ClInclude Include="Object\Number.h" />
     <ClInclude Include="Object\Object.h" />
-    <ClInclude Include="Object\Player.h" />
+    <ClInclude Include="Object\Commando.h" />
     <ClInclude Include="Object\Pump.h" />
     <ClInclude Include="Object\Rope.h" />
     <ClInclude Include="Object\RotBullet.h" />

@@ -1,5 +1,7 @@
 #pragma once
 #include "Object.h"
+class Texture;
+class Number;
 class CommandoUI : public Object
 {
 public:
@@ -12,6 +14,15 @@ public:
 	void Collision(float DeltaTime) override;
 	void Render(HDC Hdc, float DeltaTime) override;
 	CommandoUI* Clone() override;
+
+private:
+	Texture* PerTexture;
+	Vector2 PerPos;
+	Vector2 PerSize;
+
+	Number* HpNumber;
+	Number* MaxHpNumber;
+	Number* LevelNumber;
 
 protected:
 	CommandoUI();

@@ -53,36 +53,72 @@ void Animation::Update(float DeltaTime)
 
 	m_isEnd = false;
 
-	while (m_CurClip->m_AnimationTime >= CompleatTime)
+	if (m_CurClip->m_Option != AO_REVERS_LOOP)
 	{
-		m_CurClip->m_AnimationTime -= CompleatTime;
-		m_CurClip->m_FrameX++;
-
-		//다돌았으면 시작위치로 바꿔주고 y++
-		if (m_CurClip->m_FrameX >= m_CurClip->m_StartX + m_CurClip->m_FrameCountX)
+		while (m_CurClip->m_AnimationTime >= CompleatTime)
 		{
-			m_CurClip->m_FrameX = m_CurClip->m_StartX;
-			m_CurClip->m_FrameY++;
+			m_CurClip->m_AnimationTime -= CompleatTime;
+			m_CurClip->m_FrameX++;
 
-			//y위치 다돌았으면 y위치 바꾼다.
-			if (m_CurClip->m_FrameY >= m_CurClip->m_StartY + m_CurClip->m_FrameCountY)
+			//다돌았으면 시작위치로 바꿔주고 y++
+			if (m_CurClip->m_FrameX >= m_CurClip->m_StartX + m_CurClip->m_FrameCountX)
 			{
-				m_CurClip->m_FrameY = m_CurClip->m_StartY;
-				m_isEnd = true;
+				m_CurClip->m_FrameX = m_CurClip->m_StartX;
+				m_CurClip->m_FrameY++;
 
-				//디폴트는 Loop값
-				switch (m_CurClip->m_Option)
+				//y위치 다돌았으면 y위치 바꾼다.
+				if (m_CurClip->m_FrameY >= m_CurClip->m_StartY + m_CurClip->m_FrameCountY)
 				{
-					case AO_ONCE_RETURN:
-						ChangeClip(m_DefaultClipName);
-						break;
-					case AO_ONCE_DESTROY:
-						m_Object->SetisActiv(false);
-						break;
-				}//switch
-			}//if(y위치)
-		}//if(x위치)
-	}//while
+					m_CurClip->m_FrameY = m_CurClip->m_StartY;
+					m_isEnd = true;
+
+					//디폴트는 Loop값
+					switch (m_CurClip->m_Option)
+					{
+						case AO_ONCE_RETURN:
+							ChangeClip(m_DefaultClipName);
+							break;
+						case AO_ONCE_DESTROY:
+							m_Object->SetisActiv(false);
+							break;
+					}//switch
+				}//if(y위치)
+			}//if(x위치)
+		}//while
+	}
+	else if (m_CurClip->m_Option == AO_REVERS_LOOP)
+	{
+		while (m_CurClip->m_AnimationTime >= CompleatTime)
+		{
+			m_CurClip->m_AnimationTime -= CompleatTime;
+			m_CurClip->m_FrameX--;
+
+			//다돌았으면 시작위치로 바꿔주고 y++
+			if (m_CurClip->m_FrameX == 0)
+			{
+				m_CurClip->m_FrameX = m_CurClip->m_StartX;
+				m_CurClip->m_FrameY++;
+
+				//y위치 다돌았으면 y위치 바꾼다.
+				if (m_CurClip->m_FrameY >= m_CurClip->m_StartY + m_CurClip->m_FrameCountY)
+				{
+					m_CurClip->m_FrameY = m_CurClip->m_StartY;
+					m_isEnd = true;
+
+					//디폴트는 Loop값
+					switch (m_CurClip->m_Option)
+					{
+						case AO_ONCE_RETURN:
+							ChangeClip(m_DefaultClipName);
+							break;
+						case AO_ONCE_DESTROY:
+							m_Object->SetisActiv(false);
+							break;
+					}//switch
+				}//if(y위치)
+			}//if(x위치)
+		}//while
+	}
 }
 
 Animation * Animation::Clone() const
@@ -210,4 +246,9 @@ int Animation::GetFrameY() const
 Vector2 Animation::GetFrameSize() const
 {
 	return m_CurClip->m_FrameSize;
+}
+
+ANIMATION_OPTION Animation::GetOption() const
+{
+	return m_CurClip->m_Option;
 }

@@ -21,47 +21,49 @@ public:
 	void Update(float DeltaTime);
 	void RenderMouse(HDC hDC, float DeltaTime);
 
-	//종료조건 함수를 만든다
-	template<typename T>
-	bool PushKey(T& Value)
+	template <typename T>
+	bool PushKey(const T& value)
 	{
-		//한개짜리키는 여기 벡터에서 푸시빾
-		DWORD dKey = (DWORD&)Value;
-		KeyState->VecKey.push_back(dKey);
-
-		return true;
-	}
-	//베리어딕 템플릿 (템플릿가변인자)
-	template<typename T, typename ...Types>
-	bool PushKey(T& Value, Types ...arg)
-	{
-		//들어온것의 타입이름을 리턴해주는 함수
 		const char* pType = typeid(T).name();
 
-		if (KeyState == NULL)
-		{
-			KeyState = new KeyInfo();
-
-			KeyState->KeyDown = false;
-			KeyState->KeyPress = false;
-			KeyState->KeyUp = false;
-		}
-		//VK와 일반 a, b .. 등을 구분하기 위함
 		if (strcmp(pType, "int") == 0 || strcmp(pType, "char") == 0)
-		{
-			DWORD dKey = (DWORD&)Value;
-			KeyState->VecKey.push_back(dKey);
-		}
+			KeyState->VecKey.push_back((DWORD&)value);
+
 		else
 		{
-			KeyState->Name = Value;
+			KeyState->Name = value;
 			KeyMap.insert(make_pair(KeyState->Name, KeyState));
 		}
 
-		PushKey(arg...);
 
-		if (KeyState != NULL)
-			KeyState = NULL;
+		return true;
+	}
+
+	template <typename T, typename ... Types>
+	bool PushKey(const T& value, Types ... Args)
+	{
+		if (!KeyState)
+		{
+			KeyState = new KeyInfo();
+			KeyState->KeyPress = false;
+			KeyState->KeyDown = false;
+			KeyState->KeyUp = false;
+		}
+
+		const char* pType = typeid(T).name();
+
+		if (strcmp(pType, "int") == 0 || strcmp(pType, "char") == 0)
+			KeyState->VecKey.push_back((DWORD&)value);
+		else
+		{
+			KeyState->Name = value;
+			KeyMap.insert(make_pair(KeyState->Name, KeyState));
+		}
+
+		PushKey(Args...);
+
+		if (KeyState)
+			KeyState = nullptr;
 
 		return true;
 	}

@@ -24,11 +24,6 @@ public:
 	Monster* Clone() override;
 
 	void BulletHit(Collider* Src, Collider* Dest, float DeltaTime);
-	void RotBulletHit(Collider* Src, Collider* Dest, float DeltaTime);
-	void JumpBulletHit(Collider* Src, Collider* Dest, float DeltaTime);
-	void TargetBulletHit(Collider* Src, Collider* Dest, float DeltaTime);
-	void FollowBulletHit(Collider* Src, Collider* Dest, float DeltaTime);
-	void SubBulletHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 protected:
 	Monster();

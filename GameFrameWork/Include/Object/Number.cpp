@@ -40,6 +40,9 @@ bool Number::Init()
 	ZeroPos = Vector2(0.0f, 0.0f);
 	ZeroSize = Vector2(13.0f,24.0f);
 
+	m_NumberViewSize = m_NumberSize;
+	ZeroViewSize = ZeroSize;
+
 	return true;
 }
 
@@ -60,9 +63,7 @@ int Number::Update(float DeltaTime)
 		ZeroSize = Vector2(13.0f, 24.0f);
 	}
 	else
-	{
 		ZeroSize = Vector2(0.0f, 0.0f);
-	}
 
 	if (isMove == true && MoveSpeed >= 0.0f)
 	{
@@ -145,15 +146,16 @@ void Number::Render(HDC hDC, float DeltaTime)
 		FrameY += (int)m_Offset.y;
 
 		if (isColorKey == false)
-			BitBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberSize.x, (int)m_NumberSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
+			BitBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberViewSize.x, (int)m_NumberViewSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
 		else if(isColorKey == true)
-			TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberSize.x, (int)m_NumberSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)m_NumberSize.x, (int)m_NumberSize.y, m_ColorKey);
-		else if(m_vecNumber[i] == 0)
-			TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)ZeroSize.x, (int)ZeroSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
+			TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberViewSize.x, (int)m_NumberViewSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)m_NumberSize.x, (int)m_NumberSize.y, m_ColorKey);
 	}
 	
 	//0이미지
-	TransparentBlt(hDC, (int)ZeroPos.x, (int)ZeroPos.y, (int)ZeroSize.x, (int)ZeroSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
+	TransparentBlt(hDC, (int)ZeroPos.x, (int)ZeroPos.y, (int)ZeroViewSize.x, (int)ZeroViewSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
+	//0일때 따로 0텍스쳐를 띄워준다.
+	if(m_Number == 0)
+		TransparentBlt(hDC, (int)ZeroPos.x + (int)ZeroSize.x + 5, (int)ZeroPos.y, (int)ZeroViewSize.x, (int)ZeroViewSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
 
 	list<Collider*>::iterator StartIter = m_ColliderList.begin();
 	list<Collider*>::iterator EndIter = m_ColliderList.end();

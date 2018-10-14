@@ -30,9 +30,9 @@ Core::Core()
 	//어디서 릭났는지 잡아주는 함수 (괄호는 블럭이름)
 	//_CrtSetBreakAlloc(505);
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	AllocConsole();
-#endif
+//#endif
 }
 
 Core::~Core()
@@ -51,9 +51,9 @@ Core::~Core()
 	if (m_HDC != NULL)
 		ReleaseDC(m_Hwnd, m_HDC);
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	FreeConsole();
-#endif
+//#endif
 }
 
 bool Core::Init(HINSTANCE hInst, UINT iWidth, UINT iHeight, const TCHAR* TitleName, const TCHAR* ClassName, int IconID)

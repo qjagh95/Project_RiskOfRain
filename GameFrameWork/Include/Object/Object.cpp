@@ -86,12 +86,10 @@ int Object::Update(float DeltaTime)
 	if (isGravity == false)
 		return 0;
 
-	GravityTime += DeltaTime;
-
 	m_Pos.y -= Force * DeltaTime;
 	m_TempMove.y -= Force * DeltaTime;
 
-	Force -= GRAVITY * GravityTime * GravityTime;
+	Force -= 1500.0f * DeltaTime;
 
 	return 0;
 }
@@ -131,17 +129,15 @@ void Object::Render(HDC hDC, float DeltaTime)
 		{
 			FrameX = m_Animation->GetFrameX() * (int)(m_Animation->GetFrameSize().x);
 			FrameY = m_Animation->GetFrameY() * (int)(m_Animation->GetFrameSize().y);
+			
 			tSize = m_Animation->GetFrameSize();
 			m_ColorKey = m_Animation->m_CurClip->GetColorKey();
 			isColorKey = m_Animation->m_CurClip->GetIsColorKey();
 		}
 
-		FrameX += (int)m_Offset.x;
-		FrameY += (int)m_Offset.y;
-
 		if (isColorKey == false)
 			BitBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
-		else 
+		else
 			TransparentBlt(hDC, (int)LeftTop.x, (int)LeftTop.y, (int)tSize.x, (int)tSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)tSize.x, (int)tSize.y, (UINT)m_ColorKey);
 	}
 
@@ -502,6 +498,11 @@ void Object::ChangeClip(const string & ClipName)
 string Object::GetClipName() const
 {
 	return m_Animation->GetClipName();
+}
+
+void Object::SetDefaultAnimation(const string& ClipName)
+{
+	m_Animation->SetDefaultClip(ClipName);
 }
 
 void Object::EraseSceneObject(const string & TagName, Object * pObject)

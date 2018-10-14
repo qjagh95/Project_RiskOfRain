@@ -1,7 +1,7 @@
 #include "MenuScene.h"
 #include "Scene.h"
 #include "Layer.h"
-#include "../Object/Player.h"
+#include "../Object/Commando.h"
 #include "../Object/BackGround.h"
 #include "../Object/Bullet.h"
 #include "../Button.h"

@@ -40,9 +40,6 @@
     <ClCompile Include="Scene\MainScene.cpp">
       <Filter>MainScene\SceneMain</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Player.cpp">
-      <Filter>MainScene\Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Object\Bullet.cpp">
       <Filter>MainScene\Object\Bullet</Filter>
     </ClCompile>
@@ -142,9 +139,6 @@
     <ClCompile Include="Sound\SoundManager.cpp">
       <Filter>Core\Sound</Filter>
     </ClCompile>
-    <ClCompile Include="Object\PlayerFsm.cpp">
-      <Filter>MainScene\Object\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Scene\EditButtonCallback.cpp">
       <Filter>EditScene\SceneMain</Filter>
     </ClCompile>
@@ -214,6 +208,15 @@
     <ClCompile Include="Object\TimeUI.cpp">
       <Filter>SceneUI</Filter>
     </ClCompile>
+    <ClCompile Include="Object\EditMonster6.cpp">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Commando.cpp">
+      <Filter>MainScene\Object\Commando</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CommandoFsm.cpp">
+      <Filter>MainScene\Object\Commando</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -263,9 +266,6 @@
     </ClInclude>
     <ClInclude Include="Scene\MainScene.h">
       <Filter>MainScene\SceneMain</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Player.h">
-      <Filter>MainScene\Object\Player</Filter>
     </ClInclude>
     <ClInclude Include="Object\Bullet.h">
       <Filter>MainScene\Object\Bullet</Filter>
@@ -435,6 +435,12 @@
     <ClInclude Include="Object\TimeUI.h">
       <Filter>SceneUI</Filter>
     </ClInclude>
+    <ClInclude Include="Object\EditMonster6.h">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Commando.h">
+      <Filter>MainScene\Object\Commando</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -460,9 +466,6 @@
     </Filter>
     <Filter Include="MainScene\Object">
       <UniqueIdentifier>{30909409-486f-445d-913e-9fc0121e0adf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Object\Player">
-      <UniqueIdentifier>{0f7ffa1b-b576-4c41-9940-fba62aa90ff8}</UniqueIdentifier>
     </Filter>
     <Filter Include="MainScene\Object\Monster">
       <UniqueIdentifier>{fc7f0c21-ca3d-4ce7-9029-d4e650ed8ec7}</UniqueIdentifier>
@@ -637,6 +640,9 @@
     </Filter>
     <Filter Include="SceneUI">
       <UniqueIdentifier>{ea27cc8e-bece-458a-a112-4dd9a038ccc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Commando">
+      <UniqueIdentifier>{0f7ffa1b-b576-4c41-9940-fba62aa90ff8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

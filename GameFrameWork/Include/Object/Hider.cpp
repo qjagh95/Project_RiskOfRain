@@ -1,11 +1,12 @@
 #include "Hider.h"
 #include "Number.h"
 #include "../Scene/Layer.h"
+#include "../Scene/Scene.h"
 
 Hider::Hider()
-	:DelayTimeNumber(NULL)
+	:DelayTimeNumber(NULL), DelayTime(0.0f), Num(0)
 {
-	m_ObjectType = OT_UI;
+	m_ObjectType = OT_EFFECT;
 	SetTag("Hider");
 }
 
@@ -25,6 +26,13 @@ bool Hider::Init()
 	SetSize(54.0f, 54.0f);
 	SetIsCameraMode(false);
 
+	DelayTimeNumber = Object::CreateObject<Number>("HiderNumber", m_Scene->FindLayer("UI"));
+	DelayTimeNumber->SetTexture("HiderNumber", TEXT("object/TempNumber.bmp"));
+	DelayTimeNumber->SetNumberSize(19.0f, 24.0f);
+	DelayTimeNumber->SetColorKey(RGB(255, 0, 255));
+	DelayTimeNumber->SetIsCameraMode(false);
+	DelayTimeNumber->SetNumberViewSize(Vector2(19.0f, 24.0f));
+
 	return true;
 }
 
@@ -37,9 +45,16 @@ int Hider::Input(float DeltaTime)
 int Hider::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
+	DelayTime -= DeltaTime;
+	Num = (int)DelayTime;
 
-	if (DelayTime == 0)
-		return 0;
+	DelayTimeNumber->SetNumber(Num);
+	
+	if (DelayTime <= 0.0f)
+	{
+		DelayTimeNumber->SetisActiv(false);
+		SetisActiv(false);
+	}
 
 	return 0;
 }
@@ -65,29 +80,34 @@ Hider * Hider::Clone()
 	return new Hider(*this);
 }
 
-void Hider::SetHider(Layer * pLayer, SKILL_TYPE eType, int dTime)
+void Hider::SetHider(SKILL_TYPE eType, float dTime)
 {
+	DelayTime = dTime;
+
 	switch (eType)
 	{
 		case ST_SKILLONE:
 		{
-			//플레이어에선 누를때마다 CreateObject, SetHider
-			//포지션셋팅,
+			SetPos(Vector2(568.0f, 640.0f));
+			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;
 		case ST_SKILLTWO:
 		{
-
+			SetPos(Vector2(637.0f, 641.0f));
+			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;
 		case ST_SKILLTHREE:
 		{
-
+			SetPos(Vector2(706.0f, 641.0f));
+			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;
 		case ST_SKILLFOUR:
 		{
-
+			SetPos(Vector2(775.0f, 641.0f));
+			DelayTimeNumber->SetPos(Vector2(m_Pos.x + m_Size.x - 10.0f, m_Pos.y + m_Size.GetHalfY() - 10.0f));
 		}
 			break;
 	}

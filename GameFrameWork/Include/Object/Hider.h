@@ -15,12 +15,13 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	Hider* Clone() override;
 
-	void SetHider(Layer* pLayer ,SKILL_TYPE eType, int dTime);
-	int GetDelayTime() const { return DelayTime; }
+	void SetHider(SKILL_TYPE eType, float dTime);
+	float GetDelayTime() const { return DelayTime; }
 
 private:
 	Number* DelayTimeNumber;
-	int DelayTime;
+	float DelayTime;
+	int Num;
 
 protected:
 	Hider();

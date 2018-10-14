@@ -1194,7 +1194,11 @@ void EditScene::Monster6Callback(float DeltaTime)
 {
 	monsterType = MT_MONSTERSIX;
 
-	Input::Get()->SetMouseDefaultTexture();
+	SelectTileTexture = ResourceManager::Get()->LoadTexture("EditMonster6", TEXT("EditMonster/RockGolem_Right_Hold.bmp"));
+
+	Input::Get()->SetMouseTexture(SelectTileTexture);
+	Input::Get()->SetMouseTextureSize(Vector2(60.0f, 90.0f));
+	Input::Get()->SetMouseTexturePivot(0.5f, 0.5f);
 }
 
 void EditScene::Monster7Callback(float DeltaTime)

@@ -68,6 +68,7 @@ public:
 	bool LoadAnimation(const char* FileName, const string& ClipName);
 	void ChangeClip(const string& ClipName);
 	string GetClipName() const;
+	void SetDefaultAnimation(const string& ClipName);
 
 	void DestroyColorKey() { isColorKey = false; }
 

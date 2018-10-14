@@ -404,7 +404,7 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 			SerchTile->SetTileOption(TO_ROPE);
 
 			Rope* newRope = Object::CreateObject<Rope>("Rope", pLayer);
-			newRope->SetPos(Vector2(TempPos.x + SerchTile->GetSize().GetHalfX(), TempPos.y + 20.0f));
+			newRope->SetPos(Vector2(TempPos.x + SerchTile->GetSize().GetHalfX(), TempPos.y + 30.0f));
 
 			TempTile = GetTile(Vector2(TempPos.x, TempPos.y + SerchTile->GetSize().y));
 
@@ -413,7 +413,7 @@ void TileInfo::Load(FILE* pFile, Layer* pLayer)
 				TempPos.y++;
 				TempSize.y++;
 
-				TempTile = GetTile(Vector2(TempPos.x, TempPos.y + SerchTile->GetSize().y));
+				TempTile = GetTile(Vector2(TempPos.x, TempPos.y + SerchTile->GetSize().y + 30.0f));
 
 				newRope->SetSize(TempSize.x, TempSize.y - SerchTile->GetSize().y);
 			}//while(true)
