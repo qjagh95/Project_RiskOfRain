@@ -1,0 +1,613 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Core\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Core\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Core\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Core\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Core\Header\Vector2</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneManager.cpp">
+      <Filter>Core\Scene\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Scene.cpp">
+      <Filter>Core\Scene\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="RefCount.cpp">
+      <Filter>Core\RefCount</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\Layer.cpp">
+      <Filter>Core\Scene\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\SceneComponent.cpp">
+      <Filter>Core\Scene\SceneComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Object.cpp">
+      <Filter>Core\Object\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Charactor.cpp">
+      <Filter>Core\Object\Charactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MainScene.cpp">
+      <Filter>MainScene\SceneMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Player.cpp">
+      <Filter>MainScene\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Monster.cpp">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\ResourceManager.cpp">
+      <Filter>Core\Resource\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\PathManager.cpp">
+      <Filter>Core\Resource\PathManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Texture.cpp">
+      <Filter>Core\Resource\Texture\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Math.cpp">
+      <Filter>Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\BackGround.cpp">
+      <Filter>MainScene\Object\BackGround</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\RotBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\FollowBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TargetBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\JumpBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Coll\CollsionManager.cpp">
+      <Filter>Core\Coll\CollManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Coll\Collider.cpp">
+      <Filter>Core\Coll\Collider\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Coll\ColliderRect.cpp">
+      <Filter>Core\Coll\Collider\ColliderRect</Filter>
+    </ClCompile>
+    <ClCompile Include="Coll\ColliderCircle.cpp">
+      <Filter>Core\Coll\Collider\ColliderCircle</Filter>
+    </ClCompile>
+    <ClCompile Include="Coll\ColliderPixel.cpp">
+      <Filter>Core\Coll\Collider\ColliderPixel</Filter>
+    </ClCompile>
+    <ClCompile Include="Coll\ColliderPoint.cpp">
+      <Filter>Core\Coll\Collider\ColliderPoint</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\SubBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ShotGunBullet.cpp">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Core\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>Core\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Animation.cpp">
+      <Filter>Core\Resource\Texture\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\AnimationClip.cpp">
+      <Filter>Core\Resource\Texture\AnimationClip</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Effect.cpp">
+      <Filter>MainScene\Object\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>Core\UI\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Core\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="MouseObject.cpp">
+      <Filter>Core\UI\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MenuScene.cpp">
+      <Filter>MenuScene\SceneMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Number.cpp">
+      <Filter>Core\UI\Number</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Tile.cpp">
+      <Filter>Core\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Bar.cpp">
+      <Filter>Core\UI\Bar</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\EditScene.cpp">
+      <Filter>EditScene\SceneMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound\SoundManager.cpp">
+      <Filter>Core\Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\PlayerFsm.cpp">
+      <Filter>MainScene\Object\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\EditButtonCallback.cpp">
+      <Filter>EditScene\SceneMain</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TileBg.cpp">
+      <Filter>EditScene\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TileInfo.cpp">
+      <Filter>EditScene\Object\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MenuStarBg.cpp">
+      <Filter>MenuScene\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MenuBg.cpp">
+      <Filter>MenuScene\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\EditSceneFunc.cpp">
+      <Filter>EditScene\SceneMain</Filter>
+    </ClCompile>
+    <ClCompile Include="StageManager.cpp">
+      <Filter>StageManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EditMonster.cpp">
+      <Filter>EditScene\Object\EditObject\Parent</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EditMonster1.cpp">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EditMonster2.cpp">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EditMonster3.cpp">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EditMonster4.cpp">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\EditMonster5.cpp">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ItemBox.cpp">
+      <Filter>StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Pump.cpp">
+      <Filter>StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Rope.cpp">
+      <Filter>StageObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TelePoter.cpp">
+      <Filter>StageObject</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Core\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Core\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Core\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Core\Header\Vector2</Filter>
+    </ClInclude>
+    <ClInclude Include="Rect.h">
+      <Filter>Core\Header\Rect</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Core\Header\Macro</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Core\Header\stdafx</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
+      <Filter>Core\Scene\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Scene.h">
+      <Filter>Core\Scene\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="RefCount.h">
+      <Filter>Core\RefCount</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\Layer.h">
+      <Filter>Core\Scene\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\SceneComponent.h">
+      <Filter>Core\Scene\SceneComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Object.h">
+      <Filter>Core\Object\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Charactor.h">
+      <Filter>Core\Object\Charactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MainScene.h">
+      <Filter>MainScene\SceneMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Player.h">
+      <Filter>MainScene\Object\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Monster.h">
+      <Filter>MainScene\Object\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ResourceManager.h">
+      <Filter>Core\Resource\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\PathManager.h">
+      <Filter>Core\Resource\PathManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Texture.h">
+      <Filter>Core\Resource\Texture\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Math.h">
+      <Filter>Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\BackGround.h">
+      <Filter>MainScene\Object\BackGround</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\RotBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\FollowBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TargetBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\JumpBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Coll\CollsionManager.h">
+      <Filter>Core\Coll\CollManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Coll\Collider.h">
+      <Filter>Core\Coll\Collider\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Coll\ColliderRect.h">
+      <Filter>Core\Coll\Collider\ColliderRect</Filter>
+    </ClInclude>
+    <ClInclude Include="Flag.h">
+      <Filter>Core\Header\Flag</Filter>
+    </ClInclude>
+    <ClInclude Include="Coll\ColliderCircle.h">
+      <Filter>Core\Coll\Collider\ColliderCircle</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>Core\Header\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="Coll\ColliderPixel.h">
+      <Filter>Core\Coll\Collider\ColliderPixel</Filter>
+    </ClInclude>
+    <ClInclude Include="Coll\ColliderPoint.h">
+      <Filter>Core\Coll\Collider\ColliderPoint</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\SubBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ShotGunBullet.h">
+      <Filter>MainScene\Object\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Core\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Animation.h">
+      <Filter>Core\Resource\Texture\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\AnimationClip.h">
+      <Filter>Core\Resource\Texture\AnimationClip</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Effect.h">
+      <Filter>MainScene\Object\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>Core\UI\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Core\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseObject.h">
+      <Filter>Core\UI\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MenuScene.h">
+      <Filter>MenuScene\SceneMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Number.h">
+      <Filter>Core\UI\Number</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Tile.h">
+      <Filter>Core\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Bar.h">
+      <Filter>Core\UI\Bar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\EditScene.h">
+      <Filter>EditScene\SceneMain</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound\SoundManager.h">
+      <Filter>Core\Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TileBg.h">
+      <Filter>EditScene\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TileInfo.h">
+      <Filter>EditScene\Object\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MenuStarBg.h">
+      <Filter>MenuScene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MenuBg.h">
+      <Filter>MenuScene\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="StageManager.h">
+      <Filter>StageManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EditMonster.h">
+      <Filter>EditScene\Object\EditObject\Parent</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EditMonster1.h">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EditMonster2.h">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EditMonster3.h">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EditMonster4.h">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\EditMonster5.h">
+      <Filter>EditScene\Object\EditObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ItemBox.h">
+      <Filter>StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Pump.h">
+      <Filter>StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Rope.h">
+      <Filter>StageObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TelePoter.h">
+      <Filter>StageObject</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{f68d2be5-f598-408b-b1d6-3253314b94b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Basic">
+      <UniqueIdentifier>{4f58e9e4-dfd1-4449-ac0e-70916517101d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Timer">
+      <UniqueIdentifier>{041e5e55-2879-47fc-883d-f30ea6539707}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Key">
+      <UniqueIdentifier>{4255f6da-6f14-4a87-9a6c-d32c43f5db79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\RefCount">
+      <UniqueIdentifier>{d8f21730-42cb-4e09-a2f6-9c69ecf5962c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene">
+      <UniqueIdentifier>{33d1613b-d717-4f81-8bce-4e0cf282a7c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\SceneMain">
+      <UniqueIdentifier>{0ba449a3-c250-43b0-a6d8-42aa4fda5bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object">
+      <UniqueIdentifier>{30909409-486f-445d-913e-9fc0121e0adf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Player">
+      <UniqueIdentifier>{0f7ffa1b-b576-4c41-9940-fba62aa90ff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Monster">
+      <UniqueIdentifier>{fc7f0c21-ca3d-4ce7-9029-d4e650ed8ec7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Bullet">
+      <UniqueIdentifier>{d811f12e-3787-468d-8595-cd00fbe0053a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource">
+      <UniqueIdentifier>{7868b1a0-53e4-4337-8020-d04183b436e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Manager">
+      <UniqueIdentifier>{cb1ac5d9-fc93-40dc-bcc2-5abfc8754c1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\PathManager">
+      <UniqueIdentifier>{7e50b969-a09e-430a-a321-a84348f6eede}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Math">
+      <UniqueIdentifier>{a1179127-3a90-472a-844c-5955051f7bd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\BackGround">
+      <UniqueIdentifier>{7d3487e1-58ae-4bbf-97cf-dd1436b6ca99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header">
+      <UniqueIdentifier>{4eef6374-5d62-4e68-b452-793114c149fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header\Rect">
+      <UniqueIdentifier>{6e163760-8e00-49b2-a55e-f7f2a672db1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header\Vector2">
+      <UniqueIdentifier>{3b4115d8-b185-4f3a-a684-93c68cabb320}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header\Macro">
+      <UniqueIdentifier>{98e35abe-4d09-44b6-be18-4968faa049bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header\stdafx">
+      <UniqueIdentifier>{1584be1c-6738-4ff0-a895-88c4bafcf7ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Object">
+      <UniqueIdentifier>{5bd3f848-919f-4c14-a072-3d991c2f7be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Object\Base">
+      <UniqueIdentifier>{e8c45b45-fff5-4a1f-9553-9f70c0221ab1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Object\Charactor">
+      <UniqueIdentifier>{811bc154-9ff4-4292-beb5-c9f6fd27a19f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Scene">
+      <UniqueIdentifier>{b22f1b44-5b67-40b7-bc6c-aeb4bb9f1639}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Scene\Manager">
+      <UniqueIdentifier>{6186206f-e2ca-4ff7-9283-07f33469b4bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Scene\Scene">
+      <UniqueIdentifier>{c77b4260-7e7c-4a64-83ae-da74a19bacae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Scene\SceneComponent">
+      <UniqueIdentifier>{6bfe1552-d63b-42ae-929e-e788ff8efaf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Scene\Layer">
+      <UniqueIdentifier>{66baf8df-69e5-40b4-9945-20af5173abd8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll">
+      <UniqueIdentifier>{391ff6b5-724e-4abc-9ca4-d2ddf3dfb299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll\CollManager">
+      <UniqueIdentifier>{db73e0d4-ded5-49ad-b7a1-9117c4676cdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll\Collider">
+      <UniqueIdentifier>{4eaaaaa5-79bf-492d-8cf8-4a4ec311e895}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll\Collider\Base">
+      <UniqueIdentifier>{7f018c44-1dc2-45ee-90e9-be5b02f54eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header\Flag">
+      <UniqueIdentifier>{f41b4d8c-e255-4d51-a349-ddc6241255fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Window">
+      <UniqueIdentifier>{f3abb3ba-160c-4e83-9b2f-1ba5f121dbf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header\Circle">
+      <UniqueIdentifier>{091070c8-d4ab-4de8-915b-5ed50f07e968}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll\Collider\ColliderCircle">
+      <UniqueIdentifier>{163da4c1-f87f-480c-acd7-1a30d93fc0b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll\Collider\ColliderRect">
+      <UniqueIdentifier>{f73beb7e-ebb1-4c23-ba82-b1c9fd35a413}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll\Collider\ColliderPoint">
+      <UniqueIdentifier>{2e21be57-60e3-4723-ad89-5e166bd1ebeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Coll\Collider\ColliderPixel">
+      <UniqueIdentifier>{2cfa453b-a64a-4951-9362-0a5d890d8b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Camera">
+      <UniqueIdentifier>{8810cc31-b24e-4450-9d27-bf11c449e348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Debug">
+      <UniqueIdentifier>{0118745b-5160-4b12-89f9-75a7b3acb3ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Texture">
+      <UniqueIdentifier>{f99bf063-0b32-473d-be6b-3f261f36a351}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Texture\Texture">
+      <UniqueIdentifier>{10971f61-b0cd-4c69-ad36-bc58fe982706}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Texture\Animation">
+      <UniqueIdentifier>{40f63f8b-e9b9-4555-b234-f2e79093ecf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Texture\AnimationClip">
+      <UniqueIdentifier>{4947d10b-b366-44d2-b4a5-510a8f87b54c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\Effect">
+      <UniqueIdentifier>{e9f21ab2-c7c6-4067-bae3-14444a13edde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\UI">
+      <UniqueIdentifier>{365bca06-a8de-484b-afa0-0c68f401c6c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\UI\Base">
+      <UniqueIdentifier>{a564f0aa-4ee4-45b1-9b8f-2e4e93559b47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\UI\Button">
+      <UniqueIdentifier>{ff11c25b-a10f-4451-9f6b-3f0bcaa887c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\UI\Mouse">
+      <UniqueIdentifier>{bd79f6eb-ecd7-4791-8806-55c7da858273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MenuScene">
+      <UniqueIdentifier>{a5a511d5-23ae-4bfc-99fa-afee30fa0076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MenuScene\SceneMain">
+      <UniqueIdentifier>{d539863e-4b68-4129-9e09-ff3df2d7bfb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MenuScene\Object">
+      <UniqueIdentifier>{9fc2da62-0cd4-42f2-bbab-6856abdb4ac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\UI\Number">
+      <UniqueIdentifier>{feb007b8-7452-4969-8bc1-ff4527ee9695}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Object\Tile">
+      <UniqueIdentifier>{eb4fe3ed-0ab6-4df6-9a86-ac38be37decd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\UI\Bar">
+      <UniqueIdentifier>{b220e21b-ddc3-432d-a64b-b50289dd993a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditScene">
+      <UniqueIdentifier>{515b990b-e141-4cee-a4a5-5a4a96a552b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditScene\SceneMain">
+      <UniqueIdentifier>{39d51e92-00c1-4915-bb42-a630093e36d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditScene\Object">
+      <UniqueIdentifier>{b3da8305-731e-42fe-ae86-4e4ecae9b80d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Sound">
+      <UniqueIdentifier>{ae9b7071-9153-4a4d-8b45-993f774e7a2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditScene\Object\EditObject">
+      <UniqueIdentifier>{31549868-82c3-46cf-9a8b-e7e619465337}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditScene\Object\Tile">
+      <UniqueIdentifier>{74a1914c-c86a-4815-b40a-e0c7ea851f27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StageManager">
+      <UniqueIdentifier>{df2a6f74-da36-479d-aa23-2efee1e3b3f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EditScene\Object\EditObject\Parent">
+      <UniqueIdentifier>{efddb7e9-0783-451a-970b-5ed4817f9373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StageObject">
+      <UniqueIdentifier>{697a4f39-33a1-45cd-9a3f-a773283f2631}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GameFrameWork.rc">
+      <Filter>Basic</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Basic</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
