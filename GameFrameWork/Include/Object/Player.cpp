@@ -56,19 +56,19 @@ bool Player::Init()
 	Input::Get()->PushKey("Skill4", 'F');
 	Input::Get()->PushKey("Jump", VK_SPACE);
 
-	HpBar = Object::CreateObject<Bar>("Bar", m_Scene->FindLayer("PlayLayer"));
-	HpBar->SetSize(100.f, 40.f);
-	HpBar->SetPos(50.f, 600.f);
-	HpBar->SetTexture("MPBar", TEXT("MPBar.bmp"));
-	HpBar->SetBarInfo(0, 5000, 5000);
-	HpBar->SetIsCameraMode(false);
+	//HpBar = Object::CreateObject<Bar>("Bar", m_Scene->FindLayer("PlayLayer"));
+	//HpBar->SetSize(100.f, 40.f);
+	//HpBar->SetPos(50.f, 600.f);
+	//HpBar->SetTexture("MPBar", TEXT("MPBar.bmp"));
+	//HpBar->SetBarInfo(0, 5000, 5000);
+	//HpBar->SetIsCameraMode(false);
 
-	ExpBar = Object::CreateObject<Bar>("Bar", m_Scene->FindLayer("PlayLayer"));
-	ExpBar->SetSize(100.f, 40.f);
-	ExpBar->SetPos(150.f, 50.f);
-	ExpBar->SetTexture("HPBar", TEXT("HPBar.bmp"));
-	ExpBar->SetBarInfo(0, 5000, 5000);
-	ExpBar->SetIsCameraMode(false);
+	//ExpBar = Object::CreateObject<Bar>("Bar", m_Scene->FindLayer("PlayLayer"));
+	//ExpBar->SetSize(100.f, 40.f);
+	//ExpBar->SetPos(150.f, 50.f);
+	//ExpBar->SetTexture("HPBar", TEXT("HPBar.bmp"));
+	//ExpBar->SetBarInfo(0, 5000, 5000);
+	//ExpBar->SetIsCameraMode(false);
 
 	SetMoveSpeed(300.0f);
 	SetPos(300.0f, 200.0f);
