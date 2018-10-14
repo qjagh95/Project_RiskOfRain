@@ -292,6 +292,9 @@
     <ClCompile Include="BossBarEdge.cpp">
       <Filter>SceneUI</Filter>
     </ClCompile>
+    <ClCompile Include="Object\ItemBooster.cpp">
+      <Filter>StageObject\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -587,6 +590,9 @@
     </ClInclude>
     <ClInclude Include="BossBarEdge.h">
       <Filter>SceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ItemBooster.h">
+      <Filter>StageObject\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,9 @@
 #pragma once
 #include "Charactor.h"
 #include "../stdafx.h"
+
+class UsingItemBase;
+class ItemBase;
 class Tile;
 class Collider;
 class Bullet;
@@ -39,6 +42,7 @@ public:
 	void RockHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void ColocussKickHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void ColocussClapHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void ItemHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 	void PlayerMove(float DeltaTime);
 
@@ -73,6 +77,8 @@ public:
 	void SkillState();
 	void SkillTimeCheck(float DeltaTime);
 
+	static PLAYER_STATE GetPlayerState() { return pState; }
+
 	void BasicInit();
 	void AnimationInit();
 	void CollsionInit();
@@ -100,8 +106,8 @@ private:
 	float SkillFourDelay;
 
 	float InfinityTime;
-
 	bool isInfinity;
+
 	bool isSkillOne;
 	bool isSkillTwo;
 	bool isSkillThree;
@@ -118,7 +124,10 @@ private:
 	list<Vector2> HitPosList;
 	list<Vector2> HitSizeList;
 
-	PLAYER_STATE pState;
+	list<ItemBase*> myItemList;
+	UsingItemBase* CurUsingItem;
+
+	static PLAYER_STATE pState;
 	PLAYER_STATE PrevState;
 
 	float MoveDir;

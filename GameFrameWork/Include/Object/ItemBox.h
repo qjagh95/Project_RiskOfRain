@@ -16,6 +16,7 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	ItemBox* Clone() override;
 
+	bool GetIsEnd() const { return isEnd; }
 	int GetPrice() const { return Price; }
 
 protected:
@@ -28,5 +29,6 @@ private:
 	Number* PriceNumber;
 	DollerTexture* newDoller;
 	ColliderRect* RC;
+	bool isEnd;
 };
 

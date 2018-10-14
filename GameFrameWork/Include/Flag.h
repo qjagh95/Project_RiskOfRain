@@ -162,13 +162,6 @@ enum EDITOR_STATE
 	ES_MAX,
 };
 
-enum ITEMBOX_OPEN
-{
-	//이넘으로 아이템종류 죄다 박아넣자..
-	IO_ITEM, 
-	IO_MISSILE,
-};
-
 class EditMonster;
 struct ObjectBaseSave
 {

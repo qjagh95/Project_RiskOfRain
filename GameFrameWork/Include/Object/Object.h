@@ -41,6 +41,7 @@ public:
 	float GetAngle() const { return m_Angle; }
 	void SetAngle(float Value) { m_Angle = Value; }
 	void SetMoveSpeed(float Value) { MoveSpeed = Value; }
+	float GetMoveSpeed() const { return MoveSpeed; }
 
 	bool SetTexture(const string& KeyName, const TCHAR * FileName, const string& BaseKey = TEXTURE_PATH);
 	bool SetTexture(const string& KeyName);

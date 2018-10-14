@@ -1,25 +1,23 @@
 #include "Commando.h"
 #include "BaseAttackBullet.h"
-
-#include "../Object/Tile.h"
+#include "../Sound/SoundManager.h"
+#include "../Resource/Animation.h"
 #include "../StageManager.h"
-
 #include "../Scene/MainScene.h"
-
+#include "../Scene/Scene.h"
+#include "../Scene/Layer.h"
 #include "../stdafx.h"
 #include "../Input.h"
 #include "../Camera.h"
 #include "../StageManager.h"
-
+#include "../Resource/Animation.h"
 #include "../Object/Tile.h"
 #include "../Object/Bar.h"
 #include "../Object/Number.h"
 #include "../Object/ExpEffect.h"
 #include "../Object/ItemBox.h"
 #include "../Object/IssacTear.h"
-
 #include "../Object/Colossus.h"
-
 #include "../Object/AncientHitBox.h"
 #include "../Object/JellyFishHitBox.h"
 #include "../Object/LemurinHitBox.h"
@@ -27,18 +25,14 @@
 #include "../Object/RockGolenHitBox.h"
 #include "../Object/ColossusClapHitBox.h"
 #include "../Object/ColossusKickHitBox.h"
-
-#include "../Resource/Animation.h"
+#include "../Object/Tile.h"
+#include "../Object/Hider.h"
+#include "../Object/UsingItemBase.h"
+#include "../Object/ItemBase.h"
+#include "../Object/ItemBooster.h"
 
 #include "../Coll/ColliderRect.h"
 #include "../Coll/ColliderPoint.h"
-
-#include "../Scene/Scene.h"
-#include "../Scene/Layer.h"
-
-#include "../Object/Hider.h"
-
-#include "../Sound/SoundManager.h"
 
 void Commando::TileCollsionActive(float DeltaTime)
 {
@@ -141,16 +135,52 @@ void Commando::ItemBoxHit(Collider * Src, Collider * Dest, float DeltaTime)
 
 		if (KEYDown('A'))
 		{
+			if (getBox->GetIsEnd() == true)
+				return;
+
 			if (pMoney >= getBox->GetPrice())
 			{
 				pMoney -= getBox->GetPrice();
 				getBox->ChangeClip("ItemBoxOpen");
 				SoundManager::Get()->Play("BoxOpen");
-			}
-		}
+
+				ItemBooster* newBoost = Object::CreateObject<ItemBooster>("ItemBooster", m_Layer);
+				newBoost->SetPos(Dest->GetPos().x, Dest->GetPos().y - 10.0f);
+				newBoost->SetTempPos(Vector2(Dest->GetPos().x, Dest->GetPos().y - 10.0f));
+
+				SAFE_RELEASE(newBoost);
+
+				//int RandNumber = Math::RandomRange(0 , ItemBase::ITEM_KIND::ITEM_MAX);
+				//switch (RandNumber)
+				//{
+				//	case ItemBase::ITEM_KIND::ITEM_BOOSTER:
+				//	{
+				//		ItemBooster* newBoost = Object::CreateObject<ItemBooster>("ItemBooster", m_Layer);
+				//		newBoost->SetPos(Dest->GetPos().x , Dest->GetPos().y - 10.0f);
+
+				//		SAFE_RELEASE(newBoost);
+				//	}
+				//		break;
+				//	case ItemBase::ITEM_KIND::ITEM_ALIENHEAD:
+				//		break;
+				//	case ItemBase::ITEM_KIND::ITEM_FIREMANBOOT:
+				//		break;
+				//	case ItemBase::ITEM_KIND::ITEM_FIRESHIELD:
+				//		break;
+				//	case ItemBase::ITEM_KIND::ITEM_KNIFE:
+				//		break;
+				//	case ItemBase::ITEM_KIND::ITEM_TASER:
+				//		break;
+				//	case ItemBase::ITEM_KIND::ITEM_TELESCOPE:
+				//		break;
+				//	case ItemBase::ITEM_KIND::ITEM_TOUGHTIME:
+				//		break;
+				//}//switch
+			}//if(Money)
+		} //if(KeyDown)
 
 		SAFE_RELEASE(getBox);
-	}
+	} //if(Dest->GetTag)
 }
 
 void Commando::TearHit(Collider * Src, Collider * Dest, float DeltaTime)
@@ -159,7 +189,7 @@ void Commando::TearHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		IssacTear* getTear = (IssacTear*)Dest->GetCurObject();
 
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getTear->GetAttack();
 
@@ -173,8 +203,9 @@ void Commando::TearHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getTear->SetisActiv(false);
@@ -189,7 +220,7 @@ void Commando::AncientHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		AncientHitBox* getBox = (AncientHitBox*)Dest->GetCurObject();
 		
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getBox->GetAttack();
 
@@ -203,8 +234,9 @@ void Commando::AncientHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
@@ -219,7 +251,7 @@ void Commando::JellyFishHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		JellyFishHitBox* getBox = (JellyFishHitBox*)Dest->GetCurObject();
 
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getBox->GetAttack();
 
@@ -233,8 +265,9 @@ void Commando::JellyFishHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
@@ -249,7 +282,7 @@ void Commando::LemuiranHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		LemurinHitBox* getBox = (LemurinHitBox*)Dest->GetCurObject();
 
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getBox->GetAttack();
 
@@ -263,8 +296,10 @@ void Commando::LemuiranHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
+
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
@@ -279,7 +314,7 @@ void Commando::WispHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		WispHitBox* getBox = (WispHitBox*)Dest->GetCurObject();
 
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getBox->GetAttack();
 
@@ -293,8 +328,10 @@ void Commando::WispHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
+
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
@@ -309,7 +346,7 @@ void Commando::RockHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		RockGolenHitBox* getBox = (RockGolenHitBox*)Dest->GetCurObject();
 
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getBox->GetAttack();
 
@@ -323,16 +360,16 @@ void Commando::RockHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
+
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
 
 		SAFE_RELEASE(getBox);
 	}
-
-
 }
 
 void Commando::ColocussKickHit(Collider * Src, Collider * Dest, float DeltaTime)
@@ -341,7 +378,7 @@ void Commando::ColocussKickHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		ColossusKickHitBox* getBox = (ColossusKickHitBox*)Dest->GetCurObject();
 
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getBox->GetAttack();
 
@@ -355,8 +392,9 @@ void Commando::ColocussKickHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
@@ -370,7 +408,7 @@ void Commando::ColocussClapHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{
 		ColossusClapHitBox* getBox = (ColossusClapHitBox*)Dest->GetCurObject();
 
-		if (pState != PS_SKILL3)
+		if (pState != PS_SKILL3 && isInfinity == false)
 		{
 			Hp -= getBox->GetAttack();
 
@@ -384,12 +422,64 @@ void Commando::ColocussClapHit(Collider * Src, Collider * Dest, float DeltaTime)
 			DamegaNumber->SetIsCameraMode(true);
 
 			SAFE_RELEASE(DamegaNumber);
+			isInfinity = true;
 		}
-		else
+		else if(pState == PS_SKILL3)
 			SoundManager::Get()->Play("Miss");
 
 		getBox->SetisActiv(false);
 		SAFE_RELEASE(getBox);
+	}
+}
+
+void Commando::ItemHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "ItemBody")
+	{
+		if (KEYDown('A'))
+		{
+			ItemBase* getItem = (ItemBase*)Dest->GetCurObject();
+
+			switch (getItem->GetItemKind())
+			{
+				case ItemBase::ITEM_KIND::ITEM_BOOSTER:
+				{
+					getItem->SetIsCameraMode(false);
+					getItem->SetIsStop(true);
+					//포지션을 업데이트에서 리스트돌려서..?
+
+					list<ItemBase*>::iterator StartIter = myItemList.begin();
+					list<ItemBase*>::iterator EndIter= myItemList.end();
+
+					int Count = 0;
+					for (; StartIter != EndIter; StartIter++)
+					{
+						Count++;
+					}
+
+					getItem->SetPos(Vector2((float)Count + 30.0f, Core::Get()->GetWinSizeVector2().y - 200.0f));
+					myItemList.push_back(getItem);
+				}
+					break;
+				case ItemBase::ITEM_KIND::ITEM_ALIENHEAD:
+				{
+
+				}
+					break;
+				case ItemBase::ITEM_KIND::ITEM_FIREMANBOOT:
+					break;
+				case ItemBase::ITEM_KIND::ITEM_FIRESHIELD:
+					break;
+				case ItemBase::ITEM_KIND::ITEM_KNIFE:
+					break;
+				case ItemBase::ITEM_KIND::ITEM_TASER:
+					break;
+				case ItemBase::ITEM_KIND::ITEM_TELESCOPE:
+					break;
+				case ItemBase::ITEM_KIND::ITEM_TOUGHTIME:
+					break;
+			}
+		}
 	}
 }
 
@@ -423,7 +513,6 @@ void Commando::LineHit(Collider * Src, Collider * Dest, float DeltaTime)
 			if (HitSize > *StartSizeIter)
 				HitSize = *StartSizeIter;
 		}
-
 		isLineHit = true;
 	}
 }

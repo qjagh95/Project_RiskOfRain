@@ -1,33 +1,25 @@
 #include "Commando.h"
 #include "BaseAttackBullet.h"
 #include "Effect.h"
-
 #include "../Debug.h"
-
 #include "../stdafx.h"
 #include "../Input.h"
 #include "../Camera.h"
 #include "../StageManager.h"
-
 #include "../Object/Tile.h"
 #include "../Object/Bar.h"
 #include "../Object/Number.h"
-
 #include "../Object/LevelUpEffect.h"
-
 #include "../Resource/Animation.h"
-
 #include "../Coll/ColliderRect.h"
 #include "../Coll/ColliderPoint.h"
-
 #include "../Scene/Scene.h"
 #include "../Scene/Layer.h"
-
 #include "../Object/Hider.h"
-
 #include "../Sound/SoundManager.h"
-
 #include "../StageManager.h"
+#include "../Object/UsingItemBase.h"
+#include "../Object/ItemBase.h"
 
 int Commando::pMoney = 100;
 int Commando::Hp = 300;
@@ -35,9 +27,10 @@ int Commando::Level = 1;
 int Commando::Exp = 0;
 int Commando::MaxHp = 300;
 int Commando::MaxExp = 500;
+PLAYER_STATE Commando::pState = PS_IDLE;
 
 Commando::Commando()
-	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(12), HitCount(0), InfinityTime(0.0f)
+	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(12), HitCount(0), InfinityTime(1.0f)
 	, SkillOneDelay(0.5f), SkillTwoDelay(5.0f), SkillThreeDelay(5.0f), SkillFourDelay(8.0f),
 	isSkillOne(false), isSkillTwo(false), isSkillThree(false), isSkillFour(false), isRopeHiting(false)
 	, isRopeUpHitting(false),PrevFrame(0), isLineHit(false), isInfinity(false)
@@ -50,6 +43,9 @@ Commando::~Commando()
 {
 	SAFE_RELEASE(CurTarget);
 	SAFE_RELEASE(MoneyNumber);
+	SAFE_RELEASE(CurUsingItem);
+
+	Safe_Release_VecList(myItemList);
 }
 
 bool Commando::Init()
@@ -144,6 +140,26 @@ int Commando::Update(float DeltaTime)
 	HitPos = { 0.0f, 0.0f };
 	HitPosList.clear();
 	HitSizeList.clear();
+
+	//아이템효과 업데이트
+	list<ItemBase*>::iterator StartIter = myItemList.begin();
+	list<ItemBase*>::iterator EndIter = myItemList.end();
+	for (; StartIter != EndIter; StartIter++)
+	{
+		(*StartIter)->EffectUpdate(DeltaTime);
+	}
+
+	//무적시간
+	if (isInfinity == true)
+	{
+		InfinityTime -= DeltaTime;
+
+		if (InfinityTime <= 0.0f)
+		{
+			InfinityTime = 1.0f;
+			isInfinity = false;
+		}
+	}
 
 	return 0;
 }
@@ -269,6 +285,7 @@ void Commando::HpCheck(float DeltaTime)
 		}
 	}
 
+	//TODO : DieCheck
 	//if (Hp <= 0)
 	//{
 	//	Hp = 0;
@@ -532,6 +549,7 @@ void Commando::CollsionInit()
 	RC->SetCallBack<Commando>(this, &Commando::TelePoterHit, CS_COLDOING);
 	RC->SetCallBack<Commando>(this, &Commando::ColocussClapHit, CS_COLFIRST);
 	RC->SetCallBack<Commando>(this, &Commando::ColocussKickHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::ItemHit, CS_COLDOING);
 
 	RC->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RC);

@@ -67,6 +67,7 @@
     <ClCompile Include="Object\IssacEnemy1.cpp" />
     <ClCompile Include="Object\IssacTear.cpp" />
     <ClCompile Include="Object\ItemBase.cpp" />
+    <ClCompile Include="Object\ItemBooster.cpp" />
     <ClCompile Include="Object\JellyFish.cpp" />
     <ClCompile Include="Object\JellyFishHitBox.cpp" />
     <ClCompile Include="Object\Lemurian.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="Object\IssacEnemy1.h" />
     <ClInclude Include="Object\IssacTear.h" />
     <ClInclude Include="Object\ItemBase.h" />
+    <ClInclude Include="Object\ItemBooster.h" />
     <ClInclude Include="Object\JellyFish.h" />
     <ClInclude Include="Object\JellyFishHitBox.h" />
     <ClInclude Include="Object\Lemurian.h" />

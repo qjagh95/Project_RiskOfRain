@@ -36,6 +36,8 @@ ItemBox::~ItemBox()
 
 bool ItemBox::Init()
 {
+	isEnd = false;
+
 	int RendPer = rand() % 5;
 	switch (RendPer)
 	{
@@ -119,9 +121,9 @@ int ItemBox::Update(float DeltaTime)
 
 	if (m_Animation->GetClipName() == "ItemBoxOpen")
 	{
-		bool Check = m_Animation->GetIsEnd();
+		isEnd = true;
 
-		if (Check == true)
+		if (m_Animation->GetIsEnd())
 		{
 			SetisActiv(false);
 			newDoller->SetisActiv(false);
