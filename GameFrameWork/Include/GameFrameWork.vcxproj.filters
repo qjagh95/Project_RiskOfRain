@@ -199,6 +199,21 @@
     <ClCompile Include="Object\DollerTexture.cpp">
       <Filter>StageObject</Filter>
     </ClCompile>
+    <ClCompile Include="Object\DollerUI.cpp">
+      <Filter>SceneUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CoinUI.cpp">
+      <Filter>SceneUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CommandoUI.cpp">
+      <Filter>SceneUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Hider.cpp">
+      <Filter>SceneUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TimeUI.cpp">
+      <Filter>SceneUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -405,6 +420,21 @@
     <ClInclude Include="Object\DollerTexture.h">
       <Filter>StageObject</Filter>
     </ClInclude>
+    <ClInclude Include="Object\DollerUI.h">
+      <Filter>SceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CoinUI.h">
+      <Filter>SceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CommandoUI.h">
+      <Filter>SceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Hider.h">
+      <Filter>SceneUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TimeUI.h">
+      <Filter>SceneUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Core">
@@ -604,6 +634,9 @@
     </Filter>
     <Filter Include="StageObject">
       <UniqueIdentifier>{697a4f39-33a1-45cd-9a3f-a773283f2631}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SceneUI">
+      <UniqueIdentifier>{ea27cc8e-bece-458a-a112-4dd9a038ccc4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

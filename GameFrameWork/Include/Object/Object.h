@@ -162,7 +162,7 @@ public:
 	}
 	void SetColliderCallBack(const string& TagName, void(*pFunc)(Collider*, Collider*, float), COLLSION_STATE eState);
 
-	void SetPos(float  x, float y) { m_Pos.x = x, m_Pos.y = y; }
+	void SetPos(float x, float y) { m_Pos.x = x, m_Pos.y = y; }
 	void SetPos(const Vector2& Value) { m_Pos.x = Value.x, m_Pos.y = Value.y; }
 	void SetSize(float x, float y) { m_Size.x = x, m_Size.y = y; }
 	void SetSize(const Vector2& Value) { m_Size.x = Value.x, m_Size.y = Value.y; }

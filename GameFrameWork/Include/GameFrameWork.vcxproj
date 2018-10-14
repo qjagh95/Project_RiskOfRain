@@ -37,7 +37,10 @@
     <ClCompile Include="Object\Bar.cpp" />
     <ClCompile Include="Object\Bullet.cpp" />
     <ClCompile Include="Object\Charactor.cpp" />
+    <ClCompile Include="Object\CoinUI.cpp" />
+    <ClCompile Include="Object\CommandoUI.cpp" />
     <ClCompile Include="Object\DollerTexture.cpp" />
+    <ClCompile Include="Object\DollerUI.cpp" />
     <ClCompile Include="Object\EditMonster.cpp" />
     <ClCompile Include="Object\EditMonster1.cpp" />
     <ClCompile Include="Object\EditMonster2.cpp" />
@@ -46,6 +49,7 @@
     <ClCompile Include="Object\EditMonster5.cpp" />
     <ClCompile Include="Object\Effect.cpp" />
     <ClCompile Include="Object\FollowBullet.cpp" />
+    <ClCompile Include="Object\Hider.cpp" />
     <ClCompile Include="Object\ItemBox.cpp" />
     <ClCompile Include="Object\JumpBullet.cpp" />
     <ClCompile Include="Object\MenuBg.cpp" />
@@ -65,6 +69,7 @@
     <ClCompile Include="Object\Tile.cpp" />
     <ClCompile Include="Object\TileBg.cpp" />
     <ClCompile Include="Object\TileInfo.cpp" />
+    <ClCompile Include="Object\TimeUI.cpp" />
     <ClCompile Include="RefCount.cpp" />
     <ClCompile Include="Resource\Animation.cpp" />
     <ClCompile Include="Resource\AnimationClip.cpp" />
@@ -107,7 +112,10 @@
     <ClInclude Include="Object\Bar.h" />
     <ClInclude Include="Object\Bullet.h" />
     <ClInclude Include="Object\Charactor.h" />
+    <ClInclude Include="Object\CoinUI.h" />
+    <ClInclude Include="Object\CommandoUI.h" />
     <ClInclude Include="Object\DollerTexture.h" />
+    <ClInclude Include="Object\DollerUI.h" />
     <ClInclude Include="Object\EditMonster.h" />
     <ClInclude Include="Object\EditMonster1.h" />
     <ClInclude Include="Object\EditMonster2.h" />
@@ -116,6 +124,7 @@
     <ClInclude Include="Object\EditMonster5.h" />
     <ClInclude Include="Object\Effect.h" />
     <ClInclude Include="Object\FollowBullet.h" />
+    <ClInclude Include="Object\Hider.h" />
     <ClInclude Include="Object\ItemBox.h" />
     <ClInclude Include="Object\JumpBullet.h" />
     <ClInclude Include="Object\MenuBg.h" />
@@ -134,6 +143,7 @@
     <ClInclude Include="Object\Tile.h" />
     <ClInclude Include="Object\TileBg.h" />
     <ClInclude Include="Object\TileInfo.h" />
+    <ClInclude Include="Object\TimeUI.h" />
     <ClInclude Include="Rect.h" />
     <ClInclude Include="RefCount.h" />
     <ClInclude Include="resource.h" />

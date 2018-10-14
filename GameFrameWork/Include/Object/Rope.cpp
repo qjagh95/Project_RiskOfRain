@@ -85,9 +85,9 @@ Rope * Rope::Clone()
 
 void Rope::PlayerCol(Collider * Src, Collider * Dest, float DeltaTime)
 {
-	if (Dest->GetTag() == "PlayerBody")
+	if (Dest->GetTag() == "PlayerPoint")
 	{
-
+		int a = 0;
 	}
 }
 

@@ -179,3 +179,11 @@ struct ObjectSave
 	Vector2 Pos;
 	MONSTER_TYPE m_mType;
 };
+
+enum SKILL_TYPE
+{
+	ST_SKILLONE,
+	ST_SKILLTWO,
+	ST_SKILLTHREE,
+	ST_SKILLFOUR,
+};

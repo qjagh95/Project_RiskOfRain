@@ -1,31 +1,45 @@
 #include "Player.h"
-#include "../stdafx.h"
-#include "../Input.h"
-#include "../Coll/ColliderRect.h"
-#include "../Coll/ColliderCircle.h"
-#include "../Coll/ColliderPixel.h"
-#include "../Coll/CollsionManager.h"
-#include "../Resource/Animation.h"
-#include "../Scene/Layer.h"
 #include "Bullet.h"
 #include "TargetBullet.h"
 #include "FollowBullet.h"
-#include "../Camera.h"
 #include "Effect.h"
-#include "../Sound/SoundManager.h"
+
 #include "../Object/Tile.h"
+#include "../Object/Bar.h"
+
+#include "../stdafx.h"
+#include "../Input.h"
+
+#include "../Coll/ColliderRect.h"
+#include "../Coll/ColliderPoint.h"
+
+#include "../Scene/Scene.h"
+
+#include "../Coll/CollsionManager.h"
+
+#include "../Resource/Animation.h"
+#include "../Scene/Layer.h"
+
+#include "../Camera.h"
+
+#include "../Sound/SoundManager.h"
+
 #include "../StageManager.h"
 
+int Player::pMoney = 0;
+
 Player::Player()
-	:CurTarget(NULL)
+	:CurTarget(NULL), Exp(0)
 {
 	m_ObjectType = OT_PLAYER;
-	SetTag("Players");
+	SetTag("Player");
 }
 
 Player::~Player()
 {
 	SAFE_RELEASE(CurTarget);
+	SAFE_RELEASE(HpBar);
+	SAFE_RELEASE(ExpBar);
 }
 
 bool Player::Init()
@@ -41,6 +55,20 @@ bool Player::Init()
 	Input::Get()->PushKey("Skill3", 'D');
 	Input::Get()->PushKey("Skill4", 'F');
 	Input::Get()->PushKey("Jump", VK_SPACE);
+
+	HpBar = Object::CreateObject<Bar>("Bar", m_Scene->FindLayer("PlayLayer"));
+	HpBar->SetSize(100.f, 40.f);
+	HpBar->SetPos(50.f, 600.f);
+	HpBar->SetTexture("MPBar", TEXT("MPBar.bmp"));
+	HpBar->SetBarInfo(0, 5000, 5000);
+	HpBar->SetIsCameraMode(false);
+
+	ExpBar = Object::CreateObject<Bar>("Bar", m_Scene->FindLayer("PlayLayer"));
+	ExpBar->SetSize(100.f, 40.f);
+	ExpBar->SetPos(150.f, 50.f);
+	ExpBar->SetTexture("HPBar", TEXT("HPBar.bmp"));
+	ExpBar->SetBarInfo(0, 5000, 5000);
+	ExpBar->SetIsCameraMode(false);
 
 	SetMoveSpeed(300.0f);
 	SetPos(300.0f, 200.0f);
@@ -59,12 +87,18 @@ bool Player::Init()
 	RC->SetCollsionTypeName("Player");
 	SAFE_RELEASE(RC);
 
+	//로프판단.
+	ColliderPoint* RP = AddCollider<ColliderPoint>("PlayerPoint");
+	RP->SetPivot(0.5f, 0.5f);
+	RP->SetCollsionTypeName("Player");
+	SAFE_RELEASE(RP);
+
 	AnimationName[PS_IDLE] = "Idle";
 	AnimationName[PS_BASEATTACK] = "BaseAttack";
 	AnimationName[PS_MOVE] = "Move";
 	AnimationName[PS_JUMPING] = "Jump";
 
-	pState = PS_IDLE;
+	pState = PS_IDLE; 
 	Dir = "R";
 					//애니이름, 아틀라스?, 루프?, 1개당 사이즈,1줄갯수. 전체갯수. 시작위치. 행동시간
 	AddAnimationClip("LIdle", AT_ATLAS, AO_LOOP, 45.0f, 60.0f, 14, 1, 21, 8, 0, 1, 1.0f, "HalBae", TEXT("Left.bmp"));

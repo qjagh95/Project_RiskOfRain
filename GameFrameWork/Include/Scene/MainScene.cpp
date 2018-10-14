@@ -30,17 +30,24 @@
 #include "../Object/Rope.h"
 #include "../Object/TelePoter.h"
 
+#include "../Object/CoinUI.h"
+#include "../Object/DollerUI.h"
+#include "../Object/CommandoUI.h"
+#include "../Object/TimeUI.h"
+
 #include "../Sound/SoundManager.h"
 
 #include "../StageManager.h"
 
-MainScene::MainScene() : TimeVar(0.0f)
+MainScene::MainScene()
+	: TimeVar(0.0f), DebugTimeVar(0.0f),
+	m_Second(NULL), m_Minit(NULL), PlaySecond(0), PlayMinit(0)
 {
 }
 MainScene::~MainScene()
 {
-	SAFE_RELEASE(m_UiNumber);
-	SAFE_RELEASE(m_Number);
+	SAFE_RELEASE(m_Second);
+	SAFE_RELEASE(m_Minit);
 
 	SAFE_RELEASE(m_Bar);
 	SAFE_RELEASE(m_UiBar);
@@ -63,6 +70,16 @@ bool MainScene::Init()
 
 	TileBg* Bg = Object::CreateObject<TileBg>("Bg", BackLayer);
 	Bg->SetIsCameraMode(false);
+	SAFE_RELEASE(Bg);
+
+	CoinUI* newCoin = Object::CreateObject<CoinUI>("CoinUI", UiLayer);
+	SAFE_RELEASE(newCoin);
+	DollerUI* newDoller = Object::CreateObject<DollerUI>("DollerUI", UiLayer);
+	SAFE_RELEASE(newDoller);
+	CommandoUI* newCommando = Object::CreateObject<CommandoUI>("CommandoUI", UiLayer);
+	SAFE_RELEASE(newCommando);
+	TimeUI* newTime = Object::CreateObject<TimeUI>("TimeUI", UiLayer);
+	SAFE_RELEASE(newTime);
 
 	TileInfo* Stage1TileInfo = Object::CreateObject<TileInfo>("BackGround", TileLayer);
 	Stage1TileInfo->LoadFile("123.stg", newLayer);
@@ -83,27 +100,30 @@ bool MainScene::Init()
 	pEffect->SetSize(100.0f, 200.0f);
 	pEffect->SetColorKey(RGB(255, 0, 255));
 	pEffect->AddAnimationClip("BombEffect", AT_ATLAS, AO_ONCE_DESTROY, 100.0f, 200.0f, 23, 1, 23, 1, 0, 0, 1.0f, "BombEffect", TEXT("player_bomb.bmp"));
+	SAFE_RELEASE(pEffect);
 
 	Effect* bEffect = Object::CreatePrototype<Effect>("BuffEffect", m_Scene);
 	bEffect->SetPivot(0.5f, 0.5f);
 	bEffect->SetSize(100.0f, 200.0f);
 	bEffect->SetColorKey(RGB(255, 0, 255));
 	bEffect->AddAnimationClip("BuffEffect", AT_ATLAS, AO_LOOP, 100.0f, 200.0f, 23, 1, 23, 1, 0, 0, 1.0f, "BuffEffect", TEXT("player_bomb.bmp"));
+	SAFE_RELEASE(bEffect);
 
-	m_UiNumber = Object::CreateObject<Number>("Number", UiLayer);
-	m_UiNumber->SetPos(1280, 50.f);
-	m_UiNumber->SetTexture("Number", TEXT("Number.bmp"));
-	m_UiNumber->SetNumber(1000);
-	m_UiNumber->SetNumberSize(62.6f, 88.f);
-	m_UiNumber->SetColorKey(RGB(255,255,255));
-	m_UiNumber->SetIsCameraMode(false);
+	m_Second = Object::CreateObject<Number>("NumberSecond", UiLayer);
+	m_Second->SetPos(1490.0f, 70.0f);
+	m_Second->SetTexture("NumberSecond", TEXT("object/TempNumber.bmp"));
+	m_Second->SetNumber(PlaySecond);
+	m_Second->SetNumberSize(19.0f, 24.0f);
+	m_Second->SetColorKey(RGB(255, 0, 255));
+	m_Second->SetIsCameraMode(false);
 
-	m_Number = Object::CreateObject<Number>("Number", UiLayer);
-	m_Number->SetPos(1280, 600.f);
-	m_Number->SetTexture("Number", TEXT("Number.bmp"));
-	m_Number->SetNumber(123);
-	m_Number->SetNumberSize(62.6f, 88.f);
-	m_Number->SetColorKey(RGB(255,255,255));
+	m_Minit = Object::CreateObject<Number>("Number", UiLayer);
+	m_Minit->SetPos(1430.0f, 70.0f);
+	m_Minit->SetTexture("NumberMinit", TEXT("object/TempNumber.bmp"));
+	m_Minit->SetNumber(PlayMinit);
+	m_Minit->SetNumberSize(19.0f, 24.0f);
+	m_Minit->SetColorKey(RGB(255, 0, 255));
+	m_Minit->SetIsCameraMode(false);
 
 	m_Bar = Object::CreateObject<Bar>("Bar", UiLayer);
 	m_Bar->SetSize(100.f, 40.f);
@@ -119,8 +139,6 @@ bool MainScene::Init()
 	m_UiBar->SetIsCameraMode(false);
 
 	SAFE_RELEASE(UiLayer);
-	SAFE_RELEASE(bEffect);
-	SAFE_RELEASE(pEffect);
 	SAFE_RELEASE(BackLayer);
 	SAFE_RELEASE(newPlayer);
 	SAFE_RELEASE(pBullet1);
@@ -128,19 +146,12 @@ bool MainScene::Init()
 	SAFE_RELEASE(pBullet5);
 	SAFE_RELEASE(newLayer);
 	SAFE_RELEASE(Stage1TileInfo);
-	SAFE_RELEASE(Bg);
 
 	return true;
 }
 
 int MainScene::Input(float DeltaTime)
 {
-	if (GetAsyncKeyState(VK_NUMPAD0) & 0x8000)
-		m_Number->AddNumber(1);
-
-	if (GetAsyncKeyState(VK_NUMPAD1) & 0x8000)
-		m_Number->Move(Vector2(300.0f, 0.0f), DeltaTime);
-
 	if (GetAsyncKeyState(VK_NUMPAD2) & 0x8000)
 		m_UiBar->AddValue(-50);
 
@@ -152,6 +163,25 @@ int MainScene::Input(float DeltaTime)
 
 int MainScene::Update(float DeltaTime)
 {
+	TimeVar += DeltaTime;
+
+	if (TimeVar >= 1.0f)
+	{
+		PlaySecond++;
+		TimeVar = 0.0f;
+	}
+
+	if (PlaySecond == 15)
+	{
+		PlaySecond = 0;
+		PlayMinit++;
+	}
+	if (PlayMinit == 60)
+		PlayMinit = 0;
+
+	m_Second->SetNumber(PlaySecond);
+	m_Minit->SetNumber(PlayMinit);
+
 	return 0;
 }
 
@@ -169,15 +199,15 @@ void MainScene::Render(HDC hdc, float DeltaTime)
 	if (Core::Get()->GetIsDebugMode() == false)
 		return;
 
-	TimeVar += DeltaTime;
+	DebugTimeVar += DeltaTime;
 
-	if (TimeVar >= 1.0f)
+	if (DebugTimeVar >= 1.0f)
 	{
 		char Buffer[255] = {};
 		sprintf_s(Buffer, "AllObjectCount : %d \n", m_Scene->GetObjectCount());
 		Debug::OutputConsole(Buffer);
 
-		TimeVar = 0.0f;
+		DebugTimeVar = 0.0f;
 	}
 }
 

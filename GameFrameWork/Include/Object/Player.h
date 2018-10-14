@@ -6,6 +6,7 @@ class Collider;
 class Bullet;
 class FollowBullet;
 class Effect;
+class Bar;
 class Player : public Charactor
 {
 public:
@@ -24,6 +25,10 @@ public:
 	void PlayerMove(float DeltaTime);
 
 	void DirCheck();
+
+	void SetMoney(int Value) { pMoney = Value; }
+	static int GetMoney() { return pMoney; }
+	void SetExp(int Value) { Exp = Value; }
 
 	///-------------FSMÇÔ¼ö-------------
 	void FS_Idle(float DeltaTime);
@@ -47,6 +52,9 @@ protected:
 private:
 	Vector2 LeftTop;
 
+	static int pMoney;
+	int Exp;
+
 	bool isDown;
 	bool isJumping;
 	float JumpPower;
@@ -63,5 +71,8 @@ private:
 	string Dir;
 	string AnimationName[PS_MAX];
 	string StateName;
+
+	Bar* HpBar;
+	Bar* ExpBar;
 };
 

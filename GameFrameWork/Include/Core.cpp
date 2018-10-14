@@ -1,15 +1,18 @@
 #include "Core.h"
 #include "Input.h"
 #include "Timer.h"
+#include "Camera.h"
+#include "Debug.h"
+#include "StageManager.h"
+
 #include "./Scene/SceneManager.h"
 #include "./Resource/PathManager.h"
 #include "./Resource/ResourceManager.h"
 #include "./Resource/Texture.h"
+
 #include "./Coll/CollsionManager.h"
-#include "Camera.h"
-#include "Debug.h"
-#include "Sound\SoundManager.h"
-#include "StageManager.h"
+
+#include "./Sound/SoundManager.h"
 
 WindowSize Core::m_WinSize;
 

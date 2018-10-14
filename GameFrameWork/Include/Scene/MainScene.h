@@ -20,12 +20,16 @@ private:
 	MainScene();
 	~MainScene();
 
-	Number* m_Number;
-	Number* m_UiNumber;
+	Number* m_Second;
+	Number* m_Minit;
+
+	int PlaySecond;
+	int PlayMinit;
 
 	Bar* m_Bar;
 	Bar* m_UiBar;
 
+	float DebugTimeVar;
 	float TimeVar;
 };
 

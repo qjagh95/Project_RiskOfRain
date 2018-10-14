@@ -1,5 +1,6 @@
 #pragma once
 #include "Object.h"
+class Texture;
 class Number : public Object
 {
 public:
@@ -24,6 +25,10 @@ private:
 	int	m_Number;
 	vector<int>	m_vecNumber;
 	Vector2	m_NumberSize;
+
+	Texture* m_ZeroTexture;
+	Vector2 ZeroPos;
+	Vector2 ZeroSize;
 
 	bool isMove;
 	bool isLiveTime;

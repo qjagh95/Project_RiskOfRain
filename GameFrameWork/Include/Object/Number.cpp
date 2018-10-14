@@ -2,6 +2,8 @@
 #include "../Camera.h"
 #include "../Resource/Animation.h"
 #include "../Resource/Texture.h"
+#include "../Resource/ResourceManager.h"
+
 #include "../Coll/Collider.h"
 
 Number::Number()
@@ -12,6 +14,7 @@ Number::Number()
 	MaxRange = 0.0f;
 	TimeVar = 0.0f;
 	Count = 0;
+	m_ZeroTexture = NULL;
 }
 
 Number::Number(const Number & number)
@@ -27,10 +30,16 @@ Number::Number(const Number & number)
 
 Number::~Number()
 {
+	SAFE_RELEASE(m_ZeroTexture);
 }
 
 bool Number::Init()
 {
+	m_ZeroTexture = ResourceManager::Get()->LoadTexture("Zero", TEXT("object/ZeroNumber.bmp"));
+
+	ZeroPos = Vector2(0.0f, 0.0f);
+	ZeroSize = Vector2(13.0f,24.0f);
+
 	return true;
 }
 
@@ -44,6 +53,16 @@ int Number::Input(float fTime)
 int Number::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
+
+	if (Count <= 1)
+	{	
+		ZeroPos = Vector2(m_Pos.x - m_NumberSize.x - m_NumberSize.GetHalfX(), m_Pos.y);
+		ZeroSize = Vector2(13.0f, 24.0f);
+	}
+	else
+	{
+		ZeroSize = Vector2(0.0f, 0.0f);
+	}
 
 	if (isMove == true && MoveSpeed >= 0.0f)
 	{
@@ -127,10 +146,14 @@ void Number::Render(HDC hDC, float DeltaTime)
 
 		if (isColorKey == false)
 			BitBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberSize.x, (int)m_NumberSize.y, m_Texture->GetMemDC(), FrameX, FrameY, SRCCOPY);
-		else
+		else if(isColorKey == true)
 			TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)m_NumberSize.x, (int)m_NumberSize.y, m_Texture->GetMemDC(), FrameX, FrameY, (int)m_NumberSize.x, (int)m_NumberSize.y, m_ColorKey);
+		else if(m_vecNumber[i] == 0)
+			TransparentBlt(hDC, (int)tPos.x, (int)tPos.y, (int)ZeroSize.x, (int)ZeroSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
 	}
-
+	
+	//0ÀÌ¹ÌÁö
+	TransparentBlt(hDC, (int)ZeroPos.x, (int)ZeroPos.y, (int)ZeroSize.x, (int)ZeroSize.y, m_ZeroTexture->GetMemDC(), 0, 0, (int)ZeroSize.x, (int)ZeroSize.y, m_ColorKey);
 
 	list<Collider*>::iterator StartIter = m_ColliderList.begin();
 	list<Collider*>::iterator EndIter = m_ColliderList.end();
