@@ -2,9 +2,10 @@
 #include "../Coll/ColliderRect.h"
 #include "../Scene/Layer.h"
 #include "../Object/Commando.h"
+#include "../Object/Number.h"
 
 ItemBase::ItemBase()
-	:ItemCount(1), isNumberShow(false), Target(NULL)
+	:ItemCount(0), isNumberShow(false), Target(NULL)
 {
 	m_ObjectType = OT_ITEM;
 	SetTag("Item");
@@ -39,14 +40,12 @@ bool ItemBase::Init()
 	RC->SetVirtualRect(99.0f, 99.0f);
 	RC->SetPivot(0.5f, 0.5f);
 
-	//숫자는 나중에 Coll함수에서
-	//CountNumber = Object::CreateObject<Number>("ItemCountNumber", m_Layer);
-	//CountNumber->SetPos(m_Pos.x, m_Pos.y);
-	//CountNumber->SetTexture("ItemCountNumber", TEXT("object/TempNumber.bmp"));
-	//CountNumber->SetNumberSize(19.0f, 24.0f);
-	//CountNumber->SetColorKey(RGB(255, 0, 255));
-	//CountNumber->SetIsCameraMode(false);
-	//CountNumber->SetNumberViewSize(Vector2(19.0f, 24.0f));
+	CountNumber = Object::CreateObject<Number>("ItemCountNumber", m_Layer);
+	CountNumber->SetTexture("ItemCountNumber", TEXT("object/TempNumber.bmp"));
+	CountNumber->SetNumberSize(19.0f, 24.0f);
+	CountNumber->SetColorKey(RGB(255, 0, 255));
+	CountNumber->SetIsCameraMode(false);
+	CountNumber->SetNumberViewSize(Vector2(19.0f, 24.0f));
 
 	return true;
 }
@@ -61,8 +60,13 @@ int ItemBase::Input(float DeltaTime)
 int ItemBase::Update(float DeltaTime)
 {
 	SAFE_RELEASE(Target);
-
 	Object::Update(DeltaTime);
+
+	if (ItemCount > 1)
+	{
+		CountNumber->SetNumber(ItemCount);
+		CountNumber->SetPos(m_Pos.x + 10.0f, m_Pos.y);
+	}
 
 	Target = FindSceneObject("Commando");
 
@@ -78,7 +82,6 @@ int ItemBase::Update(float DeltaTime)
 		else
 			m_Pos.y -= MoveSpeed * DeltaTime;
 	}
-
 	return 0;
 }
 

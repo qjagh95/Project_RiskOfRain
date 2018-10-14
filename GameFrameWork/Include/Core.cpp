@@ -26,7 +26,7 @@ Core::Core()
 	m_HDC = NULL;
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//어디서 릭났는지 잡아주는 함수 (괄호는 블럭이름)
-	//_CrtSetBreakAlloc(69800);
+	_CrtSetBreakAlloc(32074);
 
 //#ifdef _DEBUG
 	AllocConsole();
@@ -225,6 +225,11 @@ void Core::Logic()
 		else
 			StopTime = 1.0f;
 	}
+
+	if (KEYPress(VK_F11))
+		StopTime = 3.0f;
+	else if(KEYUp(VK_F11))
+		StopTime = 1.0f;
 
 	Input(Delta * StopTime);
 	Update(Delta * StopTime);

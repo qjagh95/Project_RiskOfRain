@@ -109,7 +109,6 @@ void EditMonster::MouseHit(Collider * Src, Collider * Dest, float DeltaTime)
 			SetisActiv(false);
 			EditScene::EraseMonserList(this);
 		}
-
 	}
 }
 

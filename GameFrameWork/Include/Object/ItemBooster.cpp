@@ -3,6 +3,7 @@
 #include "../Scene/Layer.h"
 #include "../Object/Commando.h"
 #include "../Object/Bar.h"
+#include "../Debug.h"
 
 ItemBooster::ItemBooster()
 {
@@ -22,8 +23,11 @@ ItemBooster::~ItemBooster()
 bool ItemBooster::Init()
 {
 	ItemBase::Init();
-	GaugeTime = 3.0f;
-	MaxTime = 3.0f;
+	GaugeTime = 1.0f;
+	MaxTime = 1.0f;
+	MaxSize = 41.0f;
+	Size = 41.0f;
+
 	SetTexture("BoosterItem", TEXT("Item/JetPack.bmp"));
 
 	OilBar = Object::CreateObject<Bar>("OilBar", m_Layer);
@@ -32,7 +36,6 @@ bool ItemBooster::Init()
 	OilBar->SetColorKey(RGB(255, 0, 255));
 	OilBar->SetIsCameraMode(true);
 	return true;
-
 }
 
 int ItemBooster::Input(float DeltaTime)
@@ -72,35 +75,56 @@ ItemBooster * ItemBooster::Clone()
 
 void ItemBooster::EffectUpdate(float DeltaTime)
 {
-	//점프일때만 들어온다.
-	if (Commando::GetPlayerState() != PS_JUMPING)
-		return;
-
-	if (KEYPress(VK_SPACE))
+	if (Commando::GetIsBooster() == true)
 	{
-		GaugeTime -= DeltaTime;
-
-		if (GaugeTime <= 0.0f)
+		if (KEYPress(VK_SPACE))
 		{
-			GaugeTime = 0.0f;
+			if (GaugeTime <= 0.0f)
+				return;
+
+			isUp = true;
+
+			GaugeTime -= DeltaTime;
+			Size -= (41.0f * DeltaTime);
+
+			if (GaugeTime <= 0.0f)
+			{
+				GaugeTime = 0.0f;
+				Size = 0.0f;
+
+				OilBar->SetisShow(false);
+				return;
+			}
+			else
+				OilBar->SetisShow(true);
+
+			Target->SetForce(0.0f);
+			Target->SetGravity(false);
+			Target->SetMoveUpPos(-300.0f * DeltaTime);
+		}
+	}
+	if(Commando::GetPlayerState() > 0)
+	{
+		if (KEYUp(VK_SPACE))
+			isUp = false;
+	}
+
+	if (isUp == false)
+	{
+		GaugeTime += DeltaTime;
+		Size += 41.0f * DeltaTime;
+
+		if (GaugeTime >= MaxTime * ItemCount)
+		{
+			GaugeTime = MaxTime * ItemCount;
+			Size = MaxSize * ItemCount;
 			OilBar->SetisShow(false);
 			return;
 		}
-
-		Target->SetPos(Target->GetPos().x, Target->GetPos().y - Target->GetMoveSpeed() * DeltaTime);
-
-		Target->SetForce(0.0f);
-		OilBar->SetBarInfo(0, (int)MaxTime, (int)GaugeTime, BD_DOWN);
-		OilBar->SetPos(Target->GetPos().x + Target->GetSize().x , Target->GetPos().y);
-		OilBar->SetisShow(true);
+		else
+			OilBar->SetisShow(true);
 	}
-	else
-	{
-		GaugeTime += DeltaTime;
 
-		if(GaugeTime >= MaxTime)
-			GaugeTime = MaxTime;
-
-		OilBar->SetisShow(false);
-	}
+	OilBar->SetBarInfo(0, (int)MaxSize * ItemCount, (int)Size, BD_DOWN);
+	OilBar->SetPos(Target->GetPos().x + Target->GetSize().GetHalfX(), Target->GetPos().y + 10.0f);
 }

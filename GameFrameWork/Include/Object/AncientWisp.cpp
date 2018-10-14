@@ -1,11 +1,9 @@
 #include "AncientWisp.h"
 #include "../Coll/ColliderRect.h"
-
 #include "../Object/Object.h"
 #include "../Object/Tile.h"
 #include "../StageManager.h"
 #include "../Resource/Animation.h"
-
 #include "../Object/AncientEffect.h"
 
 AncientWisp::AncientWisp()
@@ -145,17 +143,31 @@ void AncientWisp::RangeCheck()
 
 void AncientWisp::FS_MOVE(float DeltaTime)
 {
+	Tile* CurTile = NULL;
+	Tile* FootTile = NULL;
 	Tile* NextTile = NULL;
 
-	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y + m_Size.GetHalfY() - StageManager::Get()->GetTileSize().y);
+	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y);
+	CurTile = StageManager::Get()->GetTile(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+	FootTile = StageManager::Get()->GetTile(m_Pos.x + (m_Size.GetHalfX() * MoveDir) + StageManager::Get()->GetTileSize().GetHalfX(), m_Pos.y + m_Size.GetHalfY() + StageManager::Get()->GetTileSize().GetHalfY());
 
 	if (m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
-		m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+	{
+		if (FootTile->GetTileType() != TT_NOMAL)
+			m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+		else if (FootTile->GetTileType() == TT_NOMAL)
+			MoveDir *= -1.0f;
 
-	if (NextTile->GetTileType() == TT_NOMOVE)
+		if (NextTile->GetTileType() == TT_NOMOVE)
+			MoveDir *= -1.0f;
+	}
+
+	if (CurTile->GetTileType() == TT_NOMOVE && FootTile->GetTileType() == TT_NOMAL)
 		MoveDir *= -1.0f;
 
 	SAFE_RELEASE(NextTile);
+	SAFE_RELEASE(FootTile);
+	SAFE_RELEASE(CurTile);
 
 	RangeCheck();
 }

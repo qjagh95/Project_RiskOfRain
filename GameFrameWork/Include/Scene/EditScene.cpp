@@ -2,18 +2,14 @@
 #include "Scene.h"
 #include "SceneManager.h"
 #include "Layer.h"
-
 #include "../Camera.h"
 #include "../Input.h"
 #include "../Button.h"
-
 #include "../Resource/ResourceManager.h"
-
 #include "../Object/TileInfo.h"
 #include "../Object/Object.h"
 #include "../Object/TileBg.h"
 #include "../Object/Tile.h"
-
 #include "../Object/EditMonster.h"
 #include "../Object/EditMonster1.h"
 #include "../Object/EditMonster2.h"
@@ -21,10 +17,8 @@
 #include "../Object/EditMonster4.h"
 #include "../Object/EditMonster5.h"
 #include "../Object/EditMonster6.h"
-
 #include "../Resource/PathManager.h"
 #include "../Resource/Texture.h"
-
 #include "../Sound/SoundManager.h"
 
 list<ObjectBaseSave> EditScene::monsterList;
@@ -59,9 +53,9 @@ bool EditScene::Init()
 	Input::Get()->PushKey("OptionChange", VK_F7);
 	Input::Get()->PushKey("Clear", VK_RETURN);
 
-	SoundManager::Get()->LoadSound("EditBGM", true, TEXT("RolCoTa.mp3"));
+	//SoundManager::Get()->LoadSound("EditBGM", true, TEXT("RolCoTa.mp3"));
 
-	SoundManager::Get()->Play("EditBGM", true);
+	//SoundManager::Get()->Play("EditBGM", true);
 
 	Layer* DefaultLayer = m_Scene->FindLayer("Default");
 	Layer* BackLayer = m_Scene->FindLayer("BackGround");

@@ -2,6 +2,7 @@
 #include "Object.h"
 class ColliderRect;
 class Object;
+class Number;
 class ItemBase : public Object
 {
 public:
@@ -32,6 +33,7 @@ public:
 
 	virtual void EffectUpdate(float DeltaTime) {}
 
+	void AddItemCount(int Value) { ItemCount += Value; }
 	void SetItemCount(int Value) { ItemCount = Value; }
 	int GetItemCount() const { return ItemCount; }
 	ITEM_KIND GetItemKind() const { return ItemKind; }
@@ -41,6 +43,7 @@ public:
 protected:
 	ColliderRect* RC;
 	ITEM_KIND ItemKind;
+	Number* CountNumber;
 
 	int ItemCount;
 	bool isNumberShow;

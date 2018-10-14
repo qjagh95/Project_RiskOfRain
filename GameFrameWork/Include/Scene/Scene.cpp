@@ -4,6 +4,8 @@
 #include "Layer.h"
 #include "../Object/Object.h"
 
+#include "../Object/Monster.h"
+
 bool Scene::LayerSort(Layer * Src, Layer *Dest)
 {
 	//true냐 false냐에따라서 오름차순 내림차순이 결정된다.

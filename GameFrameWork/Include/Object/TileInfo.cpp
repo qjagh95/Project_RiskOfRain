@@ -86,8 +86,8 @@ int TileInfo::Update(float DeltaTime)
 	//해당위치의 인덱스를 구한다
 	m_StartX = (int)(CameraPos.x / m_SizeX);
 	m_StartY = (int)(CameraPos.y / m_SizeY);
-	m_EndX = (int)(CameraEnd.x / m_SizeX);
-	m_EndY = (int)(CameraEnd.y / m_SizeY);
+	m_EndX = (int)(CameraEnd.x + 25.0f / m_SizeX);
+	m_EndY = (int)(CameraEnd.y + 25.0f / m_SizeY);
 
 	if (KEYDOWN("GridShow"))
 	{
@@ -103,9 +103,9 @@ int TileInfo::Update(float DeltaTime)
 		m_StartY = 0;
 
 	if (m_EndX >= (int)m_NumX)
-		m_EndX = m_NumX - 1;
+		m_EndX = m_NumX;
 	if (m_EndY >= (int)m_NumY)
-		m_EndY = m_NumY - 1;
+		m_EndY = m_NumY;
 
 	for (int y = m_StartY; y < m_EndY; y++)
 	{

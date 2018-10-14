@@ -1,15 +1,11 @@
 #include "JellyFish.h"
 #include "../Coll/ColliderRect.h"
-
 #include "../Scene/Layer.h"
-
 #include "../Object/Object.h"
 #include "../Object/Tile.h"
 #include "../StageManager.h"
 #include "../Resource/Animation.h"
-
 #include "../Object/AncientEffect.h"
-
 #include "../Object/JellyFishHitBox.h"
 
 JellyFish::JellyFish()
@@ -34,6 +30,8 @@ bool JellyFish::Init()
 	TraceRange = 500.0f;
 	SetGravity(false);
 	ChangeTime = 0.0f;
+	isHit = false;
+	BackDistance = 100.0f; 
 
 	RC->SetCollsionTypeName("JellyBody");
 
@@ -110,6 +108,27 @@ int JellyFish::LateUpdate(float DeltaTime)
 
 	PrevFrame = m_Animation->GetFrameX();
 
+	if (isHit == true)
+	{
+		Tile* NextTile = NULL;
+
+		NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * (MoveDir * -1.0f), m_Pos.y);
+
+		if (NextTile->GetTileType() != TT_NOMOVE)
+		{
+			BackDistance -= MoveSpeed * 3.0f * DeltaTime;
+			m_Pos.x += MoveSpeed * 3.0f * (MoveDir * -1.0f) * DeltaTime;
+		}
+
+		if (BackDistance <= 0.0f)
+		{
+			isHit = false;
+			BackDistance = 50.0f;
+		}
+
+		SAFE_RELEASE(NextTile);
+	}
+
 	return 0;
 }
 
@@ -136,6 +155,26 @@ JellyFish * JellyFish::Clone()
 void JellyFish::TileCollsionActive(float DeltaTime)
 {
 	Monster::TileCollsionActive(DeltaTime);
+}
+
+void JellyFish::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	Monster::BaseAttackHitFirst(Src, Dest, DeltaTime);
+
+	if (Dest->GetTag() == "BaseBody")
+	{
+		isHit = true;
+	}
+}
+
+void JellyFish::SkillTwoHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	Monster::SkillTwoHitFirst(Src, Dest, DeltaTime);
+
+	if (Dest->GetTag() == "LaserBody")
+	{
+		isHit = true;
+	}
 }
 
 void JellyFish::RangeCheck()

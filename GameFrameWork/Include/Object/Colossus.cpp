@@ -1,24 +1,18 @@
 #include "Colossus.h"
 #include "../Coll/ColliderRect.h"
 #include "../Scene/Layer.h"
-
 #include "../Object/Object.h"
 #include "../Object/Tile.h"
 #include "../StageManager.h"
 #include "../Resource/Animation.h"
-
 #include "../Scene/MainScene.h"
 #include "../Object/AncientEffect.h"
 #include "../Object/Bar.h"
 #include "../Object/Number.h"
-
 #include "../Object/ColossusKickHitBox.h"
 #include "../Object/ColossusClapHitBox.h"
-
 #include "../BossBarEdge.h"
-
 #include "../Debug.h"
-
 #include "../Sound/SoundManager.h"
 
 Colossus::Colossus()
@@ -77,6 +71,7 @@ bool Colossus::Init()
 	SetMoneyCoinCount(30);
 	SetExpCoinCount(30);
 	SetBarIsShow(false);
+	MainScene::SetStageOneBoss(true);
 
 	int a = rand() % 2;
 	if (a == 0)
@@ -144,19 +139,11 @@ int Colossus::Update(float DeltaTime)
 	{
 		SetHp(0);
 		MainScene::SetStageOneBoss(false);
+		MainScene::SetSommonMode(false);
+		SoundManager::Get()->Stop("DNF");
+		SoundManager::Get()->Play("BGM");
 		newEdge->SetisActiv(false);
 		HpNumber->SetisActiv(false);
-
-		SoundManager::Get()->Play("Win");
-
-		bool Check = false;
-		SoundManager::Get()->GetisPlay("Win", &Check);
-		if (Check == true)
-		{
-			SoundManager::Get()->Stop("DNF");
-			MessageBox(NULL, L"�̱褻", L"Win", MB_OK);
-		}
-		DestroyWindow(Core::Get()->GetHwnd());
 	}
 
 	return 0;

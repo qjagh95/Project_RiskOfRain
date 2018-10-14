@@ -24,6 +24,7 @@ public:
 	void AnimationDirCheck(string *aName, int state);
 	void SelectState(string* AnimationName ,int State);
 
+	static int GetSceneMonsterCount() { return SceneMonsterCount; }
 	void SetHp(int Value) { Hp = Value; }
 	int GetHp() const { return Hp; }
 	void SetMaxHp(int Value) { MaxHp = Value; }
@@ -56,6 +57,8 @@ protected:
 	float Distance;
 	ColliderRect* RC;
 	bool monsterColl;
+
+	static int SceneMonsterCount;
 
 	float PlayerDgree;
 	int mState;

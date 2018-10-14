@@ -1,70 +1,56 @@
 #include "MainScene.h"
 #include "Layer.h"
 #include "Scene.h"
-
 #include "../stdafx.h"
 #include "../Camera.h"
 #include "../Debug.h"
-
 #include "../Scene/EditScene.h"
-
 #include "../Resource/PathManager.h"
-
 #include "../Object/BackGround.h"
 #include "../Object/Object.h"
 #include "../Object/Commando.h"
 #include "../Object/BaseAttackBullet.h"
 #include "../Object/Monster.h"
 #include "../Object/Effect.h"
-
 #include "../Object/DieEffect.h"
-
 #include "../Object/Number.h"
 #include "../Object/Bar.h"
-
 #include "../Object/TileInfo.h"
 #include "../Object/TileBg.h"
-
 #include "../Object/ItemBox.h"
 #include "../Object/Pump.h"
 #include "../Object/Rope.h"
 #include "../Object/TelePoter.h"
-
 #include "../Object/CoinUI.h"
 #include "../Object/DollerUI.h"
 #include "../Object/CommandoUI.h"
 #include "../Object/TimeUI.h"
-
 #include "../Object/Colossus.h"
-
 #include "../Object/BaseAttackBullet.h"
 #include "../Object/LaserBullet.h"
 #include "../Object/BaseEffect.h"
 #include "../Object/LaserEffect.h"
-
 #include "../Object/ExpEffect.h"
 #include "../Object/LevelUpEffect.h"
-
 #include "../Object/AncientEffect.h"
-
 #include "../Object/IssacTear.h"
-
 #include "../Object/Coin.h"
 #include "../Object/ExpCoin.h"
 #include "../Object/MoneyCoin.h"
-
 #include "../Sound/SoundManager.h"
-
 #include "../StageManager.h"
+#include "../Object/Monster.h"
 
 bool MainScene::isStageOneBoss = false;
+bool MainScene::SommonMode = true;
 
 MainScene::MainScene()
-	: TimeVar(0.0f), DebugTimeVar(0.0f)
+	: TimeVar(0.0f), DebugTimeVar(0.0f), SummonTime(0.0f), Target(NULL)
 {
 }
 MainScene::~MainScene()
 {
+	SAFE_RELEASE(Target);
 }
 
 bool MainScene::Init()
@@ -120,6 +106,8 @@ bool MainScene::Init()
 	Camera::Get()->SetTarget(newPlayer);
 	Camera::Get()->SetTargetPivot(0.5f, 0.5f);
 
+	Target = newPlayer;
+
 	MoneyCoin* moneyCoin = Object::CreatePrototype<MoneyCoin>("MoneyCoin", m_Scene);
 	moneyCoin->SetTarget(newPlayer);
 	ExpCoin* expCoin = Object::CreatePrototype<ExpCoin>("ExpCoin", m_Scene);
@@ -163,6 +151,31 @@ int MainScene::Input(float DeltaTime)
 
 int MainScene::Update(float DeltaTime)
 {
+	SummonTime += DeltaTime;
+
+	if (SummonTime >= 60.0f && SommonMode == true)
+	{
+		Layer* TempLayer = m_Scene->FindLayer("PlayLayer");
+		StageManager::Get()->LoadMonsterListSecond(L"123.stgmon", TempLayer, Vector2(Camera::Get()->GetPos().x + Core::Get()->GetWinSizeVector2().x , Camera::Get()->GetPos().y + Core::Get()->GetWinSizeVector2().y));
+
+		SAFE_RELEASE(TempLayer);
+		SummonTime = 0.0f;
+	}
+
+	if (Monster::GetSceneMonsterCount() == 0 && SommonMode == false)
+	{
+		SoundManager::Get()->Play("Win");
+
+		bool Check = false;
+		SoundManager::Get()->GetisPlay("Win", &Check);
+		if (Check == true)
+		{
+			SoundManager::Get()->Stop("DNF");
+			MessageBox(NULL, L"�̱褻", L"Win", MB_OK);
+		}
+		DestroyWindow(Core::Get()->GetHwnd());
+	}
+
 	return 0;
 }
 
@@ -185,7 +198,7 @@ void MainScene::Render(HDC hdc, float DeltaTime)
 	if (DebugTimeVar >= 1.0f)
 	{
 		char Buffer[255] = {};
-		sprintf_s(Buffer, "All_ObjectCount : %d \n", m_Scene->GetObjectCount());
+		sprintf_s(Buffer, "StageMonsterCount : %d \n", Monster::GetSceneMonsterCount());
 		Debug::OutputConsole(Buffer);
 
 		DebugTimeVar = 0.0f;

@@ -1,31 +1,24 @@
 #include "Commando.h"
 #include "BaseAttackBullet.h"
 #include "Effect.h"
-
 #include "../stdafx.h"
 #include "../Input.h"
 #include "../Camera.h"
-
 #include "../Scene/Layer.h"
 #include "../Scene/Scene.h"
 #include "../Object/Tile.h"
 #include "../Object/TileInfo.h"
 #include "../Object/Number.h"
-
 #include "../Object/Hider.h"
-
 #include "../Coll/ColliderRect.h"
 #include "../Coll/ColliderCircle.h"
 #include "../Resource/Animation.h"
-
 #include "../Sound/SoundManager.h"
 #include "../StageManager.h"
-
 #include "../Object/BaseAttackBullet.h"
 #include "../Object/LaserBullet.h"
 #include "../Object/BaseEffect.h"
 #include "../Object/LaserEffect.h"
-
 #include "../Debug.h"
 
 void Commando::FS_Idle(float DeltaTime)
@@ -70,6 +63,15 @@ void Commando::FS_Move(float DeltaTime)
 void Commando::FS_Jump(float DeltaTime)
 {
 	PlayerMove(DeltaTime);
+	SkillState();
+	
+	if (m_Pos.y > PrevPos.y)
+	{
+ 		isBooster = true;
+	}
+	else
+		isBooster = false;
+
 
 	Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
 	Tile* NextTile = StageManager::Get()->GetTile(m_Pos.x, m_Pos.y - m_Size.GetHalfY());

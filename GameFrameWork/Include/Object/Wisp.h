@@ -24,6 +24,9 @@ public:
 	Wisp* Clone() override;
 	void TileCollsionActive(float DeltaTime) override;
 
+	void BaseAttackHitFirst(Collider* Src, Collider* Dest, float DeltaTime) override;
+	void SkillTwoHitFirst(Collider* Src, Collider* Dest, float DeltaTime) override;
+
 	void RangeCheck();
 
 	void FS_MOVE(float DeltaTime);
@@ -38,6 +41,9 @@ private:
 	float TraceTime;
 	int Attack;
 	string AnimationName[WS_MAX];
+
+	bool isHit;
+	float BackDistance;
 
 	float ChangeTime;
 	float AttackDelay;

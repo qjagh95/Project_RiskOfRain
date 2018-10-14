@@ -2,7 +2,6 @@
 #include "Charactor.h"
 #include "../stdafx.h"
 
-class UsingItemBase;
 class ItemBase;
 class Tile;
 class Collider;
@@ -78,6 +77,7 @@ public:
 	void SkillTimeCheck(float DeltaTime);
 
 	static PLAYER_STATE GetPlayerState() { return pState; }
+	static bool GetIsBooster() { return isBooster; }
 
 	void BasicInit();
 	void AnimationInit();
@@ -97,6 +97,8 @@ private:
 	static int Exp;
 	static int MaxExp;
 	static int Level;
+	static bool isBooster;
+
 	int AttackDamege;
 	int HitCount;
 
@@ -123,13 +125,10 @@ private:
 	Vector2 PrevHitPos;
 	list<Vector2> HitPosList;
 	list<Vector2> HitSizeList;
-
+	Vector2 PrevPos;
 	list<ItemBase*> myItemList;
-	UsingItemBase* CurUsingItem;
-
 	static PLAYER_STATE pState;
 	PLAYER_STATE PrevState;
-
 	float MoveDir;
 	string Dir;
 	string AnimationName[PS_MAX];
@@ -138,9 +137,9 @@ private:
 	Object* CurTarget;
 	Vector2 Center;
 	float TimeVar;
-
 	int PrevFrame;
 	float HpTimeVar;
+	Number* CountNumber;
 
 public:
 	friend class Object;

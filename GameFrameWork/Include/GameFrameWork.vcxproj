@@ -74,6 +74,7 @@
     <ClCompile Include="Object\LemurinHitBox.cpp" />
     <ClCompile Include="Object\RockGolem.cpp" />
     <ClCompile Include="Object\RockGolenHitBox.cpp" />
+    <ClCompile Include="Object\TeleCope.cpp" />
     <ClCompile Include="Object\UsingItemBase.cpp" />
     <ClCompile Include="Object\ItemBox.cpp" />
     <ClCompile Include="Object\LaserBullet.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Object\LemurinHitBox.h" />
     <ClInclude Include="Object\RockGolem.h" />
     <ClInclude Include="Object\RockGolenHitBox.h" />
+    <ClInclude Include="Object\TeleCope.h" />
     <ClInclude Include="Object\UsingItemBase.h" />
     <ClInclude Include="Object\ItemBox.h" />
     <ClInclude Include="Object\LaserBullet.h" />

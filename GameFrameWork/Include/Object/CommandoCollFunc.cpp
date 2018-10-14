@@ -30,7 +30,6 @@
 #include "../Object/UsingItemBase.h"
 #include "../Object/ItemBase.h"
 #include "../Object/ItemBooster.h"
-
 #include "../Coll/ColliderRect.h"
 #include "../Coll/ColliderPoint.h"
 
@@ -47,6 +46,8 @@ void Commando::TelePoterHit(Collider * Src, Collider * Dest, float DeltaTime)
 		if (KEYDown('A'))
 		{
 			if (MainScene::GetStageOneBoss() == true)
+				return;
+			if (MainScene::GetSommonMode() == false)
 				return;
 
 			Colossus* newBoss = Object::CreateObject<Colossus>("Colossus", m_Layer);
@@ -440,24 +441,36 @@ void Commando::ItemHit(Collider * Src, Collider * Dest, float DeltaTime)
 		{
 			ItemBase* getItem = (ItemBase*)Dest->GetCurObject();
 
+			list<ItemBase*>::iterator StartIter = myItemList.begin();
+			list<ItemBase*>::iterator EndIter = myItemList.end();
+
+			for (; StartIter != EndIter; StartIter++)
+			{
+				if ((*StartIter)->GetItemKind() == getItem->GetItemKind())
+				{
+					(*StartIter)->AddItemCount(1);
+					getItem->SetisActiv(false);
+					SAFE_RELEASE(getItem);
+					return;
+				}
+			}
+
 			switch (getItem->GetItemKind())
 			{
 				case ItemBase::ITEM_KIND::ITEM_BOOSTER:
 				{
 					getItem->SetIsCameraMode(false);
 					getItem->SetIsStop(true);
-					//포지션을 업데이트에서 리스트돌려서..?
+					getItem->AddItemCount(1);
 
 					list<ItemBase*>::iterator StartIter = myItemList.begin();
 					list<ItemBase*>::iterator EndIter= myItemList.end();
 
 					int Count = 0;
 					for (; StartIter != EndIter; StartIter++)
-					{
 						Count++;
-					}
 
-					getItem->SetPos(Vector2((float)Count + 30.0f, Core::Get()->GetWinSizeVector2().y - 200.0f));
+					getItem->SetPos(Vector2((float)(Count * 99.0f) + 30.0f, Core::Get()->GetWinSizeVector2().y - 200.0f));
 					myItemList.push_back(getItem);
 				}
 					break;

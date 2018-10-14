@@ -124,10 +124,6 @@ public:
 	void Monster4Callback(float DeltaTime);
 	void Monster5Callback(float DeltaTime);
 	void Monster6Callback(float DeltaTime);
-	void Monster7Callback(float DeltaTime);
-	void Monster8Callback(float DeltaTime);
-	void Monster9Callback(float DeltaTime);
-	void Monster10Callback(float DeltaTime);
 
 	void NoMoveButtonCallback(float DeltaTime);
 

@@ -24,6 +24,9 @@ public:
 	JellyFish* Clone() override;
 	void TileCollsionActive(float DeltaTime) override;
 
+	void BaseAttackHitFirst(Collider* Src, Collider* Dest, float DeltaTime) override;
+	void SkillTwoHitFirst(Collider* Src, Collider* Dest, float DeltaTime) override;
+
 	void RangeCheck();
 	void SelectState(JELLYFISH_STATE mState);
 
@@ -36,6 +39,8 @@ private:
 	float TraceRange;
 	bool isAttack;
 	int Attack;
+	bool isHit;
+	float BackDistance;
 	string AnimationName[JS_MAX];
 
 	float ChangeTime;

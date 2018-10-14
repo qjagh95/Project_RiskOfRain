@@ -13,12 +13,15 @@ public:
 	void Collision(float DeltaTime) override;
 	void Render(HDC Hdc, float DeltaTime) override;
 	ItemBooster* Clone() override;
-
 	void EffectUpdate(float DeltaTime) override;
 
 private:
 	float GaugeTime;
 	float MaxTime;
+	float Size;
+	float MaxSize;
+
+	bool isUp;
 	Bar* OilBar;
 
 protected:

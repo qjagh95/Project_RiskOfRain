@@ -1,6 +1,5 @@
 #include "Monster.h"
 #include "../Camera.h"
-
 #include "../Coll/ColliderRect.h"
 #include "../Sound/SoundManager.h"
 #include "../Object/Bar.h"
@@ -11,9 +10,10 @@
 #include "../Object/DieEffect.h"
 #include "../Object/MoneyCoin.h"
 #include "../Object/ExpCoin.h"
-
 #include "../Object/Tile.h"
 #include "../StageManager.h"
+
+int Monster::SceneMonsterCount = 0;
 
 Monster::Monster()
 	:Target(NULL), Hp(100), MaxHp(100), HpBar(NULL), Distance(0.0f), mState(0), PrevState(0), PlayerDgree(0)
@@ -22,6 +22,8 @@ Monster::Monster()
 	SetTag("Monster");
 	Dir = "R";
 	Name = "Monster";
+
+	SceneMonsterCount++;
 }
 
 Monster::Monster(const Monster & Value)
@@ -134,6 +136,7 @@ int Monster::Update(float DeltaTime)
 			newExp->SetPos(Vector2(x, y));
 			SAFE_RELEASE(newExp)
 		}
+		SceneMonsterCount--;
 		SetisActiv(false);
 	}
 
@@ -305,3 +308,4 @@ void Monster::SkillTwoHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
 void Monster::SkillTwoHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
 {
 }
+

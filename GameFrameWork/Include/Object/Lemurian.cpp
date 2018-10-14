@@ -5,7 +5,6 @@
 #include "../Object/Tile.h"
 #include "../StageManager.h"
 #include "../Resource/Animation.h"
-
 #include "../Object/LemurinHitBox.h"
 
 Lemurian::Lemurian()

@@ -5,7 +5,6 @@
 #include "../Object/Tile.h"
 #include "../StageManager.h"
 #include "../Resource/Animation.h"
-
 #include "../Object/WispHitBox.h"
 
 Wisp::Wisp()
@@ -33,6 +32,8 @@ bool Wisp::Init()
 	AttackDelay = 0.0f;
 	isTrace = false;
 	TraceTime = 0.0f;
+	isHit = false;
+	BackDistance = 100.0f;
 
 	int randn = rand() % 2;
 	if (randn == 0)
@@ -98,6 +99,28 @@ int Wisp::LateUpdate(float DeltaTime)
 
 	PrevFrame = m_Animation->GetFrameX();
 	AnimationDirCheck(AnimationName, mState);
+
+	if (isHit == true)
+	{
+		Tile* NextTile = NULL;
+
+		NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * (MoveDir * -1.0f), m_Pos.y);
+
+		if (NextTile->GetTileType() != TT_NOMOVE)
+		{
+			BackDistance -= MoveSpeed * 3.0f * DeltaTime;
+			m_Pos.x += MoveSpeed * 3.0f * (MoveDir * -1.0f) * DeltaTime;
+		}
+
+		if (BackDistance <= 0.0f)
+		{
+			isHit = false;
+			BackDistance = 50.0f;
+		}
+
+		SAFE_RELEASE(NextTile);
+	}
+
 	return 0;
 }
 
@@ -126,6 +149,26 @@ void Wisp::TileCollsionActive(float DeltaTime)
 	Monster::TileCollsionActive(DeltaTime);
 }
 
+void Wisp::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	Monster::BaseAttackHitFirst(Src, Dest, DeltaTime);
+
+	if (Dest->GetTag() == "BaseBody")
+	{
+		isHit = true;
+	}
+}
+
+void Wisp::SkillTwoHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	Monster::SkillTwoHitFirst(Src, Dest, DeltaTime);
+
+	if (Dest->GetTag() == "LaserBody")
+	{
+		isHit = true;
+	}
+}
+
 void Wisp::RangeCheck()
 {
 	if (Distance < TraceRange)
@@ -134,25 +177,31 @@ void Wisp::RangeCheck()
 
 void Wisp::FS_MOVE(float DeltaTime)
 {
+	Tile* CurTile = NULL;
+	Tile* FootTile = NULL;
 	Tile* NextTile = NULL;
-	Tile* FootNextTile = NULL;
-	Tile* TempTile = NULL;
 
-	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y + m_Size.GetHalfY() - StageManager::Get()->GetTileSize().y);
-	FootNextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y + m_Size.GetHalfY() + StageManager::Get()->GetTileSize().GetHalfY());
+	NextTile = StageManager::Get()->GetTile(m_Pos.x + m_Size.GetHalfX() * MoveDir, m_Pos.y);
+	CurTile = StageManager::Get()->GetTile(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+	FootTile = StageManager::Get()->GetTile(m_Pos.x + (m_Size.GetHalfX() * MoveDir) + StageManager::Get()->GetTileSize().GetHalfX(), m_Pos.y + m_Size.GetHalfY() + StageManager::Get()->GetTileSize().GetHalfY());
 
 	if (m_Pos.x >= 0 || m_Pos.x < StageManager::Get()->GetWidth())
-		m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+	{
+		if (FootTile != NULL && FootTile->GetTileType() != TT_NOMAL)
+			m_Pos.x += MoveSpeed * MoveDir * DeltaTime;
+		else if (FootTile != NULL && FootTile->GetTileType() == TT_NOMAL)
+			MoveDir *= -1.0f;
 
-	if (FootNextTile->GetTileType() == TT_NOMAL)
-		MoveDir *= -1.0f;
+		if (NextTile->GetTileType() == TT_NOMOVE)
+			MoveDir *= -1.0f;
+	}
 
-	if (NextTile->GetTileType() == TT_NOMOVE)
+	if (CurTile->GetTileType() == TT_NOMOVE && FootTile->GetTileType() == TT_NOMAL)
 		MoveDir *= -1.0f;
 
 	SAFE_RELEASE(NextTile);
-	SAFE_RELEASE(FootNextTile);
-	SAFE_RELEASE(TempTile);
+	SAFE_RELEASE(FootTile);
+	SAFE_RELEASE(CurTile);
 
 	RangeCheck();
 }

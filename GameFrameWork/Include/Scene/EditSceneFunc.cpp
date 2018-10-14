@@ -195,22 +195,6 @@ void EditScene::LoadMonFile(const TCHAR* FileName)
 					SAFE_RELEASE(TempLayer);
 				}
 				break;
-				case MT_MONSTERSEVEN:
-				{
-				}
-				break;
-				case MT_MONSTEREIGHT:
-				{
-				}
-				break;
-				case MT_MONSTERNINE:
-				{
-				}
-				break;
-				case MT_MONSTERTEN:
-				{
-				}
-				break;
 			} //switch
 			Save.m_mType = Saver.m_mType;
 
@@ -282,9 +266,7 @@ void EditScene::SaveLoad()
 				LoadStageFile(Arr.c_str());
 				LoadMonFile(FileName);
 			}
-
 		}
-
 		ShowCursor(FALSE);
 	}
 }
@@ -1129,50 +1111,6 @@ void EditScene::MonsterButtonInit(Layer * UiLayer)
 	TileButton->SetIsOffset(false);
 	TileButton->SetCallBack<EditScene>(&EditScene::Monster6Callback, this);
 	TileButton->SetTexture("Monster6", TEXT("Tile/M6.bmp"));
-	TileButton->AddRefCount();
-	MonsterButtonList.push_back(TileButton);
-
-	SAFE_RELEASE(TileButton);
-
-	TileButton = Object::CreateObject<Button>("Monster7Button", UiLayer);
-	TileButton->SetPos(300.0f, 0.0f);
-	TileButton->SetSize(50.0f, 50.0f);
-	TileButton->SetIsOffset(false);
-	TileButton->SetCallBack<EditScene>(&EditScene::Monster7Callback, this);
-	TileButton->SetTexture("Monster7", TEXT("Tile/M7.bmp"));
-	TileButton->AddRefCount();
-	MonsterButtonList.push_back(TileButton);
-
-	SAFE_RELEASE(TileButton);
-
-	TileButton = Object::CreateObject<Button>("Monster8Button", UiLayer);
-	TileButton->SetPos(350.0f, 0.0f);
-	TileButton->SetSize(50.0f, 50.0f);
-	TileButton->SetIsOffset(false);
-	TileButton->SetCallBack<EditScene>(&EditScene::Monster8Callback, this);
-	TileButton->SetTexture("Monster8", TEXT("Tile/M8.bmp"));
-	TileButton->AddRefCount();
-	MonsterButtonList.push_back(TileButton);
-
-	SAFE_RELEASE(TileButton);
-
-	TileButton = Object::CreateObject<Button>("Monster9Button", UiLayer);
-	TileButton->SetPos(400.0f, 0.0f);
-	TileButton->SetSize(50.0f, 50.0f);
-	TileButton->SetIsOffset(false);
-	TileButton->SetCallBack<EditScene>(&EditScene::Monster9Callback, this);
-	TileButton->SetTexture("Monster9", TEXT("Tile/M9.bmp"));
-	TileButton->AddRefCount();
-	MonsterButtonList.push_back(TileButton);
-
-	SAFE_RELEASE(TileButton);
-
-	TileButton = Object::CreateObject<Button>("Monster10Button", UiLayer);
-	TileButton->SetPos(450.0f, 0.0f);
-	TileButton->SetSize(50.0f, 50.0f);
-	TileButton->SetIsOffset(false);
-	TileButton->SetCallBack<EditScene>(&EditScene::Monster10Callback, this);
-	TileButton->SetTexture("Monster10", TEXT("Tile/M10.bmp"));
 	TileButton->AddRefCount();
 	MonsterButtonList.push_back(TileButton);
 

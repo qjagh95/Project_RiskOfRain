@@ -15,11 +15,13 @@
 #include "../Coll/ColliderPoint.h"
 #include "../Scene/Scene.h"
 #include "../Scene/Layer.h"
+#include "../Scene/MainScene.h"
 #include "../Object/Hider.h"
 #include "../Sound/SoundManager.h"
 #include "../StageManager.h"
 #include "../Object/UsingItemBase.h"
 #include "../Object/ItemBase.h"
+#include "../Object/Monster.h"
 
 int Commando::pMoney = 100;
 int Commando::Hp = 300;
@@ -28,9 +30,10 @@ int Commando::Exp = 0;
 int Commando::MaxHp = 300;
 int Commando::MaxExp = 500;
 PLAYER_STATE Commando::pState = PS_IDLE;
+bool Commando::isBooster = false;
 
 Commando::Commando()
-	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(12), HitCount(0), InfinityTime(1.0f)
+	:CurTarget(NULL), MoneyNumber(NULL),CountNumber(NULL), AttackDamege(12), HitCount(0), InfinityTime(1.0f)
 	, SkillOneDelay(0.5f), SkillTwoDelay(5.0f), SkillThreeDelay(5.0f), SkillFourDelay(8.0f),
 	isSkillOne(false), isSkillTwo(false), isSkillThree(false), isSkillFour(false), isRopeHiting(false)
 	, isRopeUpHitting(false),PrevFrame(0), isLineHit(false), isInfinity(false)
@@ -43,7 +46,7 @@ Commando::~Commando()
 {
 	SAFE_RELEASE(CurTarget);
 	SAFE_RELEASE(MoneyNumber);
-	SAFE_RELEASE(CurUsingItem);
+	SAFE_RELEASE(CountNumber);
 
 	Safe_Release_VecList(myItemList);
 }
@@ -67,6 +70,9 @@ int Commando::Input(float DeltaTime)
 	else if(isRopeHiting == false)
 		isGravity = true;
 
+	if (KEYDown(VK_NUMPAD7))
+		SelectState(PS_IDLE);
+
 	if (KEYDown(VK_NUMPAD0))
 		pMoney += 500;
 	if (KEYDown(VK_NUMPAD1))
@@ -78,6 +84,8 @@ int Commando::Input(float DeltaTime)
 		MaxHp += 50;
 	}
 
+	if (KEYDown(VK_NUMPAD8))
+		MoveSpeed += 50.f;
 
 	return 0;
 }
@@ -104,6 +112,42 @@ int Commando::Update(float DeltaTime)
 	RopeCheck();
 	LevelUpCheck();
 	SkillTimeCheck(DeltaTime);
+
+	Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
+	if (CurTile->GetTileType() == TT_NOMOVE)
+	{
+		if (pState != PS_ROPE)
+		{
+			while (true)
+			{
+				m_Pos.x++;
+				m_Pos.y++;
+
+				CurTile = StageManager::Get()->GetTile(m_Pos);
+
+				if (CurTile->GetTileType() == TT_NOMOVE)
+				{
+					m_Pos.x -= 2.0f;
+					m_Pos.y -= 2.0f;
+				}
+
+				if (CurTile->GetTileType() == TT_NOMAL)
+				{
+					SelectState(PS_IDLE);
+					SAFE_RELEASE(CurTile);
+					break;
+				}
+				SAFE_RELEASE(CurTile);
+			}
+		}	
+	}
+
+	SAFE_RELEASE(CurTile)
+	//아이템효과 업데이트
+	list<ItemBase*>::iterator StartIter = myItemList.begin();
+	list<ItemBase*>::iterator EndIter = myItemList.end();
+	for (; StartIter != EndIter; StartIter++)
+		(*StartIter)->EffectUpdate(DeltaTime);
 
 	switch (pState)
 	{
@@ -141,14 +185,6 @@ int Commando::Update(float DeltaTime)
 	HitPosList.clear();
 	HitSizeList.clear();
 
-	//아이템효과 업데이트
-	list<ItemBase*>::iterator StartIter = myItemList.begin();
-	list<ItemBase*>::iterator EndIter = myItemList.end();
-	for (; StartIter != EndIter; StartIter++)
-	{
-		(*StartIter)->EffectUpdate(DeltaTime);
-	}
-
 	//무적시간
 	if (isInfinity == true)
 	{
@@ -171,6 +207,7 @@ int Commando::LateUpdate(float DeltaTime)
 	isRopeHiting = false;
 	isRopeUpHitting = false;
 	PrevFrame = m_Animation->GetFrameX();
+	PrevPos = m_Pos;
 
 	return 0;
 }
@@ -188,6 +225,37 @@ void Commando::CollsionAfterUpdate(float DeltaTime)
 void Commando::Render(HDC Hdc, float DeltaTime)
 {
 	Charactor::Render(Hdc, DeltaTime);
+
+	if (Monster::GetSceneMonsterCount() > 0 && MainScene::GetSommonMode() == false)
+	{
+		CountNumber->SetPos(m_Pos.x + m_Size.GetHalfX() + 20.0f, m_Pos.y);
+		CountNumber->SetisShow(true);
+		CountNumber->SetNumber(Monster::GetSceneMonsterCount());
+
+		MoveToEx(Hdc, (int)m_Pos.x - Camera::Get()->GetPos().x, (int)m_Pos.y - Camera::Get()->GetPos().y, NULL);
+
+		const list<Object*>* pFindList = Object::FindSceneObjects("Monster");
+
+		list<Object*>::const_iterator StartIter = pFindList->begin();
+		list<Object*>::const_iterator EndIter = pFindList->end();
+
+		Vector2 TempPos = (*StartIter)->GetPos();
+
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			float Src = Math::GetDistance(m_Pos, TempPos);
+			float Dest = Math::GetDistance(m_Pos, (*StartIter)->GetPos());
+
+			if (Src > Dest)
+				TempPos = (*StartIter)->GetPos();
+		}
+		Vector2 a = TempPos;
+
+		a.x = TempPos.x + cosf(Math::DgreeToRadian(Math::GetDegree(m_Pos, TempPos)));
+		a.y = TempPos.y + sinf(Math::DgreeToRadian(Math::GetDegree(m_Pos, TempPos)));
+
+		LineTo(Hdc, (int)a.x - Camera::Get()->GetPos().x, (int)a.y - Camera::Get()->GetPos().y);
+	}
 }
 
 Commando * Commando::Clone()
@@ -485,6 +553,15 @@ void Commando::BasicInit()
 	MoneyNumber->SetIsCameraMode(false);
 	MoneyNumber->SetNumberViewSize(Vector2(25.0f, 25.0f));
 	MoneyNumber->SetZeroViewSize(Vector2(25.0f, 25.0f));
+
+	CountNumber = Object::CreateObject<Number>("CountNumber", m_Layer);
+	CountNumber->SetPos(m_Pos);
+	CountNumber->SetTexture("CountNumber", TEXT("object/TempNumber.bmp"));
+	CountNumber->SetNumberSize(19.0f, 24.0f);
+	CountNumber->SetColorKey(RGB(255, 0, 255));
+	CountNumber->SetNumberViewSize(Vector2(10.0f, 10.0f));
+	CountNumber->SetZeroViewSize(Vector2(0.0f, 0.0f));
+	CountNumber->SetisShow(false);
 }
 
 void Commando::AnimationInit()

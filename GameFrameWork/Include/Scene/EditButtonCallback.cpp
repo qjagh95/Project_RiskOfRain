@@ -1201,26 +1201,6 @@ void EditScene::Monster6Callback(float DeltaTime)
 	Input::Get()->SetMouseTexturePivot(0.5f, 0.5f);
 }
 
-void EditScene::Monster7Callback(float DeltaTime)
-{
-	monsterType = MT_MONSTERSEVEN;
-}
-
-void EditScene::Monster8Callback(float DeltaTime)
-{
-	monsterType = MT_MONSTEREIGHT;
-}
-
-void EditScene::Monster9Callback(float DeltaTime)
-{
-	monsterType = MT_MONSTERNINE;
-}
-
-void EditScene::Monster10Callback(float DeltaTime)
-{
-	monsterType = MT_MONSTERTEN;
-}
-
 void EditScene::NoMoveButtonCallback(float DeltaTime)
 {
 	isItemOptionMode = false;

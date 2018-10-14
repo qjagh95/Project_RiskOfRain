@@ -295,6 +295,9 @@
     <ClCompile Include="Object\ItemBooster.cpp">
       <Filter>StageObject\Item</Filter>
     </ClCompile>
+    <ClCompile Include="Object\TeleCope.cpp">
+      <Filter>StageObject\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h">
@@ -592,6 +595,9 @@
       <Filter>SceneUI</Filter>
     </ClInclude>
     <ClInclude Include="Object\ItemBooster.h">
+      <Filter>StageObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TeleCope.h">
       <Filter>StageObject\Item</Filter>
     </ClInclude>
   </ItemGroup>

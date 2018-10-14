@@ -56,39 +56,11 @@ int BaseAttackBullet::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
 
-	if (isStop == false)
-	{
-		while (true)
-		{
-			Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
+	BaseEffect* newEffect = (BaseEffect*)Object::CreateCloneObject("BaseEffect", m_Layer);
+	newEffect->SetPos(m_Pos);
+	newEffect->SelectAnimationClip(Dir);
+	SAFE_RELEASE(newEffect);
 
-			m_Pos.x += MoveSpeed * Dir * DeltaTime;
-
-			if (CurTile == NULL)
-			{
-				SAFE_RELEASE(CurTile);
-				break;
-			}
-
-			if (CurTile->GetTileType() == TT_NOMOVE)
-			{
-				SAFE_RELEASE(CurTile);
-				break;
-			}
-
-			SAFE_RELEASE(CurTile);
-		}
-	}
-
-	isTileCol = true;
-
-	if (isTileCol == true)
-	{
-		BaseEffect* newEffect = (BaseEffect*)Object::CreateCloneObject("BaseEffect", m_Layer);
-		newEffect->SetPos(m_Pos);
-		newEffect->SelectAnimationClip(Dir);
-		SAFE_RELEASE(newEffect);
-	}
 	return 0;
 }
 
