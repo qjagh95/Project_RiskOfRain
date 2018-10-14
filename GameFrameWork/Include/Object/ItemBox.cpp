@@ -3,6 +3,7 @@
 #include "Object.h"
 #include "../Coll/ColliderRect.h"
 #include "../Resource/Texture.h"
+#include "../Scene/Layer.h"
 
 ItemBox::ItemBox()
 	:PriceNumber(NULL), DollerTexture(NULL)
@@ -62,7 +63,7 @@ bool ItemBox::Init()
 	ColliderRect* RC = AddCollider<ColliderRect>("ItemBoxBody");
 	RC->SetVirtualRect(m_Size);
 	RC->SetPivot(0.5f, 0.5f);
-	RC->SetCallBack(this, ItemBox::PlayerCollBack, CS_COLDOING);
+	//RC->SetCallBack(this, ItemBox::PlayerCollBack, CS_COLDOING);
 	RC->SetCollsionTypeName("ItemBoxObject");
 
 	SAFE_RELEASE(RC);

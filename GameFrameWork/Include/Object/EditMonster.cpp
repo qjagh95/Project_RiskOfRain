@@ -12,11 +12,13 @@ EditMonster::EditMonster()
 {
 	m_ObjectType = OT_EDITOBJECT;
 	SetTag("EditMonster1");
+	m_bDrag = false;
 }
 
 EditMonster::EditMonster(const EditMonster & Value)
 	:Object(Value)
 {
+	m_bDrag = false;
 }
 
 EditMonster::~EditMonster()
@@ -45,12 +47,27 @@ bool EditMonster::Init()
 int EditMonster::Input(float DeltaTime)
 {
 	Object::Input(DeltaTime);
+
+	if (KEYUP("LBotton"))
+	{
+		m_bDrag = false;
+		EditSelect = this;
+		isSelect = false;
+	}
+
 	return 0;
 }
 
 int EditMonster::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
+
+	if (m_bDrag)
+	{
+		Vector2	vPos = Input::Get()->GetMouseGap();
+
+		m_Pos += vPos;
+	}
 
 	return 0;
 }
@@ -82,13 +99,14 @@ void EditMonster::MouseHit(Collider * Src, Collider * Dest, float DeltaTime)
 	{	
 		if (KEYDOWN("LBotton"))
 		{
+			m_bDrag = true;
 			isSelect = true;
 
 			EditSelect = this;
-			Src->GetCurObject(); //AddRef()
+			//Src->GetCurObject(); //AddRef()
 		}
 
-		if (KEYPRESS("LBotton"))
+		/*if (KEYPRESS("LBotton"))
 		{
 			if (EditSelect != NULL)
 			{
@@ -101,7 +119,7 @@ void EditMonster::MouseHit(Collider * Src, Collider * Dest, float DeltaTime)
 		{
 			isSelect = false;
 			SAFE_RELEASE(EditSelect);
-		}
+		}*/
 
 		if (KEYDOWN("RBotton"))
 			SetisActiv(false);

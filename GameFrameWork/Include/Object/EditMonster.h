@@ -25,5 +25,6 @@ protected:
 	ColliderRect* RC;
 	static EditMonster* EditSelect;
 	static bool isSelect;
+	bool	m_bDrag;
 };
 
