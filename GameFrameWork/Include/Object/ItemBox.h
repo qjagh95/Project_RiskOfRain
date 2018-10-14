@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 class Number;
+class Texture;
 class ItemBox : public Object
 {
 public:
@@ -14,6 +15,8 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	ItemBox* Clone() override;
 
+	void PlayerCollBack(Collider* Src, Collider* Dest, float DeltaTime);
+
 protected:
 	ItemBox();
 	ItemBox(const ItemBox& Value);
@@ -22,6 +25,6 @@ protected:
 private:
 	int Price;
 	Number* PriceNumber;
-
+	Texture* DollerTexture;
 };
 

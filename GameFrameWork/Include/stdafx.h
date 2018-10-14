@@ -9,10 +9,10 @@
 #include <string.h>
 #include <time.h>
 #include <map>
-#include <atlstr.h>
 #include <functional>
 #include <math.h>
 #include <conio.h>
+#include <atlstr.h>
 
 using namespace std;
 

@@ -66,7 +66,7 @@ bool Player::Init()
 
 	pState = PS_IDLE;
 	Dir = "R";
-
+					//애니이름, 아틀라스?, 루프?, 1개당 사이즈,1줄갯수. 전체갯수. 시작위치. 행동시간
 	AddAnimationClip("LIdle", AT_ATLAS, AO_LOOP, 45.0f, 60.0f, 14, 1, 21, 8, 0, 1, 1.0f, "HalBae", TEXT("Left.bmp"));
 	AddAnimationClip("LAttack", AT_ATLAS, AO_LOOP, 45.0f, 60.0f, 14, 1, 21, 8, 0, 4, 1.0f, "HalBae", TEXT("Left.bmp"));
 	AddAnimationClip("LMove", AT_ATLAS, AO_LOOP, 45.0f, 60.0f, 14, 1, 21, 8, 0, 3, 1.0f, "HalBae", TEXT("Left.bmp"));
@@ -111,13 +111,13 @@ int Player::Input(float DeltaTime)
 		list<Object*>::const_iterator StartIter = TargetList->begin();
 		list<Object*>::const_iterator EndIter = TargetList->end();
 
-		//콜리전리스트를 불러온다
+		//콜리전리스트를 불러온다//같은것들끼린 충돌하지않음
 		const list<class Collider*>* pCollList = bullet->GetColliderList();
 		list<Collider*>::const_iterator	StartIter1 = pCollList->begin();
 		list<Collider*>::const_iterator	EndIter1 = pCollList->end();
 
-		for (; StartIter1 != EndIter1; ++StartIter1)
-			(*StartIter1)->SetCollsionTypeName("Player");
+		for (; StartIter1 != EndIter1; StartIter1++)
+			(*StartIter1)->SetCollsionTypeName("Players");
 
 		for (; StartIter != EndIter; StartIter++)
 		{

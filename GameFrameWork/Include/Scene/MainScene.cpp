@@ -74,7 +74,6 @@ bool MainScene::Init()
 	Camera::Get()->SetTarget(newPlayer);
 	Camera::Get()->SetTargetPivot(0.5f, 0.5f);
 
-
 	Bullet* pBullet1 = Object::CreatePrototype<Bullet>("Bullet", m_Scene);
 	FollowBullet* pBullet2 = Object::CreatePrototype<FollowBullet>("FollowBullet", m_Scene);
 	TargetBullet* pBullet5 = Object::CreatePrototype<TargetBullet>("TargetBullet", m_Scene);

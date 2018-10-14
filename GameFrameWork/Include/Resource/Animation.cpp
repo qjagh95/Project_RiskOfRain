@@ -17,6 +17,8 @@ Animation::Animation(const Animation& Value)
 	m_ClipMap.clear();
 	m_CurClip = NULL;
 	m_DefaultClip = NULL;
+	m_isEnd = Value.m_isEnd;
+	m_AniStart = Value.m_AniStart;
 
 	unordered_map<string, AnimationClip*>::const_iterator StartIter = Value.m_ClipMap.begin();
 	unordered_map<string, AnimationClip*>::const_iterator EndIter = Value.m_ClipMap.end();
@@ -24,7 +26,6 @@ Animation::Animation(const Animation& Value)
 	for (; StartIter != EndIter; StartIter++)
 	{
 		AnimationClip* newClip = StartIter->second->Clone();
-
 		m_ClipMap.insert(make_pair(StartIter->first, newClip));
 	}
 
@@ -39,6 +40,9 @@ Animation::~Animation()
 
 bool Animation::Init()
 {
+	m_isEnd = false;
+	m_AniStart = false;
+
 	return true;
 }
 

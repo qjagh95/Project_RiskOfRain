@@ -26,6 +26,8 @@ public:
 	Vector2 GetFrameSize() const;
 	void SetObject(Object* Value) { m_Object = Value; }
 	bool GetIsEnd() const { return m_isEnd; }
+	void SetAniStart(bool Value) { m_AniStart = Value; }
+	bool GetAniStart() const { return m_AniStart; }
 
 private:
 	Object* m_Object;
@@ -37,6 +39,7 @@ private:
 	AnimationClip* m_DefaultClip;
 
 	bool m_isEnd;
+	bool m_AniStart;
 
 //------------------------privateÇÔ¼ö--------------------------------
 private:
