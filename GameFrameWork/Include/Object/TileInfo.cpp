@@ -284,9 +284,9 @@ int TileInfo::GetTileIndex(float x, float y)
 
 void TileInfo::ClearTileMap()
 {
-	for (unsigned int y = 0; y < m_NumY - 1; y++)
+	for (unsigned int y = 0; y < m_NumY; y++)
 	{
-		for (unsigned int x = 0; x < m_NumX - 1; x++)
+		for (unsigned int x = 0; x < m_NumX; x++)
 		{
 			unsigned int Index = y * m_NumX + x;
 

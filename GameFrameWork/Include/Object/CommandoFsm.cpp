@@ -196,14 +196,12 @@ void Commando::FS_Skill2(float DeltaTime)
 
 		Vector2 TempPos = m_Pos;
 
-		char Buffer[255] = {};
-		sprintf_s(Buffer, "CommandoPos X : %f , %f \n", m_Pos.x, m_Pos.y);
-		Debug::OutputConsole(Buffer);
-
 		LaserEffect* laserEffect = Object::CreateObject<LaserEffect>("LaserEffect", m_Layer);
 
 		if (TempPos.x <= Core::Get()->GetWinSizeVector2().x / 2.0f)
 			TempPos.x = Core::Get()->GetWinSizeVector2().x / 2.0f;
+		else if(TempPos.x >= Camera::Get()->GetPos().x)
+			TempPos.x = Core::Get()->GetWinSizeVector2().x / 2.0f + Camera::Get()->GetPos().x;
 
 		laserEffect->SetPos(TempPos);
 
@@ -224,12 +222,19 @@ void Commando::FS_Skill2(float DeltaTime)
 
 void Commando::FS_Skill3(float DeltaTime)
 {
-	m_Pos.x += BASESPEED * 2.0f * MoveDir * DeltaTime;
+	Vector2 TempPos = m_Pos;
+	Tile* NextTile = StageManager::Get()->GetTile(TempPos.x + (m_Size.GetHalfX() * MoveDir), TempPos.y);
+
+	if(NextTile->GetTileType() != TT_NOMOVE)
+		m_Pos.x += BASESPEED * 2.0f * MoveDir * DeltaTime;
 
 	if (m_Animation->GetIsEnd() == true)
 	{
 		SelectState(PLAYER_STATE::PS_IDLE);
 	}
+
+	SAFE_RELEASE(NextTile);
+
 }
 
 void Commando::FS_Skill4(float DeltaTime)

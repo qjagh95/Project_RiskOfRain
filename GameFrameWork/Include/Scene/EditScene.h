@@ -129,6 +129,8 @@ public:
 	void Monster9Callback(float DeltaTime);
 	void Monster10Callback(float DeltaTime);
 
+	void NoMoveButtonCallback(float DeltaTime);
+
 private:
 	TileInfo* TileMap;
 	Tile* SelectTile;

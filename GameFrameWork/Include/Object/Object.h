@@ -206,6 +206,9 @@ protected:
 	Vector2 m_Pivot;
 	Vector2 m_TempMove;
 
+	Vector2 LeftTop;
+	Vector2 RightBottom;
+
 	DWORD m_ColorKey;
 
 	bool isColorKey;

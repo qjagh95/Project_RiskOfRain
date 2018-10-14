@@ -5,13 +5,13 @@ class EditMonster4 : public EditMonster
 public:
 	friend class Object;
 
-	virtual bool Init() override;
-	virtual int Input(float DeltaTime) override;
-	virtual int Update(float DeltaTime) override;
-	virtual int LateUpdate(float DeltaTime) override;
-	virtual void Collision(float DeltaTime) override;
-	virtual void Render(HDC Hdc, float DeltaTime) override;
-	virtual EditMonster4* Clone() override;
+	bool Init() override;
+	int Input(float DeltaTime) override;
+	int Update(float DeltaTime) override;
+	int LateUpdate(float DeltaTime) override;
+	void Collision(float DeltaTime) override;
+	void Render(HDC Hdc, float DeltaTime) override;
+	EditMonster4* Clone() override;
 
 protected:
 	EditMonster4();

@@ -154,18 +154,6 @@
     <ClCompile Include="Object\EditMonster5.cpp">
       <Filter>EditScene\Object\EditObject</Filter>
     </ClCompile>
-    <ClCompile Include="Object\ItemBox.cpp">
-      <Filter>StageObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Pump.cpp">
-      <Filter>StageObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Rope.cpp">
-      <Filter>StageObject</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\TelePoter.cpp">
-      <Filter>StageObject</Filter>
-    </ClCompile>
     <ClCompile Include="Object\DollerUI.cpp">
       <Filter>SceneUI</Filter>
     </ClCompile>
@@ -215,10 +203,40 @@
       <Filter>Core\Key</Filter>
     </ClCompile>
     <ClCompile Include="Object\BaseEffect.cpp">
-      <Filter>MainScene\Object\CommandoBullet</Filter>
+      <Filter>Effect\Commando</Filter>
     </ClCompile>
     <ClCompile Include="Object\LaserEffect.cpp">
-      <Filter>MainScene\Object\CommandoBullet</Filter>
+      <Filter>Effect\Commando</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\DieEffect.cpp">
+      <Filter>Effect\Monster</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ItemBox.cpp">
+      <Filter>StageObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Pump.cpp">
+      <Filter>StageObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Rope.cpp">
+      <Filter>StageObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\TelePoter.cpp">
+      <Filter>StageObject\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Coin.cpp">
+      <Filter>StageObject\Coin</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ExpCoin.cpp">
+      <Filter>StageObject\Coin</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\MoneyCoin.cpp">
+      <Filter>StageObject\Coin</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\ExpEffect.cpp">
+      <Filter>Effect\Public</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LevelUpEffect.cpp">
+      <Filter>Effect\Public</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -384,18 +402,6 @@
     <ClInclude Include="Object\EditMonster5.h">
       <Filter>EditScene\Object\EditObject</Filter>
     </ClInclude>
-    <ClInclude Include="Object\ItemBox.h">
-      <Filter>StageObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Pump.h">
-      <Filter>StageObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\Rope.h">
-      <Filter>StageObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\TelePoter.h">
-      <Filter>StageObject</Filter>
-    </ClInclude>
     <ClInclude Include="Object\DollerUI.h">
       <Filter>SceneUI</Filter>
     </ClInclude>
@@ -439,10 +445,40 @@
       <Filter>Core\Key</Filter>
     </ClInclude>
     <ClInclude Include="Object\BaseEffect.h">
-      <Filter>MainScene\Object\CommandoBullet</Filter>
+      <Filter>Effect\Commando</Filter>
     </ClInclude>
     <ClInclude Include="Object\LaserEffect.h">
-      <Filter>MainScene\Object\CommandoBullet</Filter>
+      <Filter>Effect\Commando</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\DieEffect.h">
+      <Filter>Effect\Monster</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ItemBox.h">
+      <Filter>StageObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Pump.h">
+      <Filter>StageObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Rope.h">
+      <Filter>StageObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\TelePoter.h">
+      <Filter>StageObject\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Coin.h">
+      <Filter>StageObject\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ExpCoin.h">
+      <Filter>StageObject\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\MoneyCoin.h">
+      <Filter>StageObject\Coin</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\ExpEffect.h">
+      <Filter>Effect\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LevelUpEffect.h">
+      <Filter>Effect\Public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -649,6 +685,24 @@
     </Filter>
     <Filter Include="MainScene\Object\CommandoBullet">
       <UniqueIdentifier>{d811f12e-3787-468d-8595-cd00fbe0053a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect">
+      <UniqueIdentifier>{52176061-1b45-4362-84d1-0b07304c6496}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\Commando">
+      <UniqueIdentifier>{9218d64d-4fdc-4cca-934f-4898a4fd86aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\Monster">
+      <UniqueIdentifier>{e08d9910-a905-4a7a-8596-7675c0ea99c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Effect\Public">
+      <UniqueIdentifier>{de152230-7aa5-42e1-9260-55d60e40b000}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StageObject\Coin">
+      <UniqueIdentifier>{8b653bad-6be9-4377-ae5f-3087de91a815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StageObject\Object">
+      <UniqueIdentifier>{d091ae8e-41ed-4b62-8efb-c845dbb1b930}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

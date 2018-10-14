@@ -1230,4 +1230,15 @@ void EditScene::OptionButtonInit(Layer* UiLayer)
 	TileButtonList.push_back(TileButton);
 
 	SAFE_RELEASE(TileButton);
+
+	TileButton = Object::CreateObject<Button>("NoMoveTile", UiLayer);
+	TileButton->SetPos(300.0f, 250.0f);
+	TileButton->SetSize(50.0f, 50.0f);
+	TileButton->SetIsOffset(false);
+	TileButton->SetCallBack<EditScene>(&EditScene::NoMoveButtonCallback, this);
+	TileButton->SetTexture("NoMoveTile", TEXT("Tile/OptionNoMove.bmp"));
+	TileButton->AddRefCount();
+	TileButtonList.push_back(TileButton);
+
+	SAFE_RELEASE(TileButton);
 }

@@ -16,7 +16,7 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	ItemBox* Clone() override;
 
-	void PlayerCollBack(Collider* Src, Collider* Dest, float DeltaTime);
+	int GetPrice() const { return Price; }
 
 protected:
 	ItemBox();

@@ -1221,3 +1221,16 @@ void EditScene::Monster10Callback(float DeltaTime)
 	monsterType = MT_MONSTERTEN;
 }
 
+void EditScene::NoMoveButtonCallback(float DeltaTime)
+{
+	isItemOptionMode = false;
+	isRopeOptionMode = false;
+	isPumpOptionMode = false;
+	isTelePotOptionMode = false;
+
+	CurType = TT_NOMOVE;
+
+	Input::Get()->SetMouseTexture(ResourceManager::Get()->LoadTexture("NoMoveTile", TEXT("Tile/OptionNoMove.bmp")));
+	Input::Get()->SetMouseTextureSize(Vector2(60.0f, 90.0f));
+	Input::Get()->SetMouseTexturePivot(0.5f, 0.5f);
+}

@@ -122,7 +122,8 @@ void Object::Render(HDC hDC, float DeltaTime)
 {
 	if (m_Texture != NULL)
 	{
-		Vector2 LeftTop = m_Pos - (m_Size * m_Pivot);
+		LeftTop = m_Pos - (m_Size * m_Pivot);
+		RightBottom = LeftTop + m_Size;
 
 		if(isCameraMode == true)
 			LeftTop -= Camera::Get()->GetPos();

@@ -23,6 +23,10 @@ public:
 	int GetHp() const { return Hp; }
 	void SetAttack(int Value) { Attack = Value; }
 	int GetAttack() const { return Attack; }
+	void SetMoneyCoinCount(int iCount) { MoneyCoinCount = iCount;}
+	int GetMoneyCoinCount() const { return MoneyCoinCount; }
+	void SetExpCoinCount(int iCount) { ExpCoinCount = iCount; }
+	int GetExpCoinCount() const { return ExpCoinCount; }
 
 	void BaseAttackHitFirst(Collider* Src, Collider* Dest, float DeltaTime);
 	void BaseAttackHitDoing(Collider* Src, Collider* Dest, float DeltaTime);
@@ -45,13 +49,17 @@ protected:
 	Monster(const Monster& Value);
 	~Monster();
 
+	string Dir;
+	float MoveDir;
+
 private:
 	int MaxHp;
 	int Hp;
 	int Attack;
-	float MoveDir;
 
-	string Dir;
+	int MoneyCoinCount;
+	int ExpCoinCount;
+
 	Object* Target;
 	Bar* HpBar;
 	ColliderRect* RC;

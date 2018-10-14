@@ -17,6 +17,8 @@
 #include "../Object/Monster.h"
 #include "../Object/Effect.h"
 
+#include "../Object/DieEffect.h"
+
 #include "../Object/Number.h"
 #include "../Object/Bar.h"
 
@@ -38,6 +40,13 @@
 #include "../Object/BaseEffect.h"
 #include "../Object/LaserEffect.h"
 
+#include "../Object/ExpEffect.h"
+#include "../Object/LevelUpEffect.h"
+
+#include "../Object/Coin.h"
+#include "../Object/ExpCoin.h"
+#include "../Object/MoneyCoin.h"
+
 #include "../Sound/SoundManager.h"
 
 #include "../StageManager.h"
@@ -56,6 +65,7 @@ bool MainScene::Init()
 
 	SoundManager::Get()->LoadSound("BGM", true, TEXT("musicStage1.wav"));
 	SoundManager::Get()->LoadSound("CommandoShow", false, TEXT("teleporter_receive.wav"));
+	SoundManager::Get()->LoadSound("LevelUp", false, TEXT("LevelUp.wav"));
 
 	SoundManager::Get()->Play("BGM", true);
 	SoundManager::Get()->Play("CommandoShow", false);
@@ -78,17 +88,30 @@ bool MainScene::Init()
 	LaserBullet* laserBullet = Object::CreatePrototype<LaserBullet>("LaserBullet", m_Scene);
 	BaseEffect* baseEffect = Object::CreatePrototype<BaseEffect>("BaseEffect", m_Scene);
 	LaserEffect* laserEffect = Object::CreatePrototype<LaserEffect>("LaserEffect", m_Scene);
+	DieEffect* dieEffect = Object::CreatePrototype<DieEffect>("DieEffect", m_Scene);
+	LevelUpEffect* levelUpEffect = Object::CreatePrototype<LevelUpEffect>("LevelUpEffect", m_Scene);
+	ExpEffect* expEffect = Object::CreatePrototype<ExpEffect>("ExpEffect", m_Scene);
 
-	Commando* newPlayer = Object::CreateObject<Commando>("Players", newLayer);
+	Commando* newPlayer = Object::CreateObject<Commando>("Commando", newLayer);
 	Camera::Get()->SetTarget(newPlayer);
 	Camera::Get()->SetTargetPivot(0.5f, 0.5f);
+
+	MoneyCoin* moneyCoin = Object::CreatePrototype<MoneyCoin>("MoneyCoin", m_Scene);
+	moneyCoin->SetTarget(newPlayer);
+	ExpCoin* expCoin = Object::CreatePrototype<ExpCoin>("ExpCoin", m_Scene);
+	expCoin->SetTarget(newPlayer);
 
 	CoinUI* newCoin = Object::CreateObject<CoinUI>("CoinUI", UiLayer);
 	DollerUI* newDoller = Object::CreateObject<DollerUI>("DollerUI", UiLayer);
 	CommandoUI* newCommando = Object::CreateObject<CommandoUI>("CommandoUI", UiLayer);
 	TimeUI* newTime = Object::CreateObject<TimeUI>("TimeUI", UiLayer);
 
+	SAFE_RELEASE(expEffect);
+	SAFE_RELEASE(levelUpEffect);
+	SAFE_RELEASE(moneyCoin);
+	SAFE_RELEASE(expCoin);
 	SAFE_RELEASE(baseEffect);
+	SAFE_RELEASE(dieEffect);
 	SAFE_RELEASE(laserEffect);
 	SAFE_RELEASE(newPlayer);
 	SAFE_RELEASE(newCoin);

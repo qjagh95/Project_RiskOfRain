@@ -445,13 +445,13 @@ void EditScene::MonsterMode(float DeltaTime)
 void EditScene::CameraMove(float DeltaTime)
 {
 	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-		Camera::Get()->Move(Vector2(-500.0f * DeltaTime, 0.0f));
+		Camera::Get()->Move(Vector2(-800.0f * DeltaTime, 0.0f));
 	else if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
-		Camera::Get()->Move(Vector2(500.0f * DeltaTime, 0.0f));
+		Camera::Get()->Move(Vector2(800.0f * DeltaTime, 0.0f));
 	if (GetAsyncKeyState(VK_UP) & 0x8000)
-		Camera::Get()->Move(Vector2(0.0f, -500.0f * DeltaTime));
+		Camera::Get()->Move(Vector2(0.0f, -800.0f * DeltaTime));
 	else if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-		Camera::Get()->Move(Vector2(0.0f, 500.0f * DeltaTime));
+		Camera::Get()->Move(Vector2(0.0f, 800.0f * DeltaTime));
 
 	if (GetAsyncKeyState('A') & 0x8000)
 		Camera::Get()->Move(Vector2(-500.0f * DeltaTime, 0.0f));

@@ -74,7 +74,6 @@ bool ItemBox::Init()
 	RC = AddCollider<ColliderRect>("ItemBoxBody");
 	RC->SetVirtualRect(Vector2(60.0f, 60.0f));
 	RC->SetPivot(0.5f, 0.2f);
-	RC->SetCallBack(this, &ItemBox::PlayerCollBack, CS_COLFIRST);
 	RC->SetCollsionTypeName("ItemBoxObject");
 
 	PriceNumber = Object::CreateObject<Number>("PriceNumber", m_Layer);
@@ -152,12 +151,4 @@ void ItemBox::Render(HDC Hdc, float DeltaTime)
 ItemBox * ItemBox::Clone()
 {
 	return new ItemBox(*this);
-}
-
-void ItemBox::PlayerCollBack(Collider * Src, Collider * Dest, float DeltaTime)
-{
-	if (Dest->GetTag() == "CommandoBody")
-	{
-		ChangeClip("ItemBoxOpen");
-	}
 }

@@ -28,12 +28,15 @@ public:
 	void PumpHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void RopeUpHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void LineHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void CoinHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void ItemBoxHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 	void PlayerMove(float DeltaTime);
 
 	void DirCheck();
 	void HpCheck();
 	void RopeCheck();
+	void LevelUpCheck();
 
 	void SetMoney(int Value) { pMoney = Value; }
 	static int GetMoney() { return pMoney; }

@@ -12,6 +12,8 @@
 #include "../Object/Tile.h"
 #include "../Object/Bar.h"
 #include "../Object/Number.h"
+#include "../Object/ExpEffect.h"
+#include "../Object/ItemBox.h"
 
 #include "../Resource/Animation.h"
 
@@ -35,8 +37,6 @@ void Commando::BulletHit(Collider * Src, Collider * Dest, float DeltaTime)
 {
 	if (Dest->GetTag() == "BulletBody")
 	{
-		SoundManager::Get()->Play("Stun");
-
 		Object*	newBullet = Dest->GetCurObject();
 		newBullet->SetisActiv(false);
 		SAFE_RELEASE(newBullet);
@@ -71,6 +71,51 @@ void Commando::PumpHit(Collider * Src, Collider * Dest, float DeltaTime)
 		SelectState(PLAYER_STATE::PS_JUMPING);
 	}
 }
+
+void Commando::CoinHit(Collider* Src, Collider* Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "CoinBody")
+	{
+		Object* pObject = Dest->GetCurObject();
+
+		if (pObject->GetObjectType() == OT_COIN)
+		{
+			pMoney += 8;
+			pObject->SetisActiv(false);
+		}
+		else if (pObject->GetObjectType() == OT_EXP)
+		{
+			Exp += 10;
+
+			ExpEffect* newEffect = (ExpEffect*)Object::CreateCloneObject("ExpEffect", m_Layer);
+			newEffect->SetPos(m_Pos);
+
+			SAFE_RELEASE(newEffect);
+			pObject->SetisActiv(false);
+		}
+		SAFE_RELEASE(pObject);
+	}
+}
+
+void Commando::ItemBoxHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "ItemBoxBody")
+	{
+		ItemBox* getBox = (ItemBox*)Dest->GetCurObject();
+
+		if (KEYDown('A'))
+		{
+			if (pMoney >= getBox->GetPrice())
+			{
+				pMoney -= getBox->GetPrice();
+				getBox->ChangeClip("ItemBoxOpen");
+			}
+		}
+
+		SAFE_RELEASE(getBox);
+	}
+}
+
 void Commando::LineHit(Collider * Src, Collider * Dest, float DeltaTime)
 {
 	if (Dest->GetTag() == "MonsterBody")

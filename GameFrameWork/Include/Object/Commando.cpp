@@ -11,6 +11,8 @@
 #include "../Object/Bar.h"
 #include "../Object/Number.h"
 
+#include "../Object/LevelUpEffect.h"
+
 #include "../Resource/Animation.h"
 
 #include "../Coll/ColliderRect.h"
@@ -28,7 +30,7 @@
 int Commando::pMoney = 100;
 int Commando::Hp = 300;
 int Commando::Level = 1;
-int Commando::Exp = 0;
+int Commando::Exp = 427;
 int Commando::MaxHp = 300;
 int Commando::MaxExp = 500;
 
@@ -91,6 +93,7 @@ int Commando::Update(float DeltaTime)
 	DirCheck();
 	HpCheck();
 	RopeCheck();
+	LevelUpCheck();
 	SkillTimeCheck(DeltaTime);
 
 	Vector2 CameraPos = Camera::Get()->GetPos();
@@ -243,9 +246,6 @@ void Commando::HpCheck()
 		Hp = 0;
 	else if (Hp >= MaxHp)
 		Hp = MaxHp;
-
-	if (Exp > MaxExp)
-		Exp = 0;
 }
 
 void Commando::RopeCheck()
@@ -259,6 +259,31 @@ void Commando::RopeCheck()
 			SelectState(PLAYER_STATE::PS_ROPE);
 		else if (KEYPRESS("Down"))
 			SelectState(PLAYER_STATE::PS_ROPE);
+	}
+}
+
+void Commando::LevelUpCheck()
+{
+	if (Exp >= MaxExp)
+	{
+		LevelUpEffect* newEffect = (LevelUpEffect*)Object::CreateCloneObject("LevelUpEffect", m_Layer);
+		newEffect->SetPos(Vector2(m_Pos.x, m_Pos.y - m_Size.GetHalfY()));
+		SAFE_RELEASE(newEffect);
+
+		SoundManager::Get()->Play("LevelUp");
+
+		Level += 1;
+
+		AttackDamege += 5;
+
+		MaxExp += 130;
+
+		Exp = 0;
+
+		int Temp = (int)(MaxHp * 1.2f) - MaxHp;
+
+		MaxHp = (int)(MaxHp * 1.2f);
+		Hp += Temp;
 	}
 }
 
@@ -450,6 +475,8 @@ void Commando::CollsionInit()
 	RC->SetPivot(0.5f, 0.5f);
 	RC->SetCallBack<Commando>(this, &Commando::BulletHit, CS_COLFIRST);
 	RC->SetCallBack<Commando>(this, &Commando::PumpHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::CoinHit, CS_COLFIRST);
+	RC->SetCallBack<Commando>(this, &Commando::ItemBoxHit, CS_COLDOING);
 	RC->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RC);
 
@@ -461,13 +488,13 @@ void Commando::CollsionInit()
 	SAFE_RELEASE(RC2);
 
 	//로프판단.
-	ColliderPoint* RP = AddCollider<ColliderPoint>("PlayerMiddlePoint");
+	ColliderPoint* RP = AddCollider<ColliderPoint>("CommandoMiddlePoint");
 	RP->SetPivot(0.0f, -0.5f);
 	RP->SetCallBack<Commando>(this, &Commando::RopeHit, CS_COLDOING);
 	RP->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RP);
 
-	ColliderPoint* RP2 = AddCollider<ColliderPoint>("PlayerUpPoint");
+	ColliderPoint* RP2 = AddCollider<ColliderPoint>("CommandoUpPoint");
 	RP2->SetPivot(0.0f, 0.5f);
 	RP2->SetCallBack<Commando>(this, &Commando::RopeUpHit, CS_COLDOING);
 	RP2->SetCollsionTypeName("Commando");

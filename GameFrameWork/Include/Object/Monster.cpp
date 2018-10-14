@@ -8,6 +8,9 @@
 #include "../Object/BaseAttackBullet.h"
 #include "../Object/LaserBullet.h"
 #include "../Object/Number.h"
+#include "../Object/DieEffect.h"
+#include "../Object/MoneyCoin.h"
+#include "../Object/ExpCoin.h"
 
 Monster::Monster()
 	:Target(NULL), Hp(100), MaxHp(100), HpBar(NULL)
@@ -24,6 +27,8 @@ Monster::Monster(const Monster & Value)
 	MaxHp = Value.MaxHp;
 	HpBar = Value.HpBar;
 	Dir = Value.Dir;
+	MoneyCoinCount = Value.MoneyCoinCount;
+	ExpCoinCount = Value.ExpCoinCount;
 }
 
 Monster::~Monster()
@@ -35,6 +40,9 @@ Monster::~Monster()
 
 bool Monster::Init()
 {
+	MoneyCoinCount = 6;
+	ExpCoinCount = 8;
+
 	SetMoveSpeed(300.0f);
 	SetSize(100.0f, 100.0f);
 	SetPivot(0.5f, 0.5f);
@@ -91,6 +99,34 @@ int Monster::Update(float DeltaTime)
 	if (Hp <= 0)
 	{
 		Hp = 0;
+		DieEffect* newEffect = (DieEffect*)Object::CreateCloneObject("DieEffect", m_Layer);
+		newEffect->SetPos(m_Pos);
+		SAFE_RELEASE(newEffect);
+
+		//-50% ~ 원래숫자
+		int a = Math::RandomRange((int)(MoneyCoinCount * 0.5f), MoneyCoinCount);
+		int b = Math::RandomRange((int)(ExpCoinCount * 0.5f), ExpCoinCount);
+
+		for (int i = 0; i < a; i++)
+		{
+			//Money
+			float x = (float)(Math::RandomRange((int)m_Pos.x - (int)m_Size.GetHalfX(), (int)RightBottom.x));
+			float y = (float)(Math::RandomRange((int)m_Pos.y - (int)m_Size.GetHalfY(), (int)RightBottom.y));
+
+			MoneyCoin* newMoney = (MoneyCoin*)Object::CreateCloneObject("MoneyCoin", m_Layer);
+			newMoney->SetPos(Vector2(x,y));
+			SAFE_RELEASE(newMoney)
+		}
+		for (int i = 0; i < b; i++)
+		{
+			//Exp
+			float x = (float)(Math::RandomRange((int)m_Pos.x - (int)m_Size.GetHalfX(), (int)RightBottom.x));
+			float y = (float)(Math::RandomRange((int)m_Pos.y - (int)m_Size.GetHalfY(), (int)RightBottom.y));
+
+			ExpCoin* newExp = (ExpCoin*)Object::CreateCloneObject("ExpCoin", m_Layer);
+			newExp->SetPos(Vector2(x, y));
+			SAFE_RELEASE(newExp)
+		}
 		SetisActiv(false);
 	}
 
