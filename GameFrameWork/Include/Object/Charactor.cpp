@@ -82,6 +82,11 @@ void Charactor::Collision(float DeltaTime)
 	Object::Collision(DeltaTime);
 }
 
+void Charactor::CollsionAfterUpdate(float DeltaTime)
+{
+	Object::CollsionAfterUpdate(DeltaTime);
+}
+
 void Charactor::Render(HDC hDC, float DeltaTime)
 {
 	Object::Render(hDC, DeltaTime);

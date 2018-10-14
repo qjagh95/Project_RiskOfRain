@@ -17,6 +17,7 @@ public:
 	Rect GetWorldRect() const { return m_WorldRect; }
 	void MoveWorldRect(float x, float y) { m_WorldRect.Left += x, m_WorldRect.Right += x, m_WorldRect.Bottom += y, m_WorldRect.Top += y; }
 	void MoveWorldRect(const Vector2& Pos) { m_WorldRect.Left += Pos.x, m_WorldRect.Right += Pos.x, m_WorldRect.Bottom += Pos.y, m_WorldRect.Top += Pos.y; }
+	Vector2 GetSize() const { return m_Size; }
 
 protected:
 	ColliderRect();
@@ -38,10 +39,5 @@ public:
 	friend class Object;
 	friend class CollsionManager;
 	friend class ColliderCircle;
-
-	bool isTop;
-	bool isLeft;
-	bool isRight;
-	bool isBottom;
 };
 

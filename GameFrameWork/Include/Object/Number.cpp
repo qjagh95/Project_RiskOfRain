@@ -39,6 +39,7 @@ bool Number::Init()
 
 	ZeroPos = Vector2(0.0f, 0.0f);
 	ZeroSize = Vector2(13.0f,24.0f);
+	SetColorKey(RGB(255, 0, 255));
 
 	m_NumberViewSize = m_NumberSize;
 	ZeroViewSize = ZeroSize;
@@ -67,22 +68,11 @@ int Number::Update(float DeltaTime)
 
 	if (isMove == true && MoveSpeed >= 0.0f)
 	{
-		MoveByAngle(DeltaTime);
 		MaxRange -= MoveSpeed * DeltaTime;
+		m_Pos.y -= MoveSpeed * DeltaTime;
 
 		if (MaxRange <= 0.0f)
 			SetisActiv(false);
-	}
-
-	if (isLiveTime == true)
-	{
-		TimeVar += DeltaTime;
-
-		if (LiveTime >= TimeVar)
-		{
-			TimeVar = 0.0f;
-			SetisActiv(false);
-		}
 	}
 
 	return 0;

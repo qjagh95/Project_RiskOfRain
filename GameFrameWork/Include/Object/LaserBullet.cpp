@@ -19,6 +19,15 @@ LaserBullet::~LaserBullet()
 bool LaserBullet::Init()
 {
 	SetColorKey(RGB(255, 0, 255));
+	SetSize(1919.0f, 192.0f);
+	SetPivot(0.5f, 0.5f);
+	Attack = 0;
+
+	ColliderRect* RC = AddCollider<ColliderRect>("LaserBody");
+	RC->SetVirtualRect(1919.0f, 192.0f);
+	RC->SetPivot(0.5f, 0.5f);
+	RC->SetCollsionTypeName("Commando");
+	SAFE_RELEASE(RC);
 
 	return true;
 }
@@ -49,6 +58,13 @@ void LaserBullet::Collision(float DeltaTime)
 	Object::Collision(DeltaTime);
 }
 
+void LaserBullet::CollsionAfterUpdate(float DeltaTime)
+{
+	Object::CollsionAfterUpdate(DeltaTime);
+
+	SetisActiv(false);
+}
+
 void LaserBullet::Render(HDC Hdc, float DeltaTime)
 {
 	Object::Render(Hdc, DeltaTime);
@@ -57,4 +73,9 @@ void LaserBullet::Render(HDC Hdc, float DeltaTime)
 LaserBullet * LaserBullet::Clone()
 {
 	return new LaserBullet(*this);
+}
+
+void LaserBullet::SetAttack(int iAttack)
+{
+	Attack = iAttack * 3;
 }

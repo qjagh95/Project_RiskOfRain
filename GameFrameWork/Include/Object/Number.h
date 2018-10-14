@@ -17,7 +17,6 @@ public:
 	void SetNumber(int iNumber) { m_Number = iNumber; }
 	void AddNumber(int iNumber) { m_Number += iNumber; }
 
-	void SetLiveTime(float Time) { LiveTime = Time, isLiveTime = true; }
 	void SetMaxRange(float Range, float Speed) { MaxRange = Range, isMove = true, MoveSpeed = Speed; }
 	int GetNumberCount() const { return Count; }
 

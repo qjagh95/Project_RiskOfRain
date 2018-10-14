@@ -114,7 +114,7 @@ void StageManager::LoadMonsterList(const TCHAR * FileName, Layer * InputLayer)
 		{
 			case MT_MONSTERONE:
 			{
-				IssacEnemy1* newMonster = (IssacEnemy1*)Object::CreateObject<IssacEnemy1>("IssacEnemy1", InputLayer);
+				IssacEnemy1* newMonster = (IssacEnemy1*)Object::CreateObject<IssacEnemy1>("Monster", InputLayer);
 				newMonster->SetPos(Saver.Pos);
 
 				SAFE_RELEASE(newMonster);

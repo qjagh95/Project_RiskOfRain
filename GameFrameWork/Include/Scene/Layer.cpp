@@ -136,6 +136,34 @@ void Layer::Collision(float DeltaTime)
 	}
 }
 
+void Layer::CollsionAfterUpdate(float DeltaTime)
+{
+	list<Object*>::iterator StartIter = LayerObjectList.begin();
+	list<Object*>::iterator EndIter = LayerObjectList.end();
+
+	for (; StartIter != EndIter;)
+	{
+		if ((*StartIter)->GetisActiv() == false)
+		{
+			//탐색리스트에서도 지워준다.
+			Object::EraseSceneObject((*StartIter)->GetTag(), *StartIter);
+			SAFE_RELEASE((*StartIter));
+			StartIter = LayerObjectList.erase(StartIter);
+			EndIter = LayerObjectList.end();
+			continue;
+		}
+		//데이터상으론 존재한다. 하지만 보여주진않겠다!
+		else if ((*StartIter)->GetisShow() == false)
+		{
+			StartIter++;
+			continue;
+		}
+
+		(*StartIter)->CollsionAfterUpdate(DeltaTime);
+		StartIter++;
+	}
+}
+
 void Layer::Render(HDC Hdc, float DeltaTime)
 {
 	list<Object*>::iterator StartIter = LayerObjectList.begin();

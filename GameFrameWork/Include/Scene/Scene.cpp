@@ -161,6 +161,34 @@ void Scene::Collision(float DeltaTime)
 
 }
 
+void Scene::CollsionAfterUpdate(float DeltaTime)
+{
+	m_SceneComponent->CollsionAfterUpdate(DeltaTime);
+
+	list<Layer*>::iterator StartIter = LayerList.begin();
+	list<Layer*>::iterator EndIter = LayerList.end();
+
+	for (; StartIter != EndIter;)
+	{
+		if ((*StartIter)->GetisActiv() == false)
+		{
+			SAFE_RELEASE((*StartIter));
+			StartIter = LayerList.erase(StartIter);
+			EndIter = LayerList.end();
+			continue;
+		}
+		//데이터상으론 존재한다. 하지만 보여주진않겠다!
+		else if ((*StartIter)->GetisShow() == false)
+		{
+			StartIter++;
+			continue;
+		}
+
+		(*StartIter)->CollsionAfterUpdate(DeltaTime);
+		StartIter++;
+	}
+}
+
 void Scene::Render(HDC Hdc, float DeltaTime)
 {
 	m_SceneComponent->Render(Hdc,DeltaTime);

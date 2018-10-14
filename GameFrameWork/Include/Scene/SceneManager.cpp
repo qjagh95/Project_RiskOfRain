@@ -52,6 +52,11 @@ void SceneManager::Collision(float DeltaTime)
 	m_Scene->Collision(DeltaTime);
 }
 
+void SceneManager::CollsionAfterUpdate(float DeltaTime)
+{
+	m_Scene->CollsionAfterUpdate(DeltaTime);
+}
+
 void SceneManager::Render(HDC Hdc, float DeltaTime)
 {
 	m_Scene->Render(Hdc,DeltaTime);

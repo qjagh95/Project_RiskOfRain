@@ -98,6 +98,7 @@ protected:
 	bool CollsionPointToPoint(const Vector2& Left, const Vector2& Right);
 	bool CollsionCircleToPoint(const Circle& Left, const Vector2& Right);
 	bool CollsionRectToPixel(const Rect& Left, const PixelInfo& Right);
+	bool CollsionRectToLine(const Rect& Left,const Vector2& LineStart , const Vector2& LineEnd);
 
 protected:
 	Collider();

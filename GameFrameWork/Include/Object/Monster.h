@@ -13,6 +13,7 @@ public:
 	virtual int Update(float DeltaTime);
 	virtual int LateUpdate(float DeltaTime);
 	virtual void Collision(float DeltaTime);
+	virtual void CollsionAfterUpdate(float DeltaTime);
 	virtual void Render(HDC Hdc, float DeltaTime);
 	virtual void SetTarget(Object* Value);
 	virtual Monster* Clone() override;

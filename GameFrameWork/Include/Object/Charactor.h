@@ -12,6 +12,7 @@ public:
 	virtual int Update(float DeltaTime) override;
 	virtual int LateUpdate(float DeltaTime) override;
 	virtual void Collision(float DeltaTime) override;
+	virtual void CollsionAfterUpdate(float DeltaTime) override;
 	virtual void Render(HDC hDC, float DeltaTime) override;
 	virtual Charactor* Clone() = 0;
 

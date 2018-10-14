@@ -224,6 +224,11 @@ bool Collider::CollsionCircleToPoint(const Circle & Left, const Vector2 & Right)
 	return Math::GetDistance(Left.m_CenterPos, Right) <= Left.m_Radius;
 }
 
+bool Collider::CollsionRectToLine(const Rect & Left, const Vector2 & LineStart, const Vector2 & LineEnd)
+{
+	return false;
+}
+
 bool Collider::CollsionRectToPixel(const Rect & Left, const PixelInfo & Right)
 {
 	Rect TempRect = Left;
@@ -255,3 +260,4 @@ bool Collider::CollsionRectToPixel(const Rect & Left, const PixelInfo & Right)
 	}//if
 	return false;
 }
+

@@ -7,7 +7,7 @@
 #include "../Object/Monster.h"
 
 BaseAttackBullet::BaseAttackBullet()
-	:Dir(0.0f), isStop(false), Attack(0), isHit(false)
+	:Dir(0.0f), isStop(false), Attack(0), isHit(false), isTileCol(false)
 {
 	m_ObjectType = OT_BULLET;
 	SetTag("BaseAttackBullet");
@@ -54,37 +54,38 @@ int BaseAttackBullet::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
 
-	while (true)
+	if (isStop == false)
 	{
-		Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
-
-		m_Pos.x += MoveSpeed * Dir * DeltaTime;
-
-		if (CurTile == NULL)
+		while (true)
 		{
-			SAFE_RELEASE(CurTile);
-			break;
-		}
+			Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
 
-		if (CurTile->GetTileType() == TT_NOMOVE)
-		{
-			SAFE_RELEASE(CurTile);
-			break;
-		}
+			m_Pos.x += MoveSpeed * Dir * DeltaTime;
 
-		SAFE_RELEASE(CurTile);
+			if (CurTile == NULL)
+			{
+				SAFE_RELEASE(CurTile);
+				break;
+			}
+
+			if (CurTile->GetTileType() == TT_NOMOVE)
+			{
+				SAFE_RELEASE(CurTile);
+				break;
+			}
+
+			SAFE_RELEASE(CurTile);
+		}
 	}
 
-	isStop = true;
+	isTileCol = true;
 
-	if (isStop == true)
+	if (isTileCol == true)
 	{
 		BaseEffect* newEffect = (BaseEffect*)Object::CreateCloneObject("BaseEffect", m_Layer);
 		newEffect->SetPos(m_Pos);
 		newEffect->SelectAnimationClip(Dir);
 		SAFE_RELEASE(newEffect);
-
-		SetisActiv(false);
 	}
 	return 0;
 }
@@ -100,6 +101,13 @@ void BaseAttackBullet::Collision(float DeltaTime)
 	Object::Collision(DeltaTime);
 }
 
+void BaseAttackBullet::CollsionAfterUpdate(float DeltaTime)
+{
+	Object::CollsionAfterUpdate(DeltaTime);
+
+	SetisActiv(false);
+}
+
 void BaseAttackBullet::Render(HDC Hdc, float DeltaTime)
 {
 	Object::Render(Hdc, DeltaTime);
@@ -113,5 +121,5 @@ BaseAttackBullet * BaseAttackBullet::Clone()
 void BaseAttackBullet::SetAttack(int iAttack)
 {
 	//+20% ~ -20%
-	Attack = (int)Math::RandomRange((int)(iAttack * 1.2f) , (int)(iAttack / 0.8f));
+	Attack = (int)Math::RandomRange((int)(iAttack * 0.6f) , (int)(iAttack * 1.2f));
 }

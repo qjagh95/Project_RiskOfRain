@@ -14,10 +14,6 @@ ColliderRect::ColliderRect()
 	m_hRedBrush = CreateSolidBrush(RGB(255, 0, 0));
 	m_hBrush = m_hGreenBrush;
 
-	isTop = false;
-	isBottom = false;
-	isLeft = false;
-	isRight = false;
 }
 
 ColliderRect::ColliderRect(const ColliderRect & Value)
@@ -28,11 +24,6 @@ ColliderRect::ColliderRect(const ColliderRect & Value)
 	m_hGreenBrush = CreateSolidBrush(RGB(0, 255, 0));
 	m_hRedBrush = CreateSolidBrush(RGB(255, 0, 0));
 	m_hBrush = m_hGreenBrush;
-
-	isTop = false;
-	isBottom = false;
-	isLeft = false;
-	isRight = false;
 }
 
 ColliderRect::~ColliderRect()
@@ -76,7 +67,7 @@ bool ColliderRect::Collsion(Collider* Dest)
 		case CT_RECT:
 			return CollsionRectToRect(m_WorldRect, ((ColliderRect*)Dest)->m_WorldRect);
 		case CT_CIRCLE:
-			return CollsionRectToCircle(m_WorldRect, ((ColliderCircle*)Dest)->m_WorldCircle);
+			return CollsionRectToCircle(m_WorldRect, ((ColliderCircle*)Dest)->GetWorldCircle());
 		case CT_POINT:
 			return CollsionRectToPoint(m_WorldRect, ((ColliderPoint*)Dest)->GetWorldPos());
 		case CT_PIXEL:

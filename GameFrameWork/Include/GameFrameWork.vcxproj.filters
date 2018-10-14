@@ -206,19 +206,19 @@
       <Filter>MainScene\Object\Monster</Filter>
     </ClCompile>
     <ClCompile Include="Object\BaseAttackBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClCompile>
     <ClCompile Include="Object\LaserBullet.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClCompile>
     <ClCompile Include="Keyboard.cpp">
       <Filter>Core\Key</Filter>
     </ClCompile>
     <ClCompile Include="Object\BaseEffect.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClCompile>
     <ClCompile Include="Object\LaserEffect.cpp">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -430,19 +430,19 @@
       <Filter>MainScene\Object\Monster</Filter>
     </ClInclude>
     <ClInclude Include="Object\BaseAttackBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClInclude>
     <ClInclude Include="Object\LaserBullet.h">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClInclude>
     <ClInclude Include="Keyboard.h">
       <Filter>Core\Key</Filter>
     </ClInclude>
     <ClInclude Include="Object\BaseEffect.h">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClInclude>
     <ClInclude Include="Object\LaserEffect.h">
-      <Filter>MainScene\Object\Bullet</Filter>
+      <Filter>MainScene\Object\CommandoBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -472,9 +472,6 @@
     </Filter>
     <Filter Include="MainScene\Object\Monster">
       <UniqueIdentifier>{fc7f0c21-ca3d-4ce7-9029-d4e650ed8ec7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MainScene\Object\Bullet">
-      <UniqueIdentifier>{d811f12e-3787-468d-8595-cd00fbe0053a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Resource">
       <UniqueIdentifier>{7868b1a0-53e4-4337-8020-d04183b436e5}</UniqueIdentifier>
@@ -649,6 +646,9 @@
     </Filter>
     <Filter Include="MainScene\Object\Monster\Parent">
       <UniqueIdentifier>{3047cdd8-0429-4f83-b9eb-fb8161bbe8af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainScene\Object\CommandoBullet">
+      <UniqueIdentifier>{d811f12e-3787-468d-8595-cd00fbe0053a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,6 @@
 #include "LaserEffect.h"
+#include "../Object/LaserBullet.h"
+#include "../Resource/Animation.h"
 
 LaserEffect::LaserEffect()
 {
@@ -18,7 +20,10 @@ LaserEffect::~LaserEffect()
 bool LaserEffect::Init()
 {
 	SetColorKey(RGB(255, 0, 255));
+	SetSize(1919.0f, 192.0f);
+	SetPivot(0.5f, 0.5f);
 
+	AddAnimationClip("Laser", AT_ATLAS, AO_LOOP, 1919.0f, 192.0f, 5, 1, 5, 1, 0, 0, 0.3f, "Laser", TEXT("Effect/Laser Turbine Effect.bmp"));
 	return true;
 }
 
@@ -32,7 +37,8 @@ int LaserEffect::Update(float DeltaTime)
 {
 	Object::Update(DeltaTime);
 
-	MoveByAngle(DeltaTime);
+	if (m_Animation->GetIsEnd() == true)
+		SetisActiv(false);
 
 	return 0;
 }

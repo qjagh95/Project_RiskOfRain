@@ -10,6 +10,7 @@
 #include "../Scene/Scene.h"
 #include "../Object/Tile.h"
 #include "../Object/TileInfo.h"
+#include "../Object/Number.h"
 
 #include "../Object/Hider.h"
 
@@ -71,7 +72,7 @@ void Commando::FS_Jump(float DeltaTime)
 	PlayerMove(DeltaTime);
 
 	Tile* CurTile = StageManager::Get()->GetTile(m_Pos);
-	Tile* NextTile = StageManager::Get()->GetTile(m_TempMove.x, m_TempMove.y);
+	Tile* NextTile = StageManager::Get()->GetTile(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
 
 	if (isJumping == false)
 	{
@@ -81,7 +82,7 @@ void Commando::FS_Jump(float DeltaTime)
 
 	if (NextTile->GetTileType() == TT_NOMOVE)
 	{
-		SelectState(PLAYER_STATE::PS_IDLE);
+ 		SelectState(PLAYER_STATE::PS_IDLE);
 		SetForce(0.0f);
 	}
 
@@ -97,32 +98,124 @@ void Commando::FS_Skill1(float DeltaTime)
 		if (PrevFrame == m_Animation->GetFrameX())
 			return;
 
-		BaseAttackBullet* newBullet = (BaseAttackBullet*)Object::CreateCloneObject("BaseAttackBullet", m_Layer);
-		newBullet->SetDir(MoveDir);
-		newBullet->SetAttack(AttackDamege);
-		newBullet->SetPos(Vector2(m_Pos.x + (m_Size.GetHalfX() * MoveDir), m_Pos.y));
+		bool TileCheck = false;
+		Vector2 TempPos = m_Pos;
 
-		const list<class Collider*>* pCollList = newBullet->GetColliderList();
+		while (true)
+		{
+			Tile* CurTile = StageManager::Get()->GetTile(TempPos);
+			TempPos.x += 300.0f * MoveDir  * DeltaTime;
 
-		list<Collider*>::const_iterator	StartIter;
-		list<Collider*>::const_iterator	EndIter = pCollList->end();
+			if (MoveDir == 1.0f)
+			{
+				if (TempPos.x >= HitPos.x)
+				{
+					TileCheck = false;
+					SAFE_RELEASE(CurTile);
+					break;
+				}
+			}
+			else if (MoveDir == -1.0f)
+			{
+				if (TempPos.x <= HitPos.x)
+				{
+					TileCheck = false;
+					SAFE_RELEASE(CurTile);
+					break;
+				}
+			}
 
-		for (StartIter = pCollList->begin(); StartIter != EndIter; ++StartIter)
-			(*StartIter)->SetCollsionTypeName("Commando");
+			if (CurTile->GetTileType() == TT_NOMOVE)
+			{
+				TileCheck = true;
+				SAFE_RELEASE(CurTile);
+				break;
+			}
 
-		SAFE_RELEASE(newBullet);
-		TimeVar = 0.0f;
+			SAFE_RELEASE(CurTile);
+		}
+
+		if (isLineHit == true && TileCheck == false)
+		{
+			BaseAttackBullet* newBullet = (BaseAttackBullet*)Object::CreateCloneObject("BaseAttackBullet", m_Layer);
+			newBullet->SetDir(MoveDir);
+			newBullet->SetAttack(AttackDamege);
+			newBullet->SetIsStop(true);
+			newBullet->SetPos(Vector2(HitPos.x,m_Pos.y));
+
+			Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+			DamegaNumber->SetPos(HitPos.x, HitPos.y - HitSize.GetHalfY());
+			DamegaNumber->SetTexture("DamegaNumber", TEXT("object/TempNumber.bmp"));
+			DamegaNumber->SetNumberSize(19.0f, 24.0f);
+			DamegaNumber->SetNumber(newBullet->GetAttack());
+			DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+			DamegaNumber->SetMaxRange(50.0f, 100.0f);
+			DamegaNumber->SetIsCameraMode(true);
+
+			const list<Collider*>* CollList = newBullet->GetColliderList();
+
+			list<Collider*>::const_iterator	StartIter = CollList->begin();
+			list<Collider*>::const_iterator	EndIter = CollList->end();
+
+			for (; StartIter != EndIter; StartIter++)
+				(*StartIter)->SetCollsionTypeName("Commando");
+
+			SAFE_RELEASE(DamegaNumber);
+			SAFE_RELEASE(newBullet);
+		}
+		else if(isLineHit == false || TileCheck == true)
+		{
+			BaseAttackBullet* newBullet = (BaseAttackBullet*)Object::CreateCloneObject("BaseAttackBullet", m_Layer);
+			newBullet->SetDir(MoveDir);
+			newBullet->SetAttack(AttackDamege);
+			newBullet->SetIsStop(false);
+			newBullet->SetPos(m_Pos);
+
+			const list<class Collider*>* pCollList = newBullet->GetColliderList();
+
+			list<Collider*>::const_iterator	StartIter;
+			list<Collider*>::const_iterator	EndIter = pCollList->end();
+
+			for (StartIter = pCollList->begin(); StartIter != EndIter; ++StartIter)
+				(*StartIter)->SetCollsionTypeName("Commando");
+
+			SAFE_RELEASE(newBullet);
+		}
 	}
 
 	if (m_Animation->GetIsEnd() == true)
-	{
 		SelectState(PLAYER_STATE::PS_IDLE);
-		TimeVar = 0.0f;
-	}
 }
 
 void Commando::FS_Skill2(float DeltaTime)
 {
+	if (m_Animation->GetFrameX() == 1)
+	{
+		if (PrevFrame == m_Animation->GetFrameX())
+			return;
+
+		Vector2 TempPos = m_Pos;
+
+		char Buffer[255] = {};
+		sprintf_s(Buffer, "CommandoPos X : %f , %f \n", m_Pos.x, m_Pos.y);
+		Debug::OutputConsole(Buffer);
+
+		LaserEffect* laserEffect = Object::CreateObject<LaserEffect>("LaserEffect", m_Layer);
+
+		if (TempPos.x <= Core::Get()->GetWinSizeVector2().x / 2.0f)
+			TempPos.x = Core::Get()->GetWinSizeVector2().x / 2.0f;
+
+		laserEffect->SetPos(TempPos);
+
+		LaserBullet* laserBullet = Object::CreateObject<LaserBullet>("LaserBullet", m_Layer);
+		laserBullet->SetPos(TempPos);
+		laserBullet->SetAttack(AttackDamege);
+
+		SAFE_RELEASE(laserBullet);
+		SAFE_RELEASE(laserEffect);
+	}
+
+
 	if (m_Animation->GetIsEnd() == true)
 	{
 		SelectState(PLAYER_STATE::PS_IDLE);
@@ -131,7 +224,7 @@ void Commando::FS_Skill2(float DeltaTime)
 
 void Commando::FS_Skill3(float DeltaTime)
 {
-	m_Pos.x += BASESPEED * MoveDir * DeltaTime;
+	m_Pos.x += BASESPEED * 2.0f * MoveDir * DeltaTime;
 
 	if (m_Animation->GetIsEnd() == true)
 	{
@@ -141,10 +234,89 @@ void Commando::FS_Skill3(float DeltaTime)
 
 void Commando::FS_Skill4(float DeltaTime)
 {
-	if (m_Animation->GetIsEnd() == true)
+	if (m_Animation->GetFrameX() == 1 || m_Animation->GetFrameX() == 3 || m_Animation->GetFrameX() == 5 || m_Animation->GetFrameX() == 7 || m_Animation->GetFrameX() == 9)
 	{
-		SelectState(PLAYER_STATE::PS_IDLE);
+		if (PrevFrame == m_Animation->GetFrameX())
+			return;
+
+		bool TileCheck = false;
+		Vector2 TempPos = m_Pos;
+
+		while (true)
+		{
+			Tile* CurTile = StageManager::Get()->GetTile(TempPos);
+			TempPos.x += 300.0f * MoveDir  * DeltaTime;
+
+			if (MoveDir == 1.0f)
+			{
+				if (TempPos.x >= HitPos.x)
+				{
+					TileCheck = false;
+					SAFE_RELEASE(CurTile);
+					break;
+				}
+			}
+			else if (MoveDir == -1.0f)
+			{
+				if (TempPos.x <= HitPos.x)
+				{
+					TileCheck = false;
+					SAFE_RELEASE(CurTile);
+					break;
+				}
+			}
+
+			if (CurTile->GetTileType() == TT_NOMOVE)
+			{
+				TileCheck = true;
+				SAFE_RELEASE(CurTile);
+				break;
+			}
+
+			SAFE_RELEASE(CurTile);
+		}
+
+		if (isLineHit == true && TileCheck == false)
+		{
+			BaseAttackBullet* newBullet = (BaseAttackBullet*)Object::CreateCloneObject("BaseAttackBullet", m_Layer);
+			newBullet->SetDir(MoveDir);
+			newBullet->SetAttack((int)(AttackDamege * 1.3f));
+			newBullet->SetIsStop(true);
+			newBullet->SetPos(Vector2(HitPos.x, m_Pos.y));
+
+			const list<Collider*>* CollList = newBullet->GetColliderList();
+
+			list<Collider*>::const_iterator	StartIter = CollList->begin();
+			list<Collider*>::const_iterator	EndIter = CollList->end();
+
+			for (; StartIter != EndIter; StartIter++)
+				(*StartIter)->SetCollsionTypeName("Commando");
+
+			SAFE_RELEASE(newBullet);
+		}
+
+		else if (isLineHit == false || TileCheck == true)
+		{
+			BaseAttackBullet* newBullet = (BaseAttackBullet*)Object::CreateCloneObject("BaseAttackBullet", m_Layer);
+			newBullet->SetDir(MoveDir);
+			newBullet->SetAttack(AttackDamege);
+			newBullet->SetIsStop(false);
+			newBullet->SetPos(m_Pos);
+
+			const list<class Collider*>* pCollList = newBullet->GetColliderList();
+
+			list<Collider*>::const_iterator	StartIter;
+			list<Collider*>::const_iterator	EndIter = pCollList->end();
+
+			for (StartIter = pCollList->begin(); StartIter != EndIter; ++StartIter)
+				(*StartIter)->SetCollsionTypeName("Commando");
+
+			SAFE_RELEASE(newBullet);
+		}
 	}
+
+	if (m_Animation->GetIsEnd() == true)
+		SelectState(PLAYER_STATE::PS_IDLE);
 }
 
 void Commando::FS_Rope(float DeltaTime)

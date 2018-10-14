@@ -12,6 +12,7 @@ public:
 	int Update(float DeltaTime);
 	int LateUpdate(float DeltaTime);
 	void Collision(float DeltaTime);
+	void CollsionAfterUpdate(float DeltaTime);
 	void Render(HDC Hdc, float DeltaTime);
 
 	Layer* CreateLayer(const string& TagName, int ZOrder);

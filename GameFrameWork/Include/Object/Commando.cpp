@@ -36,8 +36,7 @@ Commando::Commando()
 	:CurTarget(NULL), MoneyNumber(NULL), AttackDamege(12)
 	, SkillOneDelay(0.5f), SkillTwoDelay(5.0f), SkillThreeDelay(5.0f), SkillFourDelay(8.0f),
 	isSkillOne(false), isSkillTwo(false), isSkillThree(false), isSkillFour(false), isRopeHiting(false)
-	, isRopeUpHitting(false), isRightCol(false), isUpCol(false), isDownCol(false), isLeftCol(false)
-	,PrevFrame(0)
+	, isRopeUpHitting(false),PrevFrame(0), isLineHit(false)
 {
 	m_ObjectType = OT_PLAYER;
 	SetTag("Commando");
@@ -47,8 +46,6 @@ Commando::~Commando()
 {
 	SAFE_RELEASE(CurTarget);
 	SAFE_RELEASE(MoneyNumber);
-	SAFE_RELEASE(RP);
-	SAFE_RELEASE(RP2);
 }
 
 bool Commando::Init()
@@ -79,6 +76,17 @@ int Commando::Update(float DeltaTime)
 
 	//에구 "머니" 나!
 	MoneyNumber->SetNumber(pMoney);
+
+/////////////////////////////////////////////////////////////////////////
+	ColliderRect* GetColl = (ColliderRect*)GetCollider("CommandoLine");
+	if (MoveDir == 1.0f)
+		GetColl->SetPivot(0.0f, 0.5f);
+	else if (MoveDir == -1.0f)
+		GetColl->SetPivot(1.0f, 0.5f);
+	SAFE_RELEASE(GetColl);
+////////////////////////////////////////////////////////////////////////
+
+	PrevHitPos = HitPos;
 
 	DirCheck();
 	HpCheck();
@@ -116,9 +124,9 @@ int Commando::Update(float DeltaTime)
 			break;
 	}
 
-	isRopeHiting = false;
-	isRopeUpHitting = false;
-	PrevFrame = m_Animation->GetFrameX();
+	isLineHit = false;
+	HitPos = { 0.0f, 0.0f };
+	HitPosList.clear();
 
 	return 0;
 }
@@ -126,12 +134,22 @@ int Commando::Update(float DeltaTime)
 int Commando::LateUpdate(float DeltaTime)
 {
 	Charactor::LateUpdate(DeltaTime);
+
+	isRopeHiting = false;
+	isRopeUpHitting = false;
+	PrevFrame = m_Animation->GetFrameX();
+
 	return 0;
 }
 
 void Commando::Collision(float DeltaTime)
 {
 	Charactor::Collision(DeltaTime);
+}
+
+void Commando::CollsionAfterUpdate(float DeltaTime)
+{
+	Charactor::CollsionAfterUpdate(DeltaTime);
 }
 
 void Commando::Render(HDC Hdc, float DeltaTime)
@@ -435,16 +453,25 @@ void Commando::CollsionInit()
 	RC->SetCollsionTypeName("Commando");
 	SAFE_RELEASE(RC);
 
+	ColliderRect* RC2 = AddCollider<ColliderRect>("CommandoLine");
+	RC2->SetVirtualRect(Core::Get()->GetWinSizeVector2().x, 5.0f);
+	RC2->SetPivot(0.0f, 0.5f);
+	RC2->SetCallBack(this, &Commando::LineHit, CS_COLDOING);
+	RC2->SetCollsionTypeName("CommandoLine");
+	SAFE_RELEASE(RC2);
+
 	//로프판단.
-	RP = AddCollider<ColliderPoint>("PlayerMiddlePoint");
+	ColliderPoint* RP = AddCollider<ColliderPoint>("PlayerMiddlePoint");
 	RP->SetPivot(0.0f, -0.5f);
 	RP->SetCallBack<Commando>(this, &Commando::RopeHit, CS_COLDOING);
 	RP->SetCollsionTypeName("Commando");
+	SAFE_RELEASE(RP);
 
-	RP2 = AddCollider<ColliderPoint>("PlayerUpPoint");
+	ColliderPoint* RP2 = AddCollider<ColliderPoint>("PlayerUpPoint");
 	RP2->SetPivot(0.0f, 0.5f);
 	RP2->SetCallBack<Commando>(this, &Commando::RopeUpHit, CS_COLDOING);
 	RP2->SetCollsionTypeName("Commando");
+	SAFE_RELEASE(RP2);
 }
 
 void Commando::InfoInit()

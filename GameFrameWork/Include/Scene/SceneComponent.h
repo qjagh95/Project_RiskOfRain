@@ -10,6 +10,7 @@ public:
 	virtual int Update(float DeltaTime);
 	virtual int LateUpdate(float DeltaTime);
 	virtual void Collision(float DeltaTime);
+	virtual void CollsionAfterUpdate(float DeltaTime);
 	virtual void Render(HDC hdc, float DeltaTime);
 
 	void SetScene(Scene* Value) { m_Scene = Value; }

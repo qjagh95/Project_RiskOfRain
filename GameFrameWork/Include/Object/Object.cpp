@@ -114,6 +114,10 @@ void Object::Collision(float DeltaTime)
 	
 }
 
+void Object::CollsionAfterUpdate(float DeltaTime)
+{
+}
+
 void Object::Render(HDC hDC, float DeltaTime)
 {
 	if (m_Texture != NULL)

@@ -52,6 +52,7 @@ private:
 	int Input(float DeltaTime);
 	int Update(float DeltaTime);
 	int Collision(float DeltaTime);
+	int CollsionAfterUpdate(float DeltaTime);
 	int Render(float DeltaTime);
 
 	static bool m_Loop;

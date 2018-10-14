@@ -7,6 +7,7 @@
 #include "../Scene/Layer.h"
 #include "../Object/BaseAttackBullet.h"
 #include "../Object/LaserBullet.h"
+#include "../Object/Number.h"
 
 Monster::Monster()
 	:Target(NULL), Hp(100), MaxHp(100), HpBar(NULL)
@@ -107,6 +108,11 @@ void Monster::Collision(float DeltaTime)
 	Charactor::Collision(DeltaTime);
 }
 
+void Monster::CollsionAfterUpdate(float DeltaTime)
+{
+	Charactor::CollsionAfterUpdate(DeltaTime);
+}
+
 void Monster::Render(HDC Hdc, float DeltaTime)
 {	
 	Charactor::Render(Hdc, DeltaTime);
@@ -135,6 +141,25 @@ void Monster::TileCollsionActive(float DeltaTime)
 
 void Monster::BaseAttackHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
 {
+	int a = 0;
+
+	if (Dest->GetTag() == "BaseBody")
+	{
+		BaseAttackBullet* GetBullet = (BaseAttackBullet*)Dest->GetCurObject();
+		Hp -= GetBullet->GetAttack();
+
+		Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+		DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+		DamegaNumber->SetTexture("DamegaNumber", TEXT("object/TempNumber.bmp"));
+		DamegaNumber->SetNumberSize(19.0f, 24.0f);
+		DamegaNumber->SetNumber(GetBullet->GetAttack());
+		DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+		DamegaNumber->SetMaxRange(50.0f, 100.0f);
+		DamegaNumber->SetIsCameraMode(true);
+
+		SAFE_RELEASE(DamegaNumber);
+		SAFE_RELEASE(GetBullet);
+	}
 }
 
 void Monster::BaseAttackHitDoing(Collider * Src, Collider * Dest, float DeltaTime)
@@ -147,6 +172,23 @@ void Monster::BaseAttackHitEnd(Collider * Src, Collider * Dest, float DeltaTime)
 
 void Monster::SkillTwoHitFirst(Collider * Src, Collider * Dest, float DeltaTime)
 {
+	if (Dest->GetTag() == "LaserBody")
+	{
+		LaserBullet* GetBullet = (LaserBullet*)Dest->GetCurObject();
+		Hp -= GetBullet->GetAttack();
+
+		Number* DamegaNumber = Object::CreateObject<Number>("DamegaNumber", m_Layer);
+		DamegaNumber->SetPos(m_Pos.x, m_Pos.y - m_Size.GetHalfY());
+		DamegaNumber->SetTexture("DamegaNumber", TEXT("object/TempNumber.bmp"));
+		DamegaNumber->SetNumberSize(19.0f, 24.0f);
+		DamegaNumber->SetNumber(GetBullet->GetAttack());
+		DamegaNumber->SetNumberViewSize(10.0f, 13.0f);
+		DamegaNumber->SetMaxRange(50.0f, 100.0f);
+		DamegaNumber->SetIsCameraMode(true);
+
+		SAFE_RELEASE(DamegaNumber);
+		SAFE_RELEASE(GetBullet);
+	}
 }
 
 void Monster::SkillTwoHitDoing(Collider * Src, Collider * Dest, float DeltaTime)

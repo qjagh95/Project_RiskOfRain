@@ -13,8 +13,6 @@ public:
 	void Render(HDC Hdc, float DeltaTime) override;
 	LaserEffect* Clone() override;
 
-	void SelectAnimationClip(const string& ClipName);
-
 protected:
 	LaserEffect();
 	LaserEffect(const LaserEffect& Value);

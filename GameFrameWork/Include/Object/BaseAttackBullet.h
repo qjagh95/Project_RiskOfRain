@@ -10,6 +10,7 @@ public:
 	int Update(float DeltaTime) override;
 	int LateUpdate(float DeltaTime) override;
 	void Collision(float DeltaTime) override;
+	void CollsionAfterUpdate(float DeltaTime) override;
 	void Render(HDC Hdc, float DeltaTime) override;
 	BaseAttackBullet* Clone() override;
 
@@ -26,6 +27,7 @@ protected:
 private:
 	float Dir;
 	bool isStop;
+	bool isTileCol;
 	int Attack;
 	bool isHit;
 };

@@ -229,6 +229,7 @@ void Core::Logic()
 	Input(Delta * StopTime);
 	Update(Delta * StopTime);
 	Collision(Delta * StopTime);
+	CollsionAfterUpdate(Delta * StopTime);
 	Render(Delta * StopTime);
 }
 
@@ -287,3 +288,8 @@ int Core::Collision(float DeltaTime)
 	return 0;
 }
 
+int Core::CollsionAfterUpdate(float DeltaTime)
+{
+	SceneManager::Get()->CollsionAfterUpdate(DeltaTime);
+	return 0;
+}

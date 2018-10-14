@@ -71,3 +71,27 @@ void Commando::PumpHit(Collider * Src, Collider * Dest, float DeltaTime)
 		SelectState(PLAYER_STATE::PS_JUMPING);
 	}
 }
+void Commando::LineHit(Collider * Src, Collider * Dest, float DeltaTime)
+{
+	if (Dest->GetTag() == "MonsterBody")
+	{
+		HitSize = ((ColliderRect*)Dest)->GetSize();
+		HitPos = Dest->GetPos();
+
+		HitPosList.push_back(HitPos);
+
+		list<Vector2>::iterator StartIter = HitPosList.begin();
+		list<Vector2>::iterator EndIter = HitPosList.end();
+
+		for(; StartIter != EndIter; StartIter++)
+		{
+			float a = Math::GetDistance(m_Pos, HitPos);
+			float b = Math::GetDistance(m_Pos, *StartIter);
+
+			if (a > b)
+				HitPos = *StartIter;
+		}
+
+		isLineHit = true;
+	}
+}

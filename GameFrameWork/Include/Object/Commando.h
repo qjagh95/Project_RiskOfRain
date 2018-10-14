@@ -18,6 +18,7 @@ public:
 	int Update(float DeltaTime) override;
 	int LateUpdate(float DeltaTime) override;
 	void Collision(float DeltaTime) override;
+	void CollsionAfterUpdate(float DeltaTime) override;
 	void Render(HDC Hdc, float DeltaTime) override;
 	Commando* Clone() override;
 	void TileCollsionActive(float DeltaTime) override;
@@ -26,6 +27,7 @@ public:
 	void RopeHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void PumpHit(Collider* Src, Collider* Dest, float DeltaTime);
 	void RopeUpHit(Collider* Src, Collider* Dest, float DeltaTime);
+	void LineHit(Collider* Src, Collider* Dest, float DeltaTime);
 
 	void PlayerMove(float DeltaTime);
 
@@ -90,10 +92,11 @@ private:
 	bool isRopeUpHitting;
 	bool isJumping;
 
-	bool isRightCol;
-	bool isLeftCol;
-	bool isDownCol;
-	bool isUpCol;
+	bool isLineHit;
+	Vector2 HitPos;
+	Vector2 HitSize;
+	Vector2 PrevHitPos;
+	list<Vector2> HitPosList;
 
 	PLAYER_STATE pState;
 	float MoveDir;
@@ -103,8 +106,6 @@ private:
 	Vector2 RopePos;
 	Object* CurTarget;
 	Vector2 Center;
-	ColliderPoint* RP;
-	ColliderPoint* RP2;
 	float TimeVar;
 
 	int PrevFrame;
